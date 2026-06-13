@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Premiere Caption Kit — Cheat Sheet</title>
+<style>
+  @page { size: A4; margin: 14mm; }
+  body { font-family: Arial, Helvetica, sans-serif; color:#1a1a1a; font-size:11pt; line-height:1.45; }
+  h1 { font-size:20pt; color:#5b3cff; margin:0 0 2px 0; }
+  .tag { color:#666; font-size:10pt; margin:0 0 14px 0; }
+  h2 { font-size:13pt; color:#fff; background:#5b3cff; padding:5px 10px; margin:18px 0 8px 0; }
+  h3 { font-size:11.5pt; color:#5b3cff; margin:12px 0 4px 0; }
+  table { width:100%; border-collapse:collapse; margin:4px 0 8px 0; }
+  th, td { border:1px solid #ccc; padding:5px 8px; text-align:left; vertical-align:top; font-size:10pt; }
+  th { background:#f0edff; width:38%; font-weight:bold; color:#33267a; }
+  ol, ul { margin:4px 0 8px 22px; }
+  li { margin:3px 0; }
+  .box { border:1px solid #cfc7ff; background:#f6f4ff; padding:8px 12px; margin:8px 0; font-size:10pt; }
+  .warn { border:1px solid #f3b4b4; background:#fff4f4; color:#7a1a1a; padding:8px 12px; margin:8px 0; font-size:10pt; }
+  .small { font-size:9.5pt; color:#555; }
+  b.k { color:#5b3cff; }
+</style>
+</head>
+<body>
+
+<h1>Premiere Pro Caption Kit — Cheat Sheet</h1>
+<p class="tag">Vaporswift Media · free build · keep at your desk · values for 1080&#215;1920 vertical</p>
+
+<h2>The 3-click caption system</h2>
+<ol>
+  <li><b class="k">Transcribe</b> &mdash; Window &rarr; Text &rarr; Transcribe Sequence (free, on-device).</li>
+  <li><b class="k">Create Captions</b> &mdash; from transcript. Set short line length for 1&ndash;3 words/line.</li>
+  <li><b class="k">Apply Track Style</b> &mdash; pick your saved style; all captions update. Add scale-pop preset.</li>
+</ol>
+<p class="small">Build the style once in Essential Graphics &rarr; Track Style dropdown &rarr; <b>Create Style</b>. It's then permanent and one-click on every project.</p>
+
+<h2>Style 1 — Bold Karaoke Highlight</h2>
+<table>
+  <tr><th>Font</th><td>Montserrat ExtraBold / TheBoldFont &mdash; ALL CAPS</td></tr>
+  <tr><th>Size</th><td>115&ndash;130 px</td></tr>
+  <tr><th>Fill color</th><td>White #FFFFFF</td></tr>
+  <tr><th>Highlight color</th><td>Yellow #FFE000 or Green #36F000 (pick one accent)</td></tr>
+  <tr><th>Stroke / edge</th><td>Black #000000, 12&ndash;16 px</td></tr>
+  <tr><th>Shadow</th><td>Black, opacity 75%, angle 135&deg;, distance 8, blur 12</td></tr>
+  <tr><th>Position</th><td>Centered; ~58&ndash;62% down; max width ~80%</td></tr>
+  <tr><th>Animation</th><td>Scale 92% &rarr; 106% &rarr; 100% over 6&ndash;8 frames</td></tr>
+</table>
+
+<h2>Style 2 — Clean Minimal White</h2>
+<table>
+  <tr><th>Font</th><td>Inter SemiBold / Montserrat SemiBold &mdash; Sentence case</td></tr>
+  <tr><th>Size</th><td>72&ndash;85 px</td></tr>
+  <tr><th>Fill color</th><td>White #FFFFFF</td></tr>
+  <tr><th>Stroke</th><td>Off (or 2 px black on bright footage)</td></tr>
+  <tr><th>Shadow</th><td>Black, opacity 60%, distance 5, blur 14 (soft)</td></tr>
+  <tr><th>Background</th><td>Optional black pill @ 28% opacity, high corner radius</td></tr>
+  <tr><th>Position</th><td>Centered; ~80% down (lower third); 1&ndash;2 lines</td></tr>
+  <tr><th>Animation</th><td>Opacity 0&rarr;100% + rise 20px over 8 frames</td></tr>
+</table>
+
+<div class="box"><b>Per-word karaoke (Premiere can't auto-do it):</b> use the free word-by-word
+<b>reveal</b> (short captions + scale pop), a free <b>CapCut</b> round-trip, or build the
+<b>After Effects</b> karaoke <code>.mogrt</code> (Range Selector &rarr; Based On: Words &rarr; Fill Color).</div>
+
+<h2>Hook title cards (build as .mogrt)</h2>
+<table>
+  <tr><th>Punch In</th><td>Anton/Bebas, 150&ndash;190px, scale 130&rarr;100% / 8f + fade in</td></tr>
+  <tr><th>Slide Stack</th><td>Montserrat ExtraBold, lines rise +60px, staggered 4f apart</td></tr>
+  <tr><th>Bar Reveal</th><td>Accent bar scales 0&rarr;100% (anchor left), text fades, bar exits</td></tr>
+</table>
+
+<h2>Mic cleanup chain (Essential Sound — tag as Dialogue)</h2>
+<ul>
+  <li>Reduce Noise ~4&ndash;6 &middot; Reduce Rumble on &middot; DeHum if buzzing</li>
+  <li>EQ: Vocal Enhance / boost ~3&ndash;5 kHz &middot; Dynamics ~5&ndash;7 (the "radio voice")</li>
+  <li>Loudness: Auto-Match. Save as preset &rarr; reuse on every clip.</li>
+</ul>
+
+<h2>Export — Reels / TikTok / Shorts</h2>
+<table>
+  <tr><th>Format / Res</th><td>H.264 &middot; 1080&#215;1920 &middot; frame rate = match source</td></tr>
+  <tr><th>Bitrate</th><td>VBR 2-pass &middot; target 16 Mbps &middot; max 24 Mbps</td></tr>
+  <tr><th>Audio</th><td>AAC 320 kbps, 48 kHz &middot; normalize to &minus;14 LUFS</td></tr>
+</table>
+
+<h2>Free fonts (= the "premium" pack fonts)</h2>
+<p class="small">Montserrat &middot; Poppins &middot; Anton &middot; Bebas Neue &middot; Inter &middot; Outfit &middot; TheBoldFont &mdash; all free (Google Fonts / dafont). Restart Premiere after install.</p>
+
+<div class="warn"><b>Avoid pirated pack mirrors</b> (psdly, xtemplates, gfxplugin, intro-hd, freevideoeffect, gfxlife) &mdash; cracked motion-graphics files are a common malware vector. Build your own, or buy direct.</div>
+
+</body>
+</html>

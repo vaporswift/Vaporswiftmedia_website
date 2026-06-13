@@ -19,6 +19,9 @@ packs promise — but free, fully customizable, and yours to reuse forever.
 | `assets/animated-icons-and-sfx.md` | Drag-and-drop arrows/underlines/scribbles + a free sound-FX library + a mic-cleanup preset chain |
 | `export/social-export-presets.md` | Exact export settings for Reels/TikTok/Shorts (resolution, bitrate, loudness) |
 | `resources/free-fonts-and-sources.md` | Free fonts that match the "premium" pack fonts, plus vetted free asset sources |
+| `after-effects/karaoke-caption-mogrt.md` | The **true per-word karaoke** caption — built once in After Effects, exported as a `.mogrt` that's drag-and-drop in Premiere with editable text/colors |
+| `web/index.html` | A polished, standalone **web resource page** presenting this kit — drop-in for the Vaporswift Media site |
+| `cheat-sheet/Premiere-Caption-Kit-CheatSheet.pdf` | A printable **one-look quick reference** of every key value (source: `cheat-sheet/caption-cheat-sheet.html`) |
 
 ---
 
