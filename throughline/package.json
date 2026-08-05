@@ -1,0 +1,21 @@
+{
+  "name": "throughline",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Script, storyboard, notes and feedback for video projects, anchored to the Premiere Pro timeline.",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "dev:panel": "npm run dev --workspace @throughline/panel"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
