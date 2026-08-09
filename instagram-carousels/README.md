@@ -19,13 +19,17 @@ feed and matches the profile grid with no crop.
 
 ```bash
 cd episode-01-render-to-photo
+npm install            # installs playwright + its chromium (first time only)
 ./fetch-assets.sh      # pulls the 5 source images from Higgsfield
 node render.js         # → out/slide-01.png … slide-08.png
 ```
 
-Run this on your own machine. The environment these were built in can't reach
-the Higgsfield CDN, so slides 1, 2 and 6 currently render with placeholder
-hatching — the other five are final as they stand.
+Run this on your own machine — the environment these were built in can't reach
+the Higgsfield CDN.
+
+Fonts (Inter, JetBrains Mono) ship in `fonts/` and load via `@font-face`, so
+nothing needs installing system-wide and the output is identical on any
+machine.
 
 ### Slide map
 

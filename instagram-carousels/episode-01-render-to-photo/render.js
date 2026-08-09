@@ -2,17 +2,35 @@
 /**
  * Renders each .slide in slides.html to a 1080x1440 PNG in ./out
  *
- *   node render.js
+ *   npm install && node render.js
  *
- * Playwright is installed globally in this environment, so we resolve it from
- * the global root rather than requiring a local node_modules.
+ * Resolves playwright from local node_modules first, falling back to a global
+ * install so it works both here and on a machine that has it installed system-wide.
  */
-const { execSync } = require('child_process');
 const path = require('path');
 const fs = require('fs');
 
-const GLOBAL_ROOT = execSync('npm root -g').toString().trim();
-const { chromium } = require(path.join(GLOBAL_ROOT, 'playwright'));
+function loadPlaywright() {
+  try {
+    return require('playwright');
+  } catch (_) { /* fall through to the global install */ }
+  try {
+    const { execSync } = require('child_process');
+    const globalRoot = execSync('npm root -g', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString().trim();
+    return require(path.join(globalRoot, 'playwright'));
+  } catch (_) {
+    console.error(
+      '\nPlaywright is not installed.\n\n' +
+      '  cd ' + __dirname + '\n' +
+      '  npm install\n' +
+      '  node render.js\n'
+    );
+    process.exit(1);
+  }
+}
+
+const { chromium } = loadPlaywright();
 
 const HERE = __dirname;
 const OUT = path.join(HERE, 'out');
@@ -28,7 +46,10 @@ const W = 1080, H = 1440;
   });
 
   await page.goto('file://' + path.join(HERE, 'slides.html'), { waitUntil: 'networkidle' });
-  await page.waitForTimeout(600); // let webfonts settle before we snapshot
+  // Fonts are bundled in ./fonts and loaded via @font-face — wait for them to be
+  // parsed before snapshotting, or the first slides render in a fallback face.
+  await page.evaluate(() => document.fonts.ready);
+  await page.waitForTimeout(400);
 
   const ids = await page.$$eval('.slide', els => els.map(e => e.id));
 
