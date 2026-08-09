@@ -19,7 +19,7 @@ feed and matches the profile grid with no crop.
 
 ```bash
 cd episode-01-render-to-photo
-npm install            # installs playwright + its chromium (first time only)
+npm install            # playwright + chromium, via postinstall (first time only)
 ./fetch-assets.sh      # pulls the 5 source images from Higgsfield
 node render.js         # → out/slide-01.png … slide-08.png
 ```

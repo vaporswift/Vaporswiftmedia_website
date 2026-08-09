@@ -4,6 +4,7 @@
   "private": true,
   "description": "Vaporswift Instagram carousel renderer — 1080x1440 slide export",
   "scripts": {
+    "postinstall": "playwright install chromium",
     "render": "node render.js",
     "build": "./fetch-assets.sh && node render.js"
   },
