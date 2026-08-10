@@ -62,9 +62,26 @@ masters (`.photo`, `.card`) and the design tokens in `:root` don't change.
 
 ## Design tokens
 
-| Token | Value | |
+Anthropic's palette on a forest-cast ground, with **two accents**: orange
+carries structure, green carries emphasis. Keeping those roles separate is what
+lets a prompt slide distinguish a section header from the line that matters.
+
+| Token | Value | Role |
 |---|---|---|
-| `--ink` | `#0B0B0C` | card ground |
-| `--paper` | `#F2EFE9` | warm off-white |
-| `--accent` | `#D4914A` | bronze |
+| `--ink` | `#0E1311` | forest-cast near-black, slide ground |
+| `--card` | `#141B17` | prompt block / thumbnail ground |
+| `--paper` | `#faf9f5` | Anthropic light |
+| `--accent` | `#d97757` | Anthropic orange — labels, kickers, rules |
+| `--accent2` | `#8FA97A` | forest green — headline highlights, key phrases |
+| `--muted` | `#9AA394` | captions, spec keys |
+| `--body` | `#CBC9C1` | secondary body text |
+| `--code` | `#D9D7CF` | prompt block text |
+| `--neg` | `#A8756A` | the NOT clause |
 | `--M` / `--TOP` / `--BOT` | 88 / 84 / 150 px | margins + safe zone |
+
+Type resolves to SF Pro / SF Mono on macOS, falling back to the bundled Inter
+and JetBrains Mono elsewhere. `render.js` asserts on overflow as well as canvas
+size, so a font-metric change clips loudly instead of silently.
+
+`../brand-preview/preview.js` renders candidate palettes against this deck
+without editing it — use it before changing any token here.
