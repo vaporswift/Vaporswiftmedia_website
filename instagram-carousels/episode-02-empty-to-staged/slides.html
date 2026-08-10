@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vaporswift — Episode 02 — Empty to Staged</title>
+<style>
+  /* ============================================================
+     VAPORSWIFT CAROUSEL SYSTEM
+     Canvas: 1080 x 1440 (3:4) — Instagram native, zero grid crop.
+     Two masters only: .photo and .card
+     ============================================================ */
+
+  /* Fonts ship with the repo (./fonts) so the deck renders identically on any
+     machine without a system font install. Both are SIL Open Font License. */
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/InterVariable.ttf') format('truetype-variations');
+    font-weight:100 900; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Medium.ttf') format('truetype');
+    font-weight:500; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:block;
+  }
+
+  :root{
+    --ink:      #0B0B0C;   /* near-black card ground */
+    --paper:    #F2EFE9;   /* warm off-white */
+    --accent:   #D4914A;   /* bronze — architecture, not synthwave */
+    --accent-d: #8A5C2C;
+    --muted:    #7E7972;
+    --hair:     rgba(242,239,233,.14);
+
+    --M:   88px;  /* side margin        */
+    --TOP: 84px;  /* top margin         */
+    --BOT: 150px; /* bottom safe zone — carousel dots + UI live here */
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:#1a1a1c;
+    font-family:'Inter Variable', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; gap:40px; padding:40px;
+  }
+
+  .slide{
+    width:1080px; height:1440px;
+    position:relative; overflow:hidden;
+    background:var(--ink); color:var(--paper);
+    flex:none;
+  }
+
+  /* ---------- shared furniture ---------- */
+
+  .brand{
+    position:absolute; top:var(--TOP); left:var(--M);
+    font-family:'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper); opacity:.92; z-index:5;
+  }
+  .brand span{ color:var(--accent); }
+
+  .ep{
+    position:absolute; top:var(--TOP); right:var(--M);
+    font-family:'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.18em;
+    color:var(--accent); z-index:5;
+  }
+
+  /* Sits BELOW the content box, not inside it — otherwise it collides with
+     the last line of type on dense card slides. Carousel dots are centred,
+     so the right corner at 70px is clear. */
+  .arrow{
+    position:absolute; right:var(--M); bottom:70px;
+    font-size:44px; line-height:1; color:var(--paper); opacity:.8; z-index:6;
+  }
+  .photo .arrow{ bottom:var(--BOT); }
+
+  .kicker{
+    font-family:'JetBrains Mono', monospace;
+    font-size:21px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:26px;
+  }
+
+  h1{
+    font-size:78px; line-height:1.03; font-weight:600; letter-spacing:-.028em;
+  }
+  h1 em{ font-style:normal; color:var(--accent); }
+
+  .tease{
+    font-family:'JetBrains Mono', monospace;
+    font-size:22px; letter-spacing:.02em; color:var(--paper); opacity:.72; margin-top:30px;
+  }
+
+  /* ---------- MASTER A : PHOTO ---------- */
+
+  .photo .bg{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; display:block;
+  }
+  .photo .missing{
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(45deg,#191a1d 0 22px,#131417 22px 44px);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace; font-size:26px; color:#5d5d63;
+    letter-spacing:.1em; text-align:center; padding:60px;
+  }
+  /* scrim: keeps type legible over any photograph */
+  .photo .scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to top, rgba(6,7,9,.94) 0%, rgba(6,7,9,.75) 22%, rgba(6,7,9,.18) 46%, rgba(6,7,9,.05) 62%, rgba(6,7,9,.42) 100%);
+  }
+  .photo .copy{
+    position:absolute; left:var(--M); right:var(--M); bottom:var(--BOT);
+    z-index:4;
+  }
+
+  /* before-inset chip — signals the transformation without diluting the hero */
+  .inset{
+    position:absolute; right:var(--M); bottom:calc(var(--BOT) + 300px);
+    width:238px; z-index:6;
+  }
+  .inset .frame{
+    width:238px; height:178px; overflow:hidden;
+    border:2px solid rgba(242,239,233,.55);
+    box-shadow:0 18px 46px rgba(0,0,0,.6);
+    background:#0f1013;
+  }
+  .inset .frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .inset .tag{
+    margin-top:12px; text-align:right;
+    font-family:'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.2em; color:var(--paper); opacity:.85;
+  }
+
+  .stamp{
+    display:inline-block;
+    font-family:'JetBrains Mono', monospace; font-size:20px;
+    letter-spacing:.2em; text-transform:uppercase;
+    padding:11px 20px; border:1.5px solid var(--accent); color:var(--accent);
+    margin-bottom:28px;
+  }
+
+  /* ---------- MASTER B : CARD ---------- */
+
+  .card{ padding:var(--TOP) var(--M) var(--BOT); display:flex; flex-direction:column; }
+  .card .head{ margin-top:100px; margin-bottom:38px; }
+  .card h2{
+    font-size:60px; line-height:1.05; font-weight:600; letter-spacing:-.026em;
+  }
+  .card h2 em{ font-style:normal; color:var(--accent); }
+  .card .headnum{
+    font-family:'JetBrains Mono', monospace; font-size:20px; letter-spacing:.16em;
+    color:var(--muted); margin-top:14px;
+  }
+
+  /* the prompt block — the screenshot-able signature asset */
+  .promptbox{
+    flex:1; border:1px solid var(--hair); background:#0F1013;
+    padding:34px 34px 34px 32px; overflow:hidden;
+    border-left:3px solid var(--accent);
+  }
+  .promptbox pre{
+    font-family:'JetBrains Mono', monospace;
+    font-size:27px; line-height:1.55; white-space:pre-wrap;
+    color:#DCD8D1; letter-spacing:-.006em;
+  }
+  .promptbox .lbl{ color:var(--accent); font-weight:700; }
+  .promptbox .neg{ color:#9C6B5E; }
+  .promptbox .key{ color:#F2EFE9; font-weight:600; }
+
+  /* anatomy rows */
+  .rows{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .row{
+    display:grid; grid-template-columns:222px 1fr; gap:24px;
+    padding:16px 0; border-top:1px solid var(--hair); align-items:baseline;
+  }
+  .row:last-child{ border-bottom:1px solid var(--hair); }
+  .row .k{
+    font-family:'JetBrains Mono', monospace; font-size:19px; font-weight:700;
+    letter-spacing:.1em; color:var(--accent);
+  }
+  .row .v{ font-size:24px; line-height:1.33; color:#CFCBC4; letter-spacing:-.008em; }
+  .row .v b{ color:var(--paper); font-weight:600; }
+
+  /* three-up lever comparison */
+  .three{ flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center; }
+  .lev{ display:flex; gap:24px; align-items:stretch; height:268px; }
+  .lev .thumb{
+    width:300px; flex:none; overflow:hidden; background:#111216;
+    border:1px solid var(--hair);
+  }
+  .lev .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .lev .thumb .ph{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(45deg,#191a1d 0 16px,#131417 16px 32px);
+    font-family:'JetBrains Mono', monospace; font-size:17px; color:#5d5d63; text-align:center; padding:16px;
+  }
+  .lev .txt{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .lev .txt .n{
+    font-family:'JetBrains Mono', monospace; font-size:19px; letter-spacing:.18em;
+    color:var(--accent); margin-bottom:12px;
+  }
+  .lev .txt .p{
+    font-family:'JetBrains Mono', monospace; font-size:21px; line-height:1.45;
+    color:#CFCBC4;
+  }
+  .lev .txt .p b{ color:var(--paper); background:rgba(212,145,74,.16); font-weight:500; }
+
+  /* spec table */
+  .spec{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .sp{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:26px 0; border-top:1px solid var(--hair);
+    font-family:'JetBrains Mono', monospace;
+  }
+  .sp:last-child{ border-bottom:1px solid var(--hair); }
+  .sp .k{ font-size:22px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; }
+  .sp .v{ font-size:26px; color:var(--paper); font-weight:500; }
+  .sp .v em{ font-style:normal; color:var(--accent); }
+
+  /* CTA */
+  .cta{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cta h2{ font-size:72px; margin-bottom:46px; }
+  .cta .ask{
+    display:flex; gap:20px; align-items:flex-start; padding:24px 0;
+    border-top:1px solid var(--hair);
+  }
+  .cta .ask:last-of-type{ border-bottom:1px solid var(--hair); }
+  .cta .ask .ico{
+    font-family:'JetBrains Mono', monospace; font-size:23px; color:var(--accent);
+    letter-spacing:.1em; width:52px; flex:none; padding-top:4px;
+  }
+  .cta .ask .t{ font-size:29px; line-height:1.34; color:#CFCBC4; }
+  .cta .ask .t b{ color:var(--paper); font-weight:600; }
+  .cta .sig{
+    margin-top:56px; font-family:'JetBrains Mono', monospace; font-size:22px;
+    letter-spacing:.2em; color:var(--muted);
+  }
+  .cta .sig b{ color:var(--accent); font-weight:500; }
+
+  .note{
+    position:absolute; left:var(--M); bottom:calc(var(--BOT) - 74px);
+    font-family:'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.06em; color:var(--muted);
+  }
+
+  @media print{ body{ background:#fff; gap:0; padding:0; } }
+</style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1 — HERO / AFTER ============ -->
+<section class="slide photo" id="s1">
+  <img class="bg" src="assets/after.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+  <div class="missing" style="display:none">assets/after.png</div>
+  <div class="scrim"></div>
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+
+  <div class="inset">
+    <div class="frame">
+      <img src="assets/before.png" alt="" onerror="this.parentElement.innerHTML='<div style=&quot;width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:JetBrains Mono,monospace;font-size:15px;color:#5d5d63&quot;>before.png</div>'">
+    </div>
+    <div class="tag">BEFORE</div>
+  </div>
+
+  <div class="copy">
+    <div class="kicker">Empty → Staged</div>
+    <h1>Stagers charge<br>thousands for this.<br><em>This was one prompt.</em></h1>
+    <div class="tease">The full prompt is on slide 3. →</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 2 — THE BEFORE (second-serve cover) ============ -->
+<section class="slide photo" id="s2">
+  <img class="bg" src="assets/before.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+  <div class="missing" style="display:none">assets/before.png</div>
+  <div class="scrim"></div>
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+
+  <div class="copy">
+    <div class="stamp">The input</div>
+    <h1>Empty.<br>Cold.<br><em>Scrolled past.</em></h1>
+    <div class="tease">Every vacant listing photo looks like this. →</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 3 — THE PROMPT (1/2) ============ -->
+<section class="slide card" id="s3">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+  <div class="head">
+    <div class="kicker">Copy this</div>
+    <h2>The prompt.</h2>
+    <div class="headnum">PART 1 OF 2 — THE ROOM</div>
+  </div>
+  <div class="promptbox">
+<pre><span class="lbl">PRESERVE:</span> this is the exact same
+room. Keep the walls, floor, windows,
+blinds, ceiling, doorway, proportions and
+camera position <span class="key">exactly</span> as the source.
+Do not change the architecture.
+<span class="key">Only add furnishings.</span>
+
+<span class="lbl">STAGE IT AS:</span> a warm minimalist living
+room. Low oatmeal-linen three-seat sofa,
+round travertine coffee table, pale wool
+rug with its front edge <span class="key">under the sofa's
+front legs</span>, slim black arc floor lamp,
+walnut console beneath the window, olive
+tree in a clay pot, two abstract prints
+in thin oak frames.</pre>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 4 — THE PROMPT (2/2) ============ -->
+<section class="slide card" id="s4">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+  <div class="head">
+    <div class="kicker">Copy this</div>
+    <h2>The prompt.</h2>
+    <div class="headnum">PART 2 OF 2 — THE TELL</div>
+  </div>
+  <div class="promptbox">
+<pre><span class="lbl">LIGHT:</span> the furniture must obey the light
+<span class="key">already in the room.</span> Overcast daylight
+enters from the windows on the left wall,
+so every shadow falls to the right, soft
+and long. Dark contact shadows where legs,
+rug edge and console meet the floor.
+Nothing is lit from a direction the room
+does not have.
+
+<span class="lbl">MEDIUM:</span> interiors photography, Architectural
+Digest, 24mm tilt-shift, f/8, verticals
+corrected. Subtle grain.
+
+<span class="neg">NOT: no people, no clutter, no floating
+furniture, no shadow pointing the wrong
+way, no changes to the room itself.</span></pre>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 5 — ANATOMY ============ -->
+<section class="slide card" id="s5">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+  <div class="head">
+    <div class="kicker">Why it works</div>
+    <h2>Staging is a<br><em>lighting problem.</em></h2>
+  </div>
+  <div class="rows">
+    <div class="row"><div class="k">ONLY ADD</div><div class="v"><b>Two words that save the shot.</b> Without them the model repaints your walls and swaps the flooring — and now you're advertising a house that doesn't exist.</div></div>
+    <div class="row"><div class="k">NAME IT ALL</div><div class="v">"Furniture" gives you a generic showroom. A <b>named list</b> of eight specific pieces gives you a room someone lives in.</div></div>
+    <div class="row"><div class="k">LIGHT</div><div class="v"><b>This is the whole episode.</b> Fake staging is spotted because the sofa is lit from a window that isn't there. Say which wall the light comes from and which way shadows fall.</div></div>
+    <div class="row"><div class="k">CONTACT</div><div class="v">Furniture with no contact shadow <b>floats.</b> Ask for ambient occlusion where legs meet floor and the whole frame sits down.</div></div>
+    <div class="row"><div class="k">SCALE</div><div class="v">"Rug under the sofa's front legs" is a real staging rule. A rug floating in open floor reads as <b>wrong scale</b> instantly.</div></div>
+    <div class="row"><div class="k">MEDIUM</div><div class="v">Verticals corrected again — the same tell as Episode 01, and the same fix.</div></div>
+    <div class="row"><div class="k">NOT</div><div class="v">Name the failure out loud: <b>no shadow pointing the wrong way.</b></div></div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 6 — THE ONE LEVER ============ -->
+<section class="slide card" id="s6">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+  <div class="head">
+    <div class="kicker">Transferable</div>
+    <h2>Stage for the buyer.<br><em>Not for your taste.</em></h2>
+  </div>
+  <div class="three">
+    <div class="lev">
+      <div class="thumb"><img src="assets/lever-minimal.png" alt="" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>lever-minimal.png</div>'"></div>
+      <div class="txt">
+        <div class="n">01 — THE YOUNG PROFESSIONAL</div>
+        <div class="p">STAGE IT AS: <b>a warm minimalist living room</b></div>
+      </div>
+    </div>
+    <div class="lev">
+      <div class="thumb"><img src="assets/lever-midcentury.png" alt="" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>lever-midcentury.png</div>'"></div>
+      <div class="txt">
+        <div class="n">02 — THE DESIGN BUYER</div>
+        <div class="p">STAGE IT AS: <b>a mid-century collector's living room</b></div>
+      </div>
+    </div>
+    <div class="lev">
+      <div class="thumb"><img src="assets/lever-family.png" alt="" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>lever-family.png</div>'"></div>
+      <div class="txt">
+        <div class="n">03 — THE FAMILY</div>
+        <div class="p">STAGE IT AS: <b>a soft family living room</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 7 — SPEC + DISCLOSURE ============ -->
+<section class="slide card" id="s7">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+  <div class="head">
+    <div class="kicker">Read this part</div>
+    <h2>Disclose it.<br><em>Every time.</em></h2>
+  </div>
+  <div class="spec">
+    <div class="sp"><span class="k">Model</span><span class="v">Nano Banana Pro</span></div>
+    <div class="sp"><span class="k">Mode</span><span class="v">Image → image</span></div>
+    <div class="sp"><span class="k">Input</span><span class="v">One vacant listing photo</span></div>
+    <div class="sp"><span class="k">Aspect</span><span class="v">3:4 &nbsp;<em>1080 × 1440</em></span></div>
+    <div class="sp"><span class="k">Attempts</span><span class="v">1 per style</span></div>
+    <div class="sp"><span class="k">Room altered</span><span class="v"><em>No — furniture only</em></span></div>
+    <div class="sp"><span class="k">Disclosure</span><span class="v"><em>Required</em></span></div>
+  </div>
+  <div class="note">Virtually staged imagery must be labelled under MLS and NAR rules. Label it, and never alter the room itself.</div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 8 — CTA ============ -->
+<section class="slide card" id="s8">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">02</div>
+  <div class="cta">
+    <div class="kicker">Episode 02 of 12</div>
+    <h2>Every prompt.<br><em>Free. Always.</em></h2>
+    <div class="ask">
+      <div class="ico">SAVE</div>
+      <div class="t">You have a vacant listing coming. <b>Save this now</b> and it's there when you need it.</div>
+    </div>
+    <div class="ask">
+      <div class="ico">SEND</div>
+      <div class="t">Send this to the agent <b>sitting on an empty listing</b> that won't move.</div>
+    </div>
+    <div class="ask">
+      <div class="ico">NEXT</div>
+      <div class="t">Episode 03: <b>SketchUp massing → finished facade.</b> Follow so it lands.</div>
+    </div>
+    <div class="sig">VAPORSWIFT<b>.</b>MEDIA</div>
+  </div>
+</section>
+
+</body>
+</html>
