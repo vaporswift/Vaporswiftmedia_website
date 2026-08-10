@@ -4,19 +4,16 @@ Paste everything between the rules. Keep the prompt in the caption as plain
 text — image text isn't selectable, and a copyable prompt is the single
 biggest save driver in this format.
 
+Instagram truncates around 125 characters, so the hook has to land before the
+"more" cut. Everything after it is for people who already stopped.
+
 ---
 
-Turn a raw SketchUp export into a photoreal twilight shot with one prompt.
+This was a raw SketchUp export ninety seconds ago — no textures, no lighting, nothing — and one prompt turned it into a photograph.
 
-No retouching. No 3D artist. One draft render in, one image out, about ninety seconds.
+Here's how.
 
-The whole thing hinges on a clause almost nobody writes: PRESERVE. Without it the model quietly redesigns the building you were hired to sell — new roofline, new windows, wrong house. With it, you're photographing the design instead of replacing it.
-
-The other two that carry most of the weight:
-
-→ "Verticals perfectly corrected" — this is the actual signature of architectural photography. AI defaults to converging vertical lines, which is why so much of it reads as a phone snap or a render.
-
-→ "Wet driveway from recent rain" — wet ground buys you reflections, reflections are physics, and physics is what your eye reads as real.
+It hinges on a clause almost nobody writes: PRESERVE. Without it the model quietly redesigns the building you were hired to sell — new roofline, new windows, wrong house. With it, you're photographing the design instead of replacing it.
 
 Full prompt, copy it:
 
@@ -33,6 +30,12 @@ ATMOSPHERE: wet driveway from recent rain, reflecting the warm window light. Lan
 MEDIUM: architectural photography, Dwell, ArchDaily. Sensor grain, slight vignette, natural chromatic aberration at the edges.
 
 NOT: no CGI, no plastic surfaces, no perfect symmetry, no cartoon clouds, no 3D render.
+
+Two lines in there are doing most of the work.
+
+→ "Verticals perfectly corrected" — the actual signature of architectural photography. AI defaults to converging vertical lines, which is why so much of it reads as a phone snap or a render.
+
+→ "Wet driveway from recent rain" — wet ground buys you reflections, reflections are physics, and physics is what your eye reads as real.
 
 Swap only the LIGHT line and the same house sells three different ways — twilight sells the architecture, golden hour sells the lifestyle, overcast sells the materials.
 
