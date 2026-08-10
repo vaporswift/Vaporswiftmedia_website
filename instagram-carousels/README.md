@@ -1,92 +1,69 @@
-# Vaporswift — Instagram content kits
+# Vaporswift — Instagram content system
 
-Two tracks, one design system. Every slide is 1080×1440 (3:4) so it fills the
-feed and matches the profile grid with no crop.
+Two tracks, one design system, one build pipeline.
 
-| Track | Subject | Format |
-|---|---|---|
-| **A** | AI prompting for real estate | Carousel |
-| **B** | AI prompting, everything else | Reel (+ optional carousel) |
+| Track | Subject |
+|---|---|
+| **A** | AI prompting for real estate |
+| **B** | AI prompting, everything else |
+
+**Start here:** [`PLAYBOOK.md`](PLAYBOOK.md) is the accumulated craft — prompt
+framework, design system, model gotchas. Read it before building an episode.
+[`POSTING-LOG.md`](POSTING-LOG.md) is the record — what shipped, how it did,
+what we learned. Fill it in as you post.
 
 ---
 
-## POST 1 — Track A, Episode 01: Render → Photo
+## What's built
 
-**Format:** 8-slide carousel, 1080×1440
-**Folder:** `episode-01-render-to-photo/`
+| # | Episode | Format | Folder |
+|---|---|---|---|
+| A01 | Render → photo | 8-slide carousel | `episode-01-render-to-photo/` |
+| A02 | Empty room → staged | 8-slide carousel | `episode-02-empty-to-staged/` |
+| A03 | Drone through the front door | Video + 7 slides | `episode-03-impossible-walkthrough/` |
+| B01 | Clay → photoreal cocktail | Reel | `track-b-01-clay-to-photoreal/` |
+| B02 | Into the watch movement | 8-slide carousel | `track-b-02-into-the-watch/` |
 
-### To produce it
+Five posts — roughly three weeks at two a week.
+
+`brand-preview/` is a harness for testing palettes against a real deck without
+editing it. Use it before changing any token.
+
+## Building an episode
 
 ```bash
-cd episode-01-render-to-photo
+cd <episode-folder>
 npm install            # playwright + chromium, via postinstall (first time only)
-./fetch-assets.sh      # pulls the 5 source images from Higgsfield
-node render.js         # → out/slide-01.png … slide-08.png
+./fetch-assets.sh      # pulls source images (and video) from Higgsfield
+node render.js         # → out/slide-*.png
 ```
 
-Run this on your own machine — the environment these were built in can't reach
-the Higgsfield CDN.
+Episode A03 has one extra step, because its first carousel slide is video:
 
-Fonts (Inter, JetBrains Mono) ship in `fonts/` and load via `@font-face`, so
-nothing needs installing system-wide and the output is identical on any
-machine.
+```bash
+node build-video-slide.js   # → out/slide-01-video.mp4
+```
 
-### Slide map
+Everything must run on a machine that can reach the Higgsfield CDN. Fonts ship
+in each folder, so output is identical anywhere.
 
-| # | Content |
-|---|---|
-| 1 | The twilight result, full bleed + BEFORE inset. Hook |
-| 2 | The raw SketchUp render. Second-serve cover |
-| 3 | Prompt, part 1 — PRESERVE / CAMERA / LIGHT |
-| 4 | Prompt, part 2 — MATERIAL / ATMOSPHERE / MEDIUM / NOT |
-| 5 | Anatomy — the seven slots |
-| 6 | The one lever — three lighting swaps |
-| 7 | Spec receipts |
-| 8 | CTA |
+**Watch for `OVERFLOW` in the render output.** Slides clip with
+`overflow:hidden`, so text that no longer fits is cut silently. `render.js`
+measures for it and reports how many pixels over.
 
-Caption is in `episode-01-render-to-photo/caption.md`. Paste the prompt as plain
-text — image text isn't selectable, and a copyable prompt is the biggest save
-driver in this format.
+## Posting
 
----
+Reel first, carousel 24–48h later. Reels pull roughly 1.36× the reach;
+carousels win saves. The Reel buys attention, the carousel banks it.
 
-## POST 2 — Track B, Episode 01: Clay → Photoreal
+Captions live in each folder's `caption.md`, with the Reel cutdown at the
+bottom. Paste the prompt as plain text — image text isn't selectable, and a
+copyable prompt is the biggest save driver in this format.
 
-**Format:** Reel, 9:16, 10s, 1080p, sound on
-**Folder:** `track-b-01-clay-to-photoreal/`
+Log every post in [`POSTING-LOG.md`](POSTING-LOG.md) the day it goes out, and
+the numbers a week later.
 
-### Status: ready to post
+## Still to build
 
-The video is finished. Download the upscaled 1080p file from Higgsfield and
-post it — nothing to assemble.
-
-Built with Seedance 2.5 `omni_reference`: a grey clay render carries structure,
-a photoreal plate carries material and light, and the prompt assigns each
-reference its job. Full recipe in `RECIPE.md`, caption in `caption.md`.
-
-**Post with sound on.** The native audio (bar tone, ice settle) is generated —
-watch time is the top Reels signal and silent video gives it away.
-
----
-
-## Posting order
-
-Lead with **Post 1** — the real estate carousel is the conversion asset and
-sets the format. Give it 24–48h, then **Post 2** as the Reel; Reels pull
-roughly 1.36× the reach of carousels and will feed profile visits back to the
-carousel.
-
-Track the four numbers that matter: saves ÷ reach, sends ÷ reach, swipe-through
-to the final slide, follows ÷ reach. Hold the format for four weeks before
-changing anything.
-
----
-
-## Reusing the system
-
-`episode-01-render-to-photo/slides.html` is the template for every future
-carousel. Two masters (`.photo`, `.card`) and the tokens in `:root` never
-change — swap the copy and the asset files.
-
-`slides-hosted.html` is the same deck with Higgsfield CDN URLs instead of local
-paths, for tools that fetch images server-side.
+Episodes 04–12 of Track A are listed in `PLAYBOOK.md`. Don't build ahead —
+four weeks of real numbers should decide what comes next.

@@ -11,10 +11,9 @@ get "hf_20260810_051610_2d9dc8b9-98a2-4f55-86c1-080a40d15ef7.png" "alt-start.png
 get "hf_20260810_051614_8c4760b2-d57f-4b24-b7c4-271544097a9c.png" "alt-end.png"
 get "hf_20260810_051750_142b62e5-f893-47a4-84cd-91e8d32a9580.mp4" "reel.mp4"
 
-# The 3:4 reframe used as carousel slide 1. If this URL is not yet filled in,
-# download the reframed clip from the Higgsfield library and save it as
-# assets/reel-3x4.mp4 by hand — build-video-slide.js reads it from there.
-REEL_3X4=""
+# The 3:4 reframe used as carousel slide 1. build-video-slide.js burns the text
+# overlay onto this one; reel.mp4 above is the untouched 9:16 original.
+REEL_3X4="hf_20260810_190257_fd620aba-4ae5-45b8-b11d-11c7b467f400.mp4"
 if [ -n "$REEL_3X4" ]; then
   get "$REEL_3X4" "reel-3x4.mp4"
 else
