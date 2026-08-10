@@ -35,6 +35,9 @@ const { chromium } = loadPlaywright();
 const HERE = __dirname;
 const OUT = path.join(HERE, 'out');
 const W = 1080, H = 1440;
+// Carousel position 1 is the video built by build-video-slide.js, so the
+// stills start at 02 and the filenames match the upload order exactly.
+const START = 2;
 
 (async () => {
   fs.mkdirSync(OUT, { recursive: true });
@@ -56,7 +59,7 @@ const W = 1080, H = 1440;
   for (let i = 0; i < ids.length; i++) {
     const id = ids[i];
     const el = await page.$('#' + id);
-    const file = path.join(OUT, `slide-${String(i + 1).padStart(2, '0')}.png`);
+    const file = path.join(OUT, `slide-${String(i + START).padStart(2, '0')}.png`);
     await el.screenshot({ path: file });
 
     // Hard assertion: Instagram will re-crop anything that is not exactly 3:4.
