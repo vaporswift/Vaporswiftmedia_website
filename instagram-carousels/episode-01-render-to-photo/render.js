@@ -61,8 +61,29 @@ const W = 1080, H = 1440;
 
     // Hard assertion: Instagram will re-crop anything that is not exactly 3:4.
     const { width, height } = await el.boundingBox();
-    const ok = width === W && height === H;
-    console.log(`${ok ? '✓' : '✗'} ${path.basename(file)}  ${width}x${height}`);
+    const sizeOk = width === W && height === H;
+
+    // Overflow assertion. The slide and the prompt box both clip with
+    // overflow:hidden, so text that no longer fits is silently cut rather than
+    // erroring. Font metrics differ between machines (SF Pro vs the bundled
+    // Inter fallback), so this is the check that catches a clipped slide.
+    const over = await page.$eval('#' + id, (slide) => {
+      const bad = [];
+      const check = (node, label) => {
+        if (!node) return;
+        const slack = node.scrollHeight - node.clientHeight;
+        if (slack > 1) bad.push(`${label} +${slack}px`);
+      };
+      check(slide, 'slide');
+      check(slide.querySelector('.promptbox'), 'promptbox');
+      check(slide.querySelector('.rows'), 'rows');
+      check(slide.querySelector('.three'), 'three-up');
+      return bad;
+    });
+
+    const ok = sizeOk && over.length === 0;
+    const note = over.length ? `  OVERFLOW: ${over.join(', ')}` : '';
+    console.log(`${ok ? '✓' : '✗'} ${path.basename(file)}  ${width}x${height}${note}`);
     if (!ok) process.exitCode = 1;
   }
 
