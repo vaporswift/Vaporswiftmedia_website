@@ -34,9 +34,9 @@ Why this beats writing a better camera description: "slow push-in" has a hundred
 
 One more thing. The start frame is the twilight exterior from Episode 01. Nothing new was shot for this. Every still you make is now two assets.
 
-Save this for the next listing you've already photographed.
+Save this for the next place you've already photographed.
 
-Send it to whoever quoted you four figures for a drone day.
+Send it to someone planning a shoot the budget won't quite cover.
 
 Episode 04: daylight → golden hour, same geometry. Follow so it lands.
 

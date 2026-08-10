@@ -32,7 +32,7 @@ Full recipe — all three prompts, the exact settings — is in my profile.
 
 Save this before your next product shoot.
 
-Send it to whoever's still booking a studio day for a hero shot.
+Send it to someone working on a launch.
 
 Episode 02 is the same technique on a moving product. Follow so it lands.
 

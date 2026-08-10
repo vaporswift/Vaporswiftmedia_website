@@ -36,9 +36,9 @@ Worth saying plainly: no watch was photographed. Both frames were generated, the
 
 And pick moves that are expensive or impossible, not merely pretty. Pretty AI video is a commodity now. Impossible isn't.
 
-Save this before your next product shoot.
+Save this — it works on anything you can photograph.
 
-Send it to whoever's booking a studio day for one hero shot.
+Send it to someone planning a product shoot.
 
 Next: one product, three finish packages. Follow so it lands.
 

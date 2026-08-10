@@ -5,7 +5,7 @@ Instagram truncates around 125 characters, so the hook has to land before the
 
 ---
 
-Staging this room physically costs thousands and takes a week to book — this took one pass on a photo the agent already had.
+Staging this room physically costs thousands and takes a week to book — this took one pass on a photo that already existed.
 
 Here's how.
 
@@ -45,9 +45,9 @@ Swap only the STAGE IT AS line and you stage the same room for three different b
 
 One thing that isn't optional: virtually staged photos have to be disclosed under MLS and NAR rules. Label them, and never alter the room itself — furniture only. Do it right and this is a tool. Do it wrong and it's a complaint.
 
-Save this before your next vacant listing.
+Save this before the next empty room you shoot.
 
-Send it to the agent sitting on an empty one that won't move.
+Send it to someone staring at an empty room, wondering how to show it.
 
 Episode 03 is a drone shot that flies through the front door without cutting. Follow so it lands.
 

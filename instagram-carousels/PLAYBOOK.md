@@ -5,6 +5,41 @@ one — most of it was expensive to find out.
 
 ---
 
+## Voice and positioning
+
+This posts to **VaporSwift Media** — a content and production agency (Scottsdale,
+since 2015): video, audio, podcast, content strategy, across health and
+wellness, product, brand, events and real estate.
+
+The account speaks to **anyone who could save time or money with these tools.**
+Not to a job title. An agent, a founder, a marketer, someone doing it
+themselves — if they have the problem, the post is for them.
+
+Rules, in order of how easy they are to break:
+
+- **No adversary.** Never frame anyone as the sucker. Copy like "send this to
+  the agent still paying $400 a render" was in the first draft of every episode
+  and it is wrong twice: it punches at a reader, and it mocks the exact person
+  who might hire VaporSwift.
+- **Don't undercut the service.** The message is *here's what's possible now*,
+  never *don't hire anyone*. Some readers will do it themselves and some will
+  hire us. Both are good outcomes; the copy shouldn't push either.
+- **Assume no job title.** "Your next vacant listing" excludes most of the
+  audience. "The next empty room you photograph" doesn't.
+- **Generous by default.** The whole recipe, free, every time — same ethos as
+  `premiere-caption-kit/` in this repo: *"you don't need to buy any of it. You
+  need it set up once."*
+- **Specific over clever.** The named lever beats the punchline. "Wet ground
+  buys you reflections" earns more saves than any joke.
+- **Cost and time saved is the value** — state it plainly, without a villain.
+  "Physical staging costs thousands and takes a week to book" is fine.
+  "Stagers charge thousands for this" is not.
+
+The CTA test: does it work because it's *relevant* to someone, or because it
+makes someone else look foolish? Only the first kind ships.
+
+---
+
 ## The through-line
 
 **Give the model constraints as images, not adjectives.**

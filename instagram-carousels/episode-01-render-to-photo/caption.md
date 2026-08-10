@@ -39,9 +39,9 @@ Two lines in there are doing most of the work.
 
 Swap only the LIGHT line and the same house sells three different ways — twilight sells the architecture, golden hour sells the lifestyle, overcast sells the materials.
 
-Save this one. You will not remember it tomorrow, and it works on every exterior you own.
+Save this one. You will not remember it tomorrow, and it works on any exterior you've got.
 
-Send it to the agent still paying $400 a render.
+Send it to someone sitting on a folder of renders they never use.
 
 Episode 02 is empty room → fully staged interior. Follow so it lands.
 

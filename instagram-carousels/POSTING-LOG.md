@@ -39,9 +39,11 @@ own median — that's the real benchmark.
 
 Written down before posting so they can't be rationalised afterwards.
 
-1. **Does the audience skew agents or creators?** Decides whether the CTA gets
-   harder (DM me your renderings) or stays educational. Read it from who
-   follows and who replies, not from raw reach.
+1. **What kind of work do people actually ask about?** Read the replies and
+   DMs, not the demographics. Whatever people bring their own problem about is
+   what episode 06 should be, and which VaporSwift service is worth surfacing.
+   This is not about choosing a persona to write for — the account speaks to
+   anyone who could save time or money with these tools.
 2. **Does video-led beat still-led?** A03 leads with video, A01/A02 lead with a
    still. Compare swipe-through — if video-led wins, convert the others.
 3. **Does the 3:4 reframe cost too much?** A03's drone move was shot 9:16 and
