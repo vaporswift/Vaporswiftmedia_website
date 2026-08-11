@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vaporswift — Track C 01 — The 125-Character Hook</title>
+<style>
+  /* ============================================================
+     VAPORSWIFT CAROUSEL SYSTEM
+     Canvas: 1080 x 1440 (3:4) — Instagram native, zero grid crop.
+     Two masters only: .photo and .card
+     ============================================================ */
+
+  /* Fonts ship with the repo (./fonts) so the deck renders identically on any
+     machine without a system font install. Both are SIL Open Font License. */
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/InterVariable.ttf') format('truetype-variations');
+    font-weight:100 900; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Medium.ttf') format('truetype');
+    font-weight:500; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:block;
+  }
+
+  :root{
+    /* Anthropic palette on a forest-cast ground. Two accents: orange carries
+       structure (labels, kickers, rules), green carries emphasis (headline
+       highlights, the key phrases inside a prompt). */
+    --ink:     #0E1311;              /* forest-cast near-black */
+    --card:    #141B17;              /* prompt block / thumb ground */
+    --paper:   #faf9f5;              /* Anthropic light */
+    --accent:  #d97757;              /* Anthropic orange — structure */
+    --accent2: #8FA97A;              /* forest green — emphasis */
+    --muted:   #9AA394;
+    --body:    #CBC9C1;              /* secondary body text */
+    --code:    #D9D7CF;              /* prompt block text */
+    --neg:     #A8756A;              /* the NOT clause */
+    --hair:    rgba(250,249,245,.13);
+
+    --M:   88px;  /* side margin        */
+    --TOP: 84px;  /* top margin         */
+    --BOT: 150px; /* bottom safe zone — carousel dots + UI live here */
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:#0A0E0C;
+    font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      'Helvetica Neue', 'Inter Variable', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; gap:40px; padding:40px;
+  }
+
+  .slide{
+    width:1080px; height:1440px;
+    position:relative; overflow:hidden;
+    background:var(--ink); color:var(--paper);
+    flex:none;
+  }
+
+  /* ---------- shared furniture ---------- */
+
+  .brand{
+    position:absolute; top:var(--TOP); left:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper); opacity:.92; z-index:5;
+  }
+  .brand span{ color:var(--accent); }
+
+  .ep{
+    position:absolute; top:var(--TOP); right:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.18em;
+    color:var(--accent); z-index:5;
+  }
+
+  /* Sits BELOW the content box, not inside it — otherwise it collides with
+     the last line of type on dense card slides. Carousel dots are centred,
+     so the right corner at 70px is clear. */
+  .arrow{
+    position:absolute; right:var(--M); bottom:70px;
+    font-size:44px; line-height:1; color:var(--paper); opacity:.8; z-index:6;
+  }
+  .photo .arrow{ bottom:var(--BOT); }
+
+  .kicker{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:21px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:26px;
+  }
+
+  h1{
+    font-size:78px; line-height:1.03; font-weight:600; letter-spacing:-.028em;
+  }
+  h1 em{ font-style:normal; color:var(--accent2); }
+
+  .tease{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:22px; letter-spacing:.02em; color:var(--paper); opacity:.72; margin-top:30px;
+  }
+
+  /* ---------- MASTER A : PHOTO ---------- */
+
+  .photo .bg{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; display:block;
+  }
+  .photo .missing{
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(45deg,#171F1A 0 22px,#121814 22px 44px);
+    display:flex; align-items:center; justify-content:center;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:26px; color:var(--muted);
+    letter-spacing:.1em; text-align:center; padding:60px;
+  }
+  /* scrim: keeps type legible over any photograph */
+  .photo .scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to top, rgba(7,11,9,.94) 0%, rgba(7,11,9,.75) 22%, rgba(7,11,9,.18) 46%, rgba(7,11,9,.05) 62%, rgba(7,11,9,.42) 100%);
+  }
+  .photo .copy{
+    position:absolute; left:var(--M); right:var(--M); bottom:var(--BOT);
+    z-index:4;
+  }
+
+  /* before-inset chip — signals the transformation without diluting the hero */
+  .inset{
+    position:absolute; right:var(--M); bottom:calc(var(--BOT) + 300px);
+    width:238px; z-index:6;
+  }
+  .inset .frame{
+    width:238px; height:178px; overflow:hidden;
+    border:2px solid rgba(250,249,245,.55);
+    box-shadow:0 18px 46px rgba(0,0,0,.6);
+    background:var(--card);
+  }
+  .inset .frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .inset .tag{
+    margin-top:12px; text-align:right;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.2em; color:var(--paper); opacity:.85;
+  }
+
+  .stamp{
+    display:inline-block;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px;
+    letter-spacing:.2em; text-transform:uppercase;
+    padding:11px 20px; border:1.5px solid var(--accent); color:var(--accent);
+    margin-bottom:28px;
+  }
+
+  /* ---------- MASTER B : CARD ---------- */
+
+  .card{ padding:var(--TOP) var(--M) var(--BOT); display:flex; flex-direction:column; }
+  .card .head{ margin-top:100px; margin-bottom:38px; }
+  .card h2{
+    font-size:60px; line-height:1.05; font-weight:600; letter-spacing:-.026em;
+  }
+  .card h2 em{ font-style:normal; color:var(--accent2); }
+  .card .headnum{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px; letter-spacing:.16em;
+    color:var(--muted); margin-top:14px;
+  }
+
+  /* the prompt block — the screenshot-able signature asset */
+  .promptbox{
+    flex:1; border:1px solid var(--hair); background:var(--card);
+    padding:34px 34px 34px 32px; overflow:hidden;
+    border-left:3px solid var(--accent);
+  }
+  .promptbox pre{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:27px; line-height:1.55; white-space:pre-wrap;
+    color:var(--code); letter-spacing:-.006em;
+  }
+  .promptbox .lbl{ color:var(--accent); font-weight:700; }
+  .promptbox .neg{ color:var(--neg); }
+  .promptbox .key{ color:var(--accent2); font-weight:700; }
+
+  /* anatomy rows */
+  .rows{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .row{
+    display:grid; grid-template-columns:222px 1fr; gap:24px;
+    padding:16px 0; border-top:1px solid var(--hair); align-items:baseline;
+  }
+  .row:last-child{ border-bottom:1px solid var(--hair); }
+  .row .k{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; font-weight:700;
+    letter-spacing:.1em; color:var(--accent);
+  }
+  .row .v{ font-size:24px; line-height:1.33; color:var(--body); letter-spacing:-.008em; }
+  .row .v b{ color:var(--paper); font-weight:600; }
+
+  /* three-up lever comparison */
+  .three{ flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center; }
+  .lev{ display:flex; gap:24px; align-items:stretch; height:268px; }
+  .lev .thumb{
+    width:300px; flex:none; overflow:hidden; background:var(--card);
+    border:1px solid var(--hair);
+  }
+  .lev .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .lev .thumb .ph{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(45deg,#171F1A 0 16px,#121814 16px 32px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px; color:#5d5d63; text-align:center; padding:16px;
+  }
+  .lev .txt{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .lev .txt .n{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; letter-spacing:.18em;
+    color:var(--accent2); margin-bottom:12px;
+  }
+  .lev .txt .p{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:21px; line-height:1.45;
+    color:var(--body);
+  }
+  .lev .txt .p b{ color:var(--paper); background:rgba(143,169,122,.18); font-weight:500; }
+
+  /* spec table */
+  .spec{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .sp{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:26px 0; border-top:1px solid var(--hair);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+  }
+  .sp:last-child{ border-bottom:1px solid var(--hair); }
+  .sp .k{ font-size:22px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; }
+  .sp .v{ font-size:26px; color:var(--paper); font-weight:500; }
+  .sp .v em{ font-style:normal; color:var(--accent); }
+
+  /* CTA */
+  .cta{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cta h2{ font-size:72px; margin-bottom:46px; }
+  .cta .ask{
+    display:flex; gap:20px; align-items:flex-start; padding:24px 0;
+    border-top:1px solid var(--hair);
+  }
+  .cta .ask:last-of-type{ border-bottom:1px solid var(--hair); }
+  .cta .ask .ico{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:23px; color:var(--accent);
+    letter-spacing:.1em; width:52px; flex:none; padding-top:4px;
+  }
+  .cta .ask .t{ font-size:29px; line-height:1.34; color:var(--body); }
+  .cta .ask .t b{ color:var(--paper); font-weight:600; }
+  .cta .sig{
+    margin-top:56px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:22px;
+    letter-spacing:.2em; color:var(--muted);
+  }
+  .cta .sig b{ color:var(--accent); font-weight:500; }
+
+  .note{
+    position:absolute; left:var(--M); bottom:calc(var(--BOT) - 74px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.06em; color:var(--muted);
+  }
+
+  @media print{ body{ background:#fff; gap:0; padding:0; } }
+
+  /* ---------- MASTER C : FRAMES — the two 9:16 inputs, side by side ---------- */
+  .frames{ flex:1; display:flex; gap:32px; align-items:flex-start; justify-content:center; }
+  .fr{ flex:1; display:flex; flex-direction:column; min-width:0; }
+  .fr .shot{
+    width:100%; aspect-ratio:9/16; overflow:hidden;
+    background:var(--card); border:1px solid var(--hair);
+  }
+  .fr .shot img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .fr .shot .ph{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(45deg,#171F1A 0 16px,#121814 16px 32px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:16px; color:var(--muted);
+    text-align:center; padding:14px;
+  }
+  .fr .lab{
+    margin-top:18px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px; font-weight:700;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--accent);
+  }
+  .fr .sub{ margin-top:8px; font-size:21px; line-height:1.35; color:var(--body); }
+
+  /* ---------- pull statement ---------- */
+  .pull{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .pull .q{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:42px; line-height:1.42; font-weight:700;
+    color:var(--accent2); letter-spacing:-.01em;
+    border-left:3px solid var(--accent); padding-left:32px;
+  }
+  .pull .why{ margin-top:46px; font-size:28px; line-height:1.42; color:var(--body); }
+  .pull .why b{ color:var(--paper); font-weight:600; }
+
+
+  /* ---------- .mock — an Instagram caption, cut where Instagram cuts ---------- */
+  .mock{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .mock .box{
+    border:1px solid var(--hair); background:var(--card); padding:32px 30px;
+  }
+  .mock .user{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px; font-weight:700; letter-spacing:.06em;
+    color:var(--paper); margin-bottom:18px;
+  }
+  .mock p{ font-size:26px; line-height:1.44; color:var(--code); letter-spacing:-.006em; }
+  .mock p.dim{ color:var(--muted); opacity:.45; }
+  .mock .cut{ display:flex; align-items:center; gap:16px; margin:14px 0 12px; }
+  .mock .cut .rule{ flex:1; height:0; border-top:2px dashed var(--accent); }
+  .mock .cut .tag{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px; font-weight:700; letter-spacing:.14em;
+    color:var(--accent); text-transform:uppercase; white-space:nowrap;
+  }
+  .mock .verdict{ margin-top:34px; font-size:27px; line-height:1.4; color:var(--body); }
+  .mock .verdict b{ color:var(--paper); font-weight:600; }
+
+  /* ---------- .ba — before / after, one line each ---------- */
+  .ba{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:26px; }
+  .ba .row{ border-left:3px solid; padding:24px 28px; background:var(--card); }
+  .ba .row.before{ border-color:var(--neg); }
+  .ba .row.after{ border-color:var(--accent2); }
+  .ba .lbl{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; font-weight:700; letter-spacing:.18em;
+    text-transform:uppercase; margin-bottom:14px;
+  }
+  .ba .before .lbl{ color:var(--neg); }
+  .ba .after .lbl{ color:var(--accent2); }
+  .ba .txt{ font-size:27px; line-height:1.38; color:var(--code); letter-spacing:-.006em; }
+  .ba .cnt{
+    margin-top:16px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; letter-spacing:.04em;
+    color:var(--muted);
+  }
+  .ba .after .cnt b{ color:var(--accent2); font-weight:700; }
+  .ba .before .cnt b{ color:var(--neg); font-weight:700; }
+
+</style>
+</head>
+<body>
+
+<!-- 02 — THE CUT -->
+<section class="slide card" id="s2">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C01</div>
+  <div class="head">
+    <div class="kicker">Check your own profile</div>
+    <h2>Instagram cuts you<br>off at <em>125.</em></h2>
+  </div>
+  <div class="mock">
+    <div class="box">
+      <div class="user">vaporswiftmedia</div>
+      <p>We've been experimenting with AI for real estate marketing lately and wanted to share something we learned about virtual stag</p>
+      <div class="cut"><span class="rule"></span><span class="tag">&hellip; more</span></div>
+      <p class="dim">ing that surprised us.</p>
+    </div>
+    <div class="verdict">It cuts <b>mid-word.</b> Everything under the line is invisible until someone taps &mdash; and most people don't.</div>
+    <div class="note" style="position:static;margin-top:22px">Roughly 125 characters. It shifts a little by device.</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 03 — THE PROMPT -->
+<section class="slide card" id="s3">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C01</div>
+  <div class="head">
+    <div class="kicker">Copy this into Claude</div>
+    <h2>The fix.<br><em>One prompt.</em></h2>
+  </div>
+  <div class="promptbox">
+<pre>Rewrite my Instagram caption so the hook
+survives truncation.
+
+1. First sentence lands the whole hook in
+   <span class="key">under 125 characters</span>.
+2. It creates a gap — a claim, a number,
+   a contradiction. Not a summary.
+3. Then "Here's how." and straight into
+   the method.
+4. <span class="key">Keep every fact. Change nothing true.</span>
+5. No emoji openers, no "In today's
+   world", no throat-clearing.
+
+Give me three options, each with the
+character count of its first sentence.
+
+CAPTION: [paste yours]</pre>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 04 — WHAT CHANGES -->
+<section class="slide card" id="s4">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C01</div>
+  <div class="head">
+    <div class="kicker">Same post, same facts</div>
+    <h2>Only the first<br><em>line moved.</em></h2>
+  </div>
+  <div class="ba">
+    <div class="row before">
+      <div class="lbl">Before</div>
+      <div class="txt">"We've been experimenting with AI for real estate marketing lately and wanted to share something we learned about virtual staging that surprised us."</div>
+      <div class="cnt">147 characters — <b>cut mid-word</b></div>
+    </div>
+    <div class="row after">
+      <div class="lbl">After</div>
+      <div class="txt">"Staging this room physically costs thousands and takes a week to book — this took one pass on a photo that already existed."</div>
+      <div class="cnt">123 characters — <b>lands whole</b></div>
+    </div>
+  </div>
+  <div class="note">Nothing was invented. The good line was already in paragraph three.</div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 05 — CTA -->
+<section class="slide card" id="s5">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C01</div>
+  <div class="cta">
+    <div class="kicker">Working with Claude — 01</div>
+    <h2>One prompt.<br><em>Every caption.</em></h2>
+    <div class="ask">
+      <div class="ico">SAVE</div>
+      <div class="t">You'll want this the next time you're staring at a caption. <b>Save it now</b> — you won't retype it from memory.</div>
+    </div>
+    <div class="ask">
+      <div class="ico">TRY</div>
+      <div class="t">Run it on a post you already published. <b>The good line is usually already in there.</b></div>
+    </div>
+    <div class="ask">
+      <div class="ico">SEND</div>
+      <div class="t">Send it to someone whose captions <b>deserve to be read.</b></div>
+    </div>
+    <div class="sig">VAPORSWIFT<b>.</b>MEDIA</div>
+  </div>
+</section>
+
+</body>
+</html>

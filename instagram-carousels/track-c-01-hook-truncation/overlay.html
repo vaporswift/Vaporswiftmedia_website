@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vaporswift — Track C 01 — video overlay</title>
+<style>
+  /* Transparent 1080x1440 floating-text plate, composited over the vapor bed.
+     The bed is reused across the whole Track C series — only this text changes,
+     so the opening is recognisable as a Track C post on sight. */
+
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/InterVariable.ttf') format('truetype-variations');
+    font-weight:100 900; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Medium.ttf') format('truetype');
+    font-weight:500; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:block;
+  }
+
+  :root{
+    --paper:   #faf9f5;
+    --accent:  #d97757;
+    --accent2: #8FA97A;
+    --M:   88px;
+    --TOP: 84px;
+    --BOT: 150px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  html,body{ background:transparent; }
+  body{
+    font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      'Helvetica Neue', 'Inter Variable', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .overlay{ width:1080px; height:1440px; position:relative; overflow:hidden; background:transparent; }
+
+  /* Vapor is bright where the light catches it, so the type needs its own
+     ground at top and bottom regardless of what the frame is doing. */
+  .scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to top, rgba(7,11,9,.93) 0%, rgba(7,11,9,.78) 22%,
+                              rgba(7,11,9,.22) 48%, rgba(7,11,9,.00) 64%),
+      linear-gradient(to bottom, rgba(7,11,9,.60) 0%, rgba(7,11,9,.12) 18%,
+                                 rgba(7,11,9,.00) 32%);
+  }
+
+  .brand{
+    position:absolute; top:var(--TOP); left:var(--M);
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+    font-size:20px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper);
+  }
+  .brand span{ color:var(--accent); }
+
+  .ep{
+    position:absolute; top:var(--TOP); right:var(--M);
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+    font-size:20px; font-weight:500; letter-spacing:.18em; color:var(--accent);
+  }
+
+  .copy{ position:absolute; left:var(--M); right:var(--M); bottom:var(--BOT); }
+
+  .kicker{
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+    font-size:22px; font-weight:700; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:26px;
+  }
+
+  h1{
+    font-size:88px; line-height:1.02; font-weight:600; letter-spacing:-.03em;
+    color:var(--paper); text-shadow:0 2px 34px rgba(0,0,0,.6);
+  }
+  h1 em{ font-style:normal; color:var(--accent2); }
+
+  .cta{
+    display:inline-flex; align-items:center; gap:18px;
+    margin-top:42px; padding:20px 30px;
+    border:2px solid var(--accent2); background:rgba(7,11,9,.58);
+    font-family:'JetBrains Mono', ui-monospace, monospace;
+    font-size:26px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--accent2);
+  }
+  .cta .arrow{ font-size:30px; line-height:1; }
+</style>
+</head>
+<body>
+
+<div class="overlay" id="overlay">
+  <div class="scrim"></div>
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C01</div>
+
+  <div class="copy">
+    <div class="kicker">Working with Claude</div>
+    <h1>Your caption's<br>hook dies at<br><em>125 characters.</em></h1>
+    <div class="cta">The fix is on slide 3 <span class="arrow">→</span></div>
+  </div>
+</div>
+
+</body>
+</html>
