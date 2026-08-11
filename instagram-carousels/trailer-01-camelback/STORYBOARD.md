@@ -32,8 +32,9 @@ upscaled after. Fallback ladder: `video_edit` on the master take →
 | Subject headshot | `fd3d79ee-323b-42c8-8cd3-56b928849da9` | Uploaded. **200×200 px — small for an identity lock**; a higher-res original would tighten the face match |
 | House render (clean) | `6aba65bf-58fd-4658-a45a-56ac7f53f3a3` | Watermark cropped (1365×956), verified zero residual, uploaded |
 | House render (original) | `6cc35b1e-066c-4813-b4db-2eef740f2fab` | Keep as backup; do not use as a reference (carries the ARMLS text) |
-| Casting still | `390eda82…` / `6371090c…` | Two candidates awaiting pick |
-| Car still | `76273804…` / `a00d8ac1…` | Two candidates awaiting pick |
+| Casting still | `6371090c-cd11-4d7f-b11d-69ade9a87c9e` | **PICKED** (second candidate) |
+| Car still | `a00d8ac1-785c-4ddb-a1c9-90be018c569c` | **PICKED** (second candidate) |
+| Master pass | job `da16f0ca-2737-481c-aebc-65668f641599` | Submitted — 28s, 3:4, 720p, 182 credits. Prompt saved verbatim in `PROMPT.md` |
 
 **Moderation note:** a generative "remove the watermark text" edit was rejected
 by Higgsfield's filter (watermark-removal pattern — it can't see rights). Don't
