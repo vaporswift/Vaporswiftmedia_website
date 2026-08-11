@@ -91,3 +91,28 @@ invented logos or badges, no morphing between shots — every cut is clean.
   the cut to a physical event, so the ending reads authored, not truncated.
 - **"The SAME man / car / house as the reference"** — three approved stills do
   the casting; the prompt only has to direct.
+
+---
+
+## How it came out (measured, not eyeballed)
+
+The master was analysed frame-by-frame in the Higgsfield sandbox rather than
+judged by watching — the claim this film makes is about camera motion, so it
+was worth measuring.
+
+| Check | Result |
+|---|---|
+| Shots delivered | **6** — cuts at 4.0 / 8.4 / 14.0 / 19.4 / 24.0s |
+| Written beats | 3.5 / 4 / 5.5 / 5 / 5 / 5s — close on every one |
+| Camera, shots 1–5 | **Locked.** Inter-frame motion 1.16–4.01 against a 5.54 clip mean |
+| Camera, shot 6 | **The move.** Motion climbs 17.4 → 27.7 across the push |
+| Final frame | **Pure black** (mean luma 0.0) — the cut landed |
+| Master | 834×1112 @24fps → Topaz → **1080×1440**, 28.06s, AAC stereo |
+
+The motion numbers are the whole design showing up in the data: five shots an
+order of magnitude quieter than the one that moves.
+
+**Reusable check:** sample frames at 8fps, take the mean inter-frame pixel
+difference, flag spikes above ~3× the clip mean as cuts and compare per-segment
+averages against the clip mean. Locked shots sit well below it; a move sits far
+above. It catches camera drift before posting, not after.
