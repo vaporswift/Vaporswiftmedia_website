@@ -181,11 +181,18 @@ posting.
 - **`seedance_2_5` does not appear in `models_explore` search.** Only 1.5 Pro,
   2.0 and 2.0 Mini come back. The model is live — confirm with a `get_cost`
   preflight or `action: get`, never by searching.
-- **Seedance 2.5 has no `start_image` / `end_image`.** It takes
-  `image_references` only, which guides style but cannot pin first and last
-  frame. For frame-pinned camera work, use **2.0**.
+- **Seedance 2.5's capabilities changed under us — re-verify before citing.**
+  When Episode 03 was built, 2.5 exposed `image_references` only; the model
+  card now lists `start_image` / `end_image` plus `video_edit` and
+  `video_extension` modes, and 3:4 natively at 4–30s. Episode 03's "2.5 can't
+  pin frames" claim (slide 7 + caption) is stale — soften before posting.
+  General rule: model cards move; check `models_explore action:get` the same
+  day you make a claim on a slide.
 - **Seedance 2.5 caps at 720p** (up to 30s, native audio). Always
   `upscale_video` before posting.
+- **For one-take multi-shot pieces (trailers), prefer one 2.5 pass over
+  stitching.** Character/car/location consistency across cuts is inherent when
+  every cut comes from one generation. See `trailer-01-camelback/STORYBOARD.md`.
 - **Seedance 2.0**: `start_image` + `end_image`, 4–15s, up to 4K in `mode: std`.
 - **`reframe` is video-only.** For stills use `outpaint_image` — it extends the
   frame rather than re-rolling it, so an approved shot survives.
