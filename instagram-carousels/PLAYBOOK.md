@@ -137,6 +137,45 @@ Frame prep: both frames must match the output aspect or they get cropped.
 
 ---
 
+## Technique 4 — hold the frame (still → motion)
+
+One photo in, the same photo alive. The most accessible technique on the
+account: it needs nothing but a picture that already exists.
+
+It lives or dies on the frame holding. If the animated version drifts —
+recomposes, invents an object, moves the camera — the comparison collapses into
+two different pictures, and *same photo* was the entire claim.
+
+So don't describe motion. Pin the frame, then name the short list permitted to
+move:
+
+```
+HOLD THE FRAME. The camera does not move at all — locked off on a tripod.
+This is a still photograph that has come alive, not a new shot.
+
+ONLY THESE THINGS MOVE:
+[four or five things, no more]
+
+Everything else is completely static.
+
+NOT: no camera movement, no pan, no zoom, no reframing, no new objects.
+```
+
+**Asking for "subtle motion" does not work** — subtlety isn't something a model
+can measure. An explicit permit-list is.
+
+Choose **ambient motion, not narrative**: cloud, water, reflections, foliage,
+steam, light. Soft edges and no focal point. Avoid faces and hands; they pull
+the eye to whatever is most likely to break.
+
+5s is enough — longer and the loop becomes obvious.
+
+`format-still-to-motion/build-comparison.js` freezes the clip's own first frame
+rather than the source still, so drift surfaces in the build instead of after
+posting.
+
+---
+
 ## Model notes (verified, not from docs)
 
 - **`seedance_2_5` does not appear in `models_explore` search.** Only 1.5 Pro,

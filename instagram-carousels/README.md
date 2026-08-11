@@ -26,8 +26,20 @@ what we learned. Fill it in as you post.
 
 Five posts — roughly three weeks at two a week.
 
-`brand-preview/` is a harness for testing palettes against a real deck without
-editing it. Use it before changing any token.
+## Formats
+
+| Folder | What it is |
+|---|---|
+| `format-still-to-motion/` | Photo → the same photo alive. Reusable builder; needs only a still you already have |
+| `brand-preview/` | Palette harness — test tokens against a real deck without editing it |
+
+`format-still-to-motion/` is a tool, not an episode. Point it at any clip:
+
+```bash
+cd format-still-to-motion && npm install
+./fetch-assets.sh && node build-comparison.js
+# or: node build-comparison.js path/to/your-clip.mp4
+```
 
 ## Building an episode
 

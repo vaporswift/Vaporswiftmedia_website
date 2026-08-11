@@ -5,7 +5,7 @@ set -euo pipefail
 CDN="https://d8j0ntlcm91z4.cloudfront.net/user_3Cx6lxAMIv3Bm4poL4fw1eFKLFy"
 cd "$(dirname "$0")"; mkdir -p assets
 
-MOTION=""   # filled in once the sample render completes
+MOTION="hf_20260810_194520_4f0262f3-43ec-4834-8220-c1107f1a1d13.mp4"
 
 if [ -n "$MOTION" ]; then
   echo "  → motion.mp4"
