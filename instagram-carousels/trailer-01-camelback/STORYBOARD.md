@@ -1,187 +1,173 @@
-# Trailer 01 — Camelback
+# Trailer 01 — Paradise Valley
 
-A 28-second luxury property trailer. Scottsdale desert contemporary near
-Camelback Mountain, one character, one car, one unbroken mood. 1080×1440 (3:4),
-hyper-real, measured pace. Promo text is added after generation — the edit
-leaves room for it.
+A 28-second luxury property trailer. Real assets: the client's subject
+(headshot supplied) and a Paradise Valley estate (listing render supplied).
+One car, one man, one unbroken dusk. 1080×1440 (3:4), hyper-real. Promo text
+is added after generation — the edit leaves room for it.
 
----
+## Camera grammar — five locked frames, one move
+
+**The camera never moves until the last shot.** Beats 1–2 are rigid car-mount
+rigs (static relative to the car), beats 3–5 are locked-off tripods, and beat 6
+is the only camera movement in the film — the fast push to his back, cut to
+black.
+
+This is the luxury read: real estate and automotive films are shot on rigs and
+sticks, so the stillness is what makes it feel *produced* rather than
+generated. And a single move spent in a film full of held frames lands with
+force no moving-camera piece can buy.
 
 ## Architecture: one generation, not six
 
-The whole trailer is **a single 30s Seedance 2.5 `omni_reference` pass** with
-multi-shot structure written into the prompt, plus reference stills pinning the
-cast. Not six clips stitched together.
+One **30s Seedance 2.5 `omni_reference` pass**, six shots written into the
+prompt, references pinning the cast. Consistency of man, car and house across
+cuts is inherent — every cut comes from the same generation. 720p ceiling,
+upscaled after. Fallback ladder: `video_edit` on the master take →
+`video_extension` → per-shot regeneration, in that order.
 
-Why this is the right call and not just the easy one:
+## Phase 0 — asset intake (before anything generates)
 
-- **Consistency is inherent.** The same man, the same car, the same house in
-  every cut, because every cut comes out of one generation. Shot-stitching
-  makes consistency a per-shot battle; one pass makes it free.
-- 2.5's flagship capability is exactly this — logically connected shots with
-  setup, development and resolution inside one take.
-- Native 3:4 at 4–30s, native audio. Verified against the account, not docs.
+| Asset | Source | Prep |
+|---|---|---|
+| Subject | Supplied headshot | Upload via Higgsfield widget → identity reference |
+| House | Supplied listing render | **Crop the "2026 ARMLS" watermark first** — text in a reference leaks into generations. Then upload |
+| Car | Generated (no asset supplied) | Phase 1 |
 
-The cost of this choice: **720p ceiling** (upscale after — see Finishing), and
-less per-shot control. The fallback if any beat misbehaves is `video_edit` /
-`video_extension` on the master take before resorting to per-shot regeneration.
+The headshot is a chest-up shot in a henley; the film needs him full-length in
+a suit. So Phase 1 makes a **casting still** — identity from the headshot,
+wardrobe from the brief — which gets approved before it drives the video.
 
-## Phase 1 — the cast sheet (stills before any video)
+## Phase 1 — the cast sheet
 
-Four reference stills, `nano_banana_pro`, 3:4, 2k. These are the contract the
-video has to honour — approve them **before** spending on the 30s pass.
+### R1 — Casting still (from the supplied headshot)
 
-### R1 — The character
+`nano_banana_pro`, headshot as identity reference:
 
-Run through the `character-sheet` workflow at generation time. Brief:
-
-> Man in his early 40s, relaxed confidence, olive skin, short dark hair with
-> grey at the temples, two-day stubble. Unstructured sand-coloured linen blazer
-> over a white tee, dark tapered trousers, suede loafers, no socks. Vintage
-> steel watch. Unretouched realism — visible pores, sun creases at the eyes.
-> Never looks at camera.
+> Full-length editorial portrait of THIS MAN — exact same face, skin tone and
+> head shape as the reference. Early-to-mid 30s, athletic build, warm confident
+> presence. Sharply tailored midnight-navy suit, crisp white shirt open at the
+> collar, no tie, polished dark-brown loafers, steel watch. Standing relaxed on
+> stone paving at dusk, warm architectural lighting. Unretouched skin texture.
+> Not looking at camera.
 
 ### R2 — The car
 
-> Porsche 911 (992 generation) in GT Silver Metallic, unbadged trim, staged
-> three-quarter front on warm asphalt at golden hour. Slight desert dust film
-> on the lower panels — driven, not showroom. Photoreal automotive editorial,
-> 85mm, low sun flaring across the fender line.
+> Porsche 911 (992 generation), GT Silver Metallic, unbadged trim,
+> three-quarter front on herringbone pavers at dusk. Fine desert dust film on
+> the lower panels — driven, not showroom. Automotive editorial, 85mm, warm
+> path-light reflections along the fender line.
 
-Dust on the paint is the realism lever — a spotless car reads CGI.
+Dust is the realism lever; a spotless car reads CGI. Unbadged because misdrawn
+logos are the fastest hyper-realism killer — the silhouette says 911.
 
-### R3 — The house
+### R3 — The house (supplied)
 
-> Desert contemporary single-story near Camelback Mountain: rammed-earth and
-> board-formed concrete walls, deep bronze-framed glazing, flat overhanging
-> roof planes, a floating walkway over decomposed granite to a monumental
-> pivot front door in blackened steel. Saguaro and golden barrel cactus,
-> mature palo verde. Camelback's red sandstone silhouette behind, dusk sky.
-> Warm interior light already on. 24mm tilt-shift, verticals corrected.
-
-*(Option: reuse the Episode 01 twilight house for account continuity — but its
-architecture isn't desert-specific, and "near Camelback" is the brief. New
-build recommended.)*
+The listing render, watermark cropped. For the prompt's own vocabulary: white
+stucco with stacked-stone entry masses, dark standing-seam metal hip roofs,
+black steel-framed glazing, tall stone chimney, herringbone-paved circular
+motor court with low flowering borders and path lights, manicured lawn,
+saguaros along the side wall, interior lights warm at dusk.
 
 ### R4 — The street
 
-> Quiet Paradise Valley street at golden hour, long shadows across warm
-> asphalt, low ranch walls, palo verde and saguaro, Camelback rising at the
-> end of the road. Heat shimmer at the far vanishing point. No cars, no
-> people.
+> Quiet Paradise Valley street at last light, long shadows over warm asphalt,
+> low ranch walls, mature palo verde, Camelback Mountain's red silhouette at
+> the end of the road. No cars, no people.
 
-## Phase 2 — the beat map (~28s)
+## Phase 2 — beat map (~28s)
 
-Measured, not fast. Six beats, average ~4.7s — long for social, correct for
-luxury.
-
-| # | Time | Shot | Content | Sound |
+| # | Time | Rig | Content | Sound |
 |---|---|---|---|---|
-| 1 | 0:00–0:03.5 | ECU, low | Rear wheel rolling slowly over warm asphalt, low sun flaring through the spokes, heat shimmer | Tire on asphalt, low engine note |
-| 2 | 0:03.5–0:07.5 | ECU, interior | Hand on the wheel, watch catching stripes of passing light, unhurried | Muted cabin, indicator tick |
-| 3 | 0:07.5–0:13 | **Side profile, ~15ft, tracking** | Camera travels parallel at car-door height, the 911 gliding past low walls and palo verde, Camelback behind | Engine swell, wind |
-| 4 | 0:13–0:18 | Wide, static | Car turns into the driveway, slows, settles to a stop. Dusk deepening, interior lights of the house warm | Gravel crunch, engine dies |
-| 5 | 0:18–0:23 | Medium, static | He steps out without hurry, door closes with a soft thunk, walks the floating path | Door thunk, footsteps on stone, crickets |
-| 6 | 0:23–0:28 | **Behind him, accelerating** | Camera rushes toward his back as he crosses the threshold — and cuts to black at the moment of contact | Footsteps swallowed by interior; hard silence at the cut |
+| 1 | 0:00–0:03.5 | **Car mount**, low on the fender | Rear wheel rolling over warm asphalt, last sun flaring through the spokes, road sliding beneath a rigid frame | Tire on asphalt, low flat-six note |
+| 2 | 0:03.5–0:07.5 | **Car mount**, cabin | Suit cuff and watch on the wheel, stripes of dusk light crossing the navy sleeve. Unhurried | Muted cabin, indicator tick |
+| 3 | 0:07.5–0:13 | **Tripod**, street-side, locked | Frame holds empty a beat — the 911 enters left, glides through profile ~15ft away, exits right. Camelback behind | Engine swell past, then fading |
+| 4 | 0:13–0:18 | **Tripod**, motor court, locked wide | Car turns in over the herringbone pavers, slows, settles. The house glows behind it | Tires on pavers, engine dies |
+| 5 | 0:18–0:23 | **Tripod**, locked medium | He steps out in the fitted suit, closes the door with a soft thunk, walks between the path lights toward the stone-and-glass entry | Door thunk, footsteps, crickets |
+| 6 | 0:23–0:28 | **The only move** | From behind him at the threshold: the camera accelerates hard at his back as he steps through the front door — CUT TO BLACK at contact | Footsteps swallowed; hard silence |
 
-Beat 6 is the Episode 03 lesson applied in reverse: there the phrase was
-*"never pausing at the threshold"* to force continuity — here the cut **is**
-the threshold, so the prompt says the black happens *at contact with his back*,
-not after entering. That's what makes the ending feel authored.
-
-## The master prompt (draft — to run in Phase 2)
+## Master prompt (draft)
 
 ```
 A 28-second luxury property trailer in six connected shots, one continuous
-mood. Golden hour deepening into dusk, Scottsdale desert, hyper-realistic.
-The SAME man, the SAME silver Porsche 911, and the SAME house as the
-reference images, in every shot.
+dusk. Paradise Valley, Arizona, hyper-realistic. The SAME man (reference),
+the SAME silver Porsche 911, and the SAME house (reference) in every shot.
 
-SHOT 1 (3.5s) — extreme close-up, low to the road: the rear wheel of the
-silver 911 rolling slowly over warm asphalt, low sun flaring through the
-spokes, heat shimmer rising.
+THE CAMERA NEVER MOVES IN SHOTS 1–5. Shots 1–2 are rigid car-mounted rig
+shots, locked to the car body. Shots 3–5 are locked-off tripod shots — the
+frame is completely still and the subject moves through it. Shot 6 is the
+only camera movement in the film.
 
-SHOT 2 (4s) — extreme close-up inside the cabin: his hand relaxed on the
-wheel, vintage steel watch catching stripes of passing golden light.
+SHOT 1 (3.5s) — car-mounted rig, low by the rear fender: the wheel rolling
+over warm asphalt, last sunlight flaring through the spokes, the road
+sliding beneath a perfectly rigid frame.
+
+SHOT 2 (4s) — car-mounted rig inside the cabin: his hand on the wheel,
+navy suit cuff and steel watch catching stripes of passing dusk light.
 Unhurried.
 
-SHOT 3 (5.5s) — exterior side profile, camera fifteen feet away at
-door-panel height, tracking parallel: the 911 glides past low ranch walls
-and palo verde trees, Camelback Mountain red in the background.
+SHOT 3 (5.5s) — locked-off tripod at the roadside: the frame holds still
+and empty for a moment, then the silver 911 enters frame left and glides
+through in full side profile about fifteen feet away, Camelback Mountain
+red behind, and exits frame right. The camera does not follow it.
 
-SHOT 4 (5s) — wide and static: the car turns into the driveway of the
-desert contemporary house, slows, settles to a stop. Dusk. The interior
-lights of the house glow warm through bronze-framed glass.
+SHOT 4 (5s) — locked-off tripod, wide on the motor court: the car turns in
+over herringbone pavers, slows, and settles to a stop. White stucco and
+stacked stone, dark metal roofs, warm interior light through black-framed
+glass, path lights on.
 
-SHOT 5 (5s) — medium, static: he steps out quietly, closes the door with a
-soft thunk, and walks the floating stone path toward the monumental pivot
-door. No hurry.
+SHOT 5 (5s) — locked-off tripod, medium: he steps out in the tailored navy
+suit, closes the door with a soft thunk, and walks without hurry between
+the path lights toward the stone-and-glass front entry.
 
-SHOT 6 (5s) — from behind him at the doorway: the camera accelerates
+SHOT 6 (5s) — from behind him at the threshold: the camera accelerates
 quickly toward his back as he steps through the open front door — CUT TO
-BLACK exactly at the moment the camera reaches him. The black holds.
+BLACK exactly at the moment the camera reaches his back. The black holds.
 
-LIGHT: one continuous golden-hour-into-dusk progression across all six
-shots. Warm key sinking lower each shot; the house interior 2700K.
+LIGHT: one continuous dusk across all shots, deepening slightly; house
+interior warm 2700K; path lights and landscape lighting on.
 
-MEDIUM: anamorphic 35mm, shallow focus in close-ups, cinematic grain,
-natural lens flare, luxury automotive and architectural commercial language.
+MEDIUM: anamorphic 35mm, cinematic grain, natural flare, luxury automotive
+and architectural commercial language.
 
-SOUND: low engine note, tire on asphalt, gravel, one soft door thunk,
-footsteps on stone, evening crickets. No music, no voices.
+SOUND: low flat-six engine, tires on pavers, one soft door thunk, footsteps
+on stone, evening crickets. No music, no voices.
 
-NOT: no people other than the driver, no other cars, no text, no logos
-invented on screen, no camera shake, no fast cutting, no morphing between
-shots — each cut is clean.
+NOT: no camera drift or handheld shake in shots 1–5, no pans, no zooms
+before shot 6, no other people, no other cars, no on-screen text, no
+invented logos or badges, no morphing between shots — every cut is clean.
 ```
-
-References attached: R1 (character), R2 (car), R3 (house), R4 (street) as
-`image_references`.
 
 ## Finishing
 
-1. **Upscale** — 2.5 caps at 720p; Topaz to 1080p → 1080×1440. Non-optional.
-2. **Extend the black** — don't buy end-card time from the generation. The cut
-   to black is the last frame; hold it with ffmpeg for as long as the promo
-   text needs (3–4s), at zero cost.
-3. **Text** — added after generation. The composite pipeline from
-   `episode-03-impossible-walkthrough/build-video-slide.js` works unchanged:
-   transparent 1080×1440 plate from the brand tokens, ffmpeg overlay. Beats 1–2
-   hold their upper third clear and the black tail is fully yours; keep type
-   out of the bottom 150px per the safe-zone rule.
+1. Topaz upscale past the 720p cap → 1080×1440.
+2. ffmpeg-extend the black tail 3–4s for the promo text — never buy end-card
+   time from the generation.
+3. Text composited from the brand tokens (`build-video-slide.js` pipeline works
+   unchanged). Bottom 150px stays clear.
 
 ## Budget
 
-| Item | Est. credits |
-|---|---|
-| 4 reference stills (+1 retry each) | ~30 |
-| 30s master pass @ 720p | ~195 |
-| One full retake in reserve | ~195 |
-| Topaz upscale | ~20 |
-| **Plan total** | **~440** |
-
-Preflight the master with `get_cost` before submitting — the 195 figure is
-extrapolated from a 32.5-credit 5s preflight.
+~440 credits total: stills ~30, master pass ~195, one retake in reserve ~195,
+upscale ~20. Preflight the master with `get_cost` before submitting.
 
 ## Risks
 
-- **Six shots in one pass is the model's advertised edge, not a guarantee.**
-  If it merges beats or drops one, first try `video_edit` on the master take;
-  regenerate per-shot only if editing fails. Beats 3→4→5 (car → house → man)
-  carry the most continuity load.
-- **The Porsche.** The model will approximate badging, and misdrawn logos are
-  the fastest hyper-realism killer — hence "unbadged trim" in R2 and "no logos
-  invented on screen" in the master. Silhouette says 911 without a crest.
-  (Also the safer commercial choice for a promo.)
-- **Faces in motion.** He never addresses camera and beat 6 is his back —
-  the design keeps the face small or absent everywhere except beat 5. That's
-  deliberate; don't add a close-up of his face when tempted.
-- **Watch beat 6.** "Cut to black at contact" is the most fragile instruction;
-  if the model eases through the door instead, `video_edit` the tail.
+- **Static frames are their own test** — video models like to drift. The NOT
+  block bans it explicitly; if shots 1–5 breathe, that's the first `video_edit`
+  target.
+- **Shot 3's empty-frame beat** (car enters a held frame) is the most
+  distinctive and most fragile instruction. If the model tracks the car
+  instead, retake before editing — it's the shot that sells the grammar.
+- **Beat 6's cut at contact** — if the model eases through the door, edit the
+  tail.
+- **The supplied render is a listing image (ARMLS).** Crop the watermark before
+  reference use, and confirm rights to use the property imagery in a promo.
 
-## Assumptions to confirm before Phase 1
+## Confirmed / outstanding
 
-1. Character: man, early 40s, linen-casual (above). Say the word to recast.
-2. Car: 992-era 911, GT Silver, unbadged. Colour is one word to change.
-3. House: new desert contemporary, not the Episode 01 house.
-4. Dusk arc (golden hour → twilight), matching the account's aesthetic.
+- ✅ Subject: supplied headshot. Suit: fitted navy assumed — say the word for
+  charcoal/black.
+- ✅ House: supplied Paradise Valley render.
+- ✅ Camera: locked until the final move.
+- ⬜ Car: unbadged GT Silver 992 still assumed — one word to change colour.
+- ⬜ Uploads: headshot + cropped render into Higgsfield (widget) before Phase 1.
