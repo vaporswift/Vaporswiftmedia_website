@@ -27,11 +27,20 @@ upscaled after. Fallback ladder: `video_edit` on the master take →
 
 ## Phase 0 — asset intake (before anything generates)
 
-| Asset | Source | Prep |
+| Asset | Media/job ID | Status |
 |---|---|---|
-| Subject | Supplied headshot | Upload via Higgsfield widget → identity reference |
-| House | Supplied listing render | **Crop the "2026 ARMLS" watermark first** — text in a reference leaks into generations. Then upload |
-| Car | Generated (no asset supplied) | Phase 1 |
+| Subject headshot | `fd3d79ee-323b-42c8-8cd3-56b928849da9` | Uploaded. **200×200 px — small for an identity lock**; a higher-res original would tighten the face match |
+| House render (clean) | `6aba65bf-58fd-4658-a45a-56ac7f53f3a3` | Watermark cropped (1365×956), verified zero residual, uploaded |
+| House render (original) | `6cc35b1e-066c-4813-b4db-2eef740f2fab` | Keep as backup; do not use as a reference (carries the ARMLS text) |
+| Casting still | `390eda82…` / `6371090c…` | Two candidates awaiting pick |
+| Car still | `76273804…` / `a00d8ac1…` | Two candidates awaiting pick |
+
+**Moderation note:** a generative "remove the watermark text" edit was rejected
+by Higgsfield's filter (watermark-removal pattern — it can't see rights). Don't
+re-word around it; the deterministic crop in the sandbox is the clean path:
+locate the text band programmatically, crop above it, verify zero residual
+white pixels, re-upload. Also verified: **the sandbox can reach both CDNs this
+environment can't** — it is the read/verify path for everything visual.
 
 The headshot is a chest-up shot in a henley; the film needs him full-length in
 a suit. So Phase 1 makes a **casting still** — identity from the headshot,
