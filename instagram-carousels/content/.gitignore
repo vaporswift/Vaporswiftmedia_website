@@ -1,0 +1,3 @@
+# manifest.json is generated, but it IS the interface the site builds against
+# — it ships. Regenerate with `node content/build-content.js`.
+!manifest.json

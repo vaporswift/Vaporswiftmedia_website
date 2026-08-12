@@ -7,7 +7,7 @@ Instagram truncates around 125 characters, so the hook has to land before the
 
 ---
 
-The camera goes through the sapphire crystal and keeps travelling until it's sitting among the gears — one unbroken shot, and I never described the move.
+The camera travels through the sapphire crystal and ends up among the gears. One shot, and I never described the move.
 
 Here's how.
 

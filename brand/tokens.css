@@ -1,0 +1,68 @@
+/* ============================================================
+   VAPORSWIFT MEDIA — house brand tokens
+   ============================================================
+
+   OWNER: the site session. Anything in this file is theirs to set.
+   CONSUMER: instagram-carousels/ reads it and re-renders to match.
+
+   This is the single place VaporSwift's colours and type are defined.
+   Change a value here and the next `node render.js` in any episode folder
+   picks it up — that's the whole point of the file. Nothing downstream
+   should hardcode a hex value that also appears here.
+
+   ------------------------------------------------------------
+   STATUS: PROVISIONAL.
+
+   The values below are what the carousels shipped with, kept here so
+   nothing breaks while the site revamp is in progress. They are NOT a
+   brand decision — several of them are deliberately close to Anthropic's
+   palette, which is exactly what the house look should move away from.
+   See brand/skins/anthropic-topic.css for where that aesthetic belongs.
+
+   To adopt the real palette: overwrite the values, leave the names alone.
+   ------------------------------------------------------------ */
+
+:root{
+  /* --- grounds --- */
+  --vs-ink:     #0E1311;   /* page / slide background            */
+  --vs-surface: #141B17;   /* raised block: prompt box, card      */
+  --vs-well:    #1B2320;   /* recessed block inside a surface     */
+
+  /* --- text --- */
+  --vs-paper:   #faf9f5;   /* primary text on dark                */
+  --vs-body:    #CBC9C1;   /* secondary body copy                 */
+  --vs-code:    #D9D7CF;   /* monospace / prompt text             */
+  --vs-muted:   #9AA394;   /* captions, notes, de-emphasis        */
+
+  /* --- accents ---
+     Two, with fixed jobs. Accent 1 carries STRUCTURE: labels, kickers,
+     rules, numbered pins. Accent 2 carries EMPHASIS: headline highlights,
+     the key phrase inside a prompt. Keeping the jobs separate is what
+     makes the system read as a system rather than as decoration. */
+  --vs-accent:  #d97757;   /* structure — PROVISIONAL, too close to Anthropic */
+  --vs-accent2: #8FA97A;   /* emphasis  — PROVISIONAL                          */
+  --vs-negative:#A8756A;   /* the "before", the NOT clause, the wrong answer   */
+
+  /* --- lines --- */
+  --vs-hair:    rgba(250,249,245,.13);
+
+  /* --- type ---
+     Both families are vendored per episode folder so a deck renders
+     identically on any machine. If the site adopts different faces, they
+     need vendoring the same way — see instagram-carousels/*/fonts/. */
+  --vs-font-sans: -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+                  'SF Pro Text', 'Helvetica Neue', 'Inter Variable', Inter,
+                  system-ui, sans-serif;
+  --vs-font-mono: ui-monospace, 'SF Mono', Menlo, Monaco,
+                  'JetBrains Mono', monospace;
+
+  /* --- carousel canvas geometry ---
+     1080x1440 is Instagram's 3:4, which is uncropped in both the feed and
+     the profile grid. The bottom safe zone is where carousel dots and UI
+     sit; nothing legible goes below it. Site layout does not use these. */
+  --vs-canvas-w: 1080px;
+  --vs-canvas-h: 1440px;
+  --vs-margin:   88px;
+  --vs-top:      84px;
+  --vs-bottom:   150px;
+}

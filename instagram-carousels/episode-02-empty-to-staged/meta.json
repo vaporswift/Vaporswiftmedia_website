@@ -1,0 +1,21 @@
+{
+  "code": "A02",
+  "track": "A",
+  "trackName": "AI prompting for real estate",
+  "shortTitle": "Empty room → staged",
+  "title": "How do you virtually stage a room with AI so it doesn't look fake?",
+  "description": "Virtual staging gets spotted because of lighting, not furniture. Tell the model where the light already is, then nail the furniture to the floor with contact shadows.",
+  "format": "carousel",
+  "faq": [
+    {
+      "q": "Why does virtual staging look fake?",
+      "a": "Almost always lighting, not furniture. The sofa is lit from a window the room doesn't have, so shadows fall the wrong way. Your eye catches the contradiction before your brain names it, and the whole photo reads as a lie."
+    },
+    {
+      "q": "What single line most improves an AI staging prompt?",
+      "a": "A contact-shadow instruction — 'dark contact shadows where legs, rug edge and console meet the floor.' Furniture rendered without contact shadows floats above the floor, which is the difference between a room and a collage."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}

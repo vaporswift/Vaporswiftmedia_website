@@ -1,0 +1,24 @@
+{
+  "code": "B01",
+  "track": "B",
+  "trackName": "AI prompting, everything else",
+  "shortTitle": "Clay model → photoreal",
+  "title": "How do you turn a grey clay render into a photorealistic product video?",
+  "description": "Hand the model two references with two different jobs: one carries structure only, the other carries look only. Then say which reference owns which job.",
+  "format": "reel",
+  "alt": [
+    "Vaporswift Reel — a grey clay whiskey glass becoming a photoreal cut-crystal glass with amber liquid and condensation"
+  ],
+  "faq": [
+    {
+      "q": "How do you use two reference images in an AI video prompt?",
+      "a": "Assign each one a job and say so explicitly. Reference 1 carries structure only — camera angle, composition, object placement and scale. Reference 2 carries look only — material, colour, lighting direction. The model needs to be told which reference owns which, or it averages them."
+    },
+    {
+      "q": "Why does my clay render stay grey in the output?",
+      "a": "Because feeding a clay image as a reference makes the model want to keep some of it. You have to state that the output contains none: 'no clay or grey untextured surfaces in the output.'"
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}

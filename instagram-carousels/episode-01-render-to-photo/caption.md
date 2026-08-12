@@ -9,7 +9,7 @@ Instagram truncates around 125 characters, so the hook has to land before the
 
 ---
 
-This was a raw SketchUp export ninety seconds ago — no textures, no lighting, nothing — and one prompt turned it into a photograph.
+This was a raw SketchUp export ninety seconds ago. One prompt turned it into a photograph.
 
 Here's how.
 

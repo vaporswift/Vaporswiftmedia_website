@@ -1,0 +1,21 @@
+{
+  "code": "A03",
+  "track": "A",
+  "trackName": "AI prompting for real estate",
+  "shortTitle": "Drone through the front door",
+  "title": "How do you make an AI drone video fly through a front door in one shot?",
+  "description": "Give the model two pictures instead of a paragraph. With start_image and end_image set, composition is locked at both ends and the prompt only has to describe motion.",
+  "format": "video-carousel",
+  "faq": [
+    {
+      "q": "How do you control camera movement in an AI video?",
+      "a": "Stop describing the camera and pin the endpoints. Setting start_image and end_image means the model is no longer inventing a shot — it is solving for the path between two frames you already chose, so the prompt only has to describe motion and light."
+    },
+    {
+      "q": "Why do AI video prompts about camera moves usually fail?",
+      "a": "Because a written camera move has to survive the model's interpretation of composition at the same time. Locking both frames removes composition from the problem entirely."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}

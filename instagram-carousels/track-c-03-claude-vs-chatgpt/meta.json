@@ -1,0 +1,21 @@
+{
+  "code": "C03",
+  "track": "C",
+  "trackName": "Working with Claude",
+  "shortTitle": "Claude vs ChatGPT",
+  "title": "Claude or ChatGPT — how do you decide which one to use?",
+  "description": "Every comparison expires in about a month. Here is a twenty-minute test you run on your own work instead, plus the four tells worth grading.",
+  "format": "video-carousel",
+  "faq": [
+    {
+      "q": "Is Claude or ChatGPT better?",
+      "a": "The honest answer is that it depends on your work, and any ranking has a shelf life of weeks because both ship new models constantly. Run three prompts through both — your real work, a push-back reply, and a question about your own uploaded file — and grade the answers yourself. 'Both, for different things' is a legitimate result."
+    },
+    {
+      "q": "What should you look for when comparing two AI assistants?",
+      "a": "Four tells. Did it do the whole instruction or the easy half; did it tell you what it changed; did it invent a fact you never gave it; and did it fold when you pushed back. The last one matters most — 'that's not right' should get a question back, not an instant apology and a worse answer."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}
