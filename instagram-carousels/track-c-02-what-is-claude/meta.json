@@ -1,0 +1,21 @@
+{
+  "code": "C02",
+  "track": "C",
+  "trackName": "Working with Claude",
+  "shortTitle": "What is Claude",
+  "title": "What is Claude, and what are Projects and Artifacts?",
+  "description": "Claude has four parts and most people only ever use one. A plain map of the window: Projects, the chat, the input, and Artifacts.",
+  "format": "video-carousel",
+  "faq": [
+    {
+      "q": "What is a Claude Project?",
+      "a": "A folder that remembers. You load it once with knowledge files — the documents it should always have read — plus standing instructions on how to behave. Every chat started inside that project already knows all of it, so there is no re-briefing and no re-uploading."
+    },
+    {
+      "q": "What is a Claude Artifact?",
+      "a": "Output that is a document rather than a message. When the result is a real thing — a doc, a page, a table — it opens in a panel beside the chat and updates in place as you ask for changes, keeping every version so you can go back."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}

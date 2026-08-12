@@ -1,0 +1,21 @@
+{
+  "code": "C01",
+  "track": "C",
+  "trackName": "Working with Claude",
+  "shortTitle": "The 125-character hook",
+  "title": "Where does Instagram cut off your caption, and how do you fix it?",
+  "description": "Instagram truncates a caption around 125 characters and it cuts mid-word. One prompt moves the sentence that was already in your draft to the front.",
+  "format": "video-carousel",
+  "faq": [
+    {
+      "q": "How many characters of an Instagram caption show before 'more'?",
+      "a": "Roughly 125, and it varies slightly by device and line length. It does not stop at a word boundary — it cuts mid-word, so a hook that runs long can be split in the middle of a term."
+    },
+    {
+      "q": "How do you rewrite a caption so the hook survives truncation?",
+      "a": "Ask for the whole hook in the first sentence under 125 characters, creating a gap rather than summarising, and add a rule pinning every fact. Without that rule you get a punchier rewrite that has quietly stopped being true."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}

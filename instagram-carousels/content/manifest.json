@@ -1,0 +1,483 @@
+{
+  "$schema": "./manifest.schema.md",
+  "version": 1,
+  "count": 9,
+  "tracks": {
+    "A": "AI prompting for real estate",
+    "B": "AI prompting, everything else",
+    "C": "Working with Claude",
+    "T": "Films"
+  },
+  "episodes": [
+    {
+      "slug": "episode-01-render-to-photo",
+      "code": "A01",
+      "track": "A",
+      "trackName": "AI prompting for real estate",
+      "title": "How do you turn a SketchUp render into a photorealistic image?",
+      "shortTitle": "Render → photograph",
+      "description": "One prompt turns a raw, untextured SketchUp export into a twilight photograph — without the model redesigning the building. The clause that makes it work is PRESERVE.",
+      "format": "carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "This was a raw SketchUp export ninety seconds ago. One prompt turned it into a photograph.",
+      "hookChars": 90,
+      "body": "This was a raw SketchUp export ninety seconds ago. One prompt turned it into a photograph.\n\nHere's how.\n\nIt hinges on a clause almost nobody writes: PRESERVE. Without it the model quietly redesigns the building you were hired to sell — new roofline, new windows, wrong house. With it, you're photographing the design instead of replacing it.\n\nFull prompt, copy it:\n\nPRESERVE: photograph this exact house. Keep the geometry, proportions, roofline, window placement and camera position exactly as the source image. Do not redesign the building.\n\nCAMERA: Sony A7R V, 24mm tilt-shift, f/8, tripod at 1.6m, 4-second exposure. Verticals perfectly corrected, no lens distortion.\n\nLIGHT: twilight, 15 minutes after sunset. Deep indigo sky, thin orange band at the horizon. Every interior light on, warm 2700K through the windows, pools of light spilling onto the ground.\n\nMATERIAL: lime plaster with trowel texture. White oak with grain variation board to board. Board-formed concrete. Matte black aluminium frames.\n\nATMOSPHERE: wet driveway from recent rain, reflecting the warm window light. Landscaping slightly overgrown. Faint haze catching the light.\n\nMEDIUM: architectural photography, Dwell, ArchDaily. Sensor grain, slight vignette, natural chromatic aberration at the edges.\n\nNOT: no CGI, no plastic surfaces, no perfect symmetry, no cartoon clouds, no 3D render.\n\nTwo lines in there are doing most of the work.\n\n→ \"Verticals perfectly corrected\" — the actual signature of architectural photography. AI defaults to converging vertical lines, which is why so much of it reads as a phone snap or a render.\n\n→ \"Wet driveway from recent rain\" — wet ground buys you reflections, reflections are physics, and physics is what your eye reads as real.\n\nSwap only the LIGHT line and the same house sells three different ways — twilight sells the architecture, golden hour sells the lifestyle, overcast sells the materials.\n\nSave this one. You will not remember it tomorrow, and it works on any exterior you've got.\n\nSend it to someone sitting on a folder of renders they never use.\n\nEpisode 02 is empty room → fully staged interior. Follow so it lands.\n\nDemo imagery. Altered listing photos must be disclosed under MLS rules — say so in your listing.\n\n#architecturalvisualization #realestatemarketing #aiforrealestate #archviz #realestatephotography",
+      "hashtags": [
+        "#architecturalvisualization",
+        "#realestatemarketing",
+        "#aiforrealestate",
+        "#archviz",
+        "#realestatephotography"
+      ],
+      "faq": [
+        {
+          "q": "Why does AI change my building when I ask it to make a render photorealistic?",
+          "a": "Because nothing in the prompt told it not to. Without an explicit PRESERVE clause pinning geometry, proportions, roofline, window placement and camera position to the source image, the model treats the render as inspiration and quietly redesigns the house you were hired to sell."
+        },
+        {
+          "q": "What should an architectural render-to-photo prompt actually contain?",
+          "a": "Five blocks: PRESERVE (what must not change), CAMERA (body, lens, aperture, height, exposure), LIGHT (time of day and colour temperature), MATERIAL (named finishes with texture), and ATMOSPHERE (weather, wear, haze). Photographic specifics beat adjectives like 'realistic'."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "episode-01-render-to-photo/out/slide-01.png",
+          "episode-01-render-to-photo/out/slide-02.png",
+          "episode-01-render-to-photo/out/slide-03.png",
+          "episode-01-render-to-photo/out/slide-04.png",
+          "episode-01-render-to-photo/out/slide-05.png",
+          "episode-01-render-to-photo/out/slide-06.png",
+          "episode-01-render-to-photo/out/slide-07.png",
+          "episode-01-render-to-photo/out/slide-08.png"
+        ],
+        "alt": [
+          "Vaporswift slide — Render → Photo: This was a raw SketchUp export ninety seconds ago.",
+          "Vaporswift slide — No textures. No lighting. No budget.",
+          "Vaporswift slide — Copy this: The prompt.",
+          "Vaporswift slide — Copy this: The prompt.",
+          "Vaporswift slide — Why it works: Seven slots. Same order, every time.",
+          "Vaporswift slide — Transferable: Change one line. Change the whole listing.",
+          "Vaporswift slide — Receipts: Exactly how it was made.",
+          "Vaporswift slide — Episode 01 of 12: Every prompt. Free. Always."
+        ]
+      },
+      "sourceDir": "episode-01-render-to-photo",
+      "extras": []
+    },
+    {
+      "slug": "episode-02-empty-to-staged",
+      "code": "A02",
+      "track": "A",
+      "trackName": "AI prompting for real estate",
+      "title": "How do you virtually stage a room with AI so it doesn't look fake?",
+      "shortTitle": "Empty room → staged",
+      "description": "Virtual staging gets spotted because of lighting, not furniture. Tell the model where the light already is, then nail the furniture to the floor with contact shadows.",
+      "format": "carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "Staging this room physically costs thousands and takes a week to book — this took one pass on a photo that already existed.",
+      "hookChars": 123,
+      "body": "Staging this room physically costs thousands and takes a week to book — this took one pass on a photo that already existed.\n\nHere's how.\n\nThe mistake almost everyone makes is treating this as a furniture problem. It isn't. It's a lighting problem.\n\nFake staging gets spotted for one reason: the sofa is lit from a window the room doesn't have. Your eye catches it before your brain does — the shadows point the wrong way, and the whole photo reads as a lie even if you can't say why.\n\nSo you tell the model where the light already is:\n\n\"Overcast daylight enters from the windows on the left wall, so every shadow falls to the right, soft and long.\"\n\nThen you nail the furniture to the floor:\n\n\"Dark contact shadows where legs, rug edge and console meet the floor.\"\n\nFurniture with no contact shadow floats. That one line is the difference between a room and a collage.\n\nFull prompt, copy it:\n\nPRESERVE: this is the exact same room. Keep the walls, floor, windows, blinds, ceiling, doorway, proportions and camera position exactly as the source image. Do not change the architecture. Only add furnishings.\n\nSTAGE IT AS: a warm minimalist living room. Low oatmeal-linen three-seat sofa, round travertine coffee table, pale wool rug with its front edge under the sofa's front legs, slim black arc floor lamp, walnut console beneath the window with two ceramic vessels, olive tree in a clay pot, two abstract prints in thin oak frames.\n\nLIGHT: the furniture must obey the light already in the room. Overcast daylight enters from the windows on the left wall, so every shadow falls to the right, soft and long. Dark contact shadows where legs, rug edge and console meet the floor. Nothing is lit from a direction the room does not have.\n\nMEDIUM: interiors photography, Architectural Digest, 24mm tilt-shift, f/8, verticals corrected. Subtle grain.\n\nNOT: no people, no clutter, no floating furniture, no shadow pointing the wrong way, no changes to the room itself.\n\nTwo more lines carry real weight:\n\n→ ONLY ADD FURNISHINGS. Leave it out and the model repaints your walls and swaps your flooring — and now you're advertising a house that doesn't exist. That's not a bad render, that's a problem.\n\n→ \"Rug under the sofa's front legs.\" A real staging rule. A rug floating in open floor reads as wrong scale instantly, and it's the second thing people notice after the shadows.\n\nSwap only the STAGE IT AS line and you stage the same room for three different buyers — minimalist for the young professional, mid-century for the design buyer, soft and durable for the family. Stage for who's buying, not for your own taste.\n\nOne thing that isn't optional: virtually staged photos have to be disclosed under MLS and NAR rules. Label them, and never alter the room itself — furniture only. Do it right and this is a tool. Do it wrong and it's a complaint.\n\nSave this before the next empty room you shoot.\n\nSend it to someone staring at an empty room, wondering how to show it.\n\nEpisode 03 is a drone shot that flies through the front door without cutting. Follow so it lands.\n\n#virtualstaging #realestatemarketing #listingphotos #aiforrealestate #realestateagent",
+      "hashtags": [
+        "#virtualstaging",
+        "#realestatemarketing",
+        "#listingphotos",
+        "#aiforrealestate",
+        "#realestateagent"
+      ],
+      "faq": [
+        {
+          "q": "Why does virtual staging look fake?",
+          "a": "Almost always lighting, not furniture. The sofa is lit from a window the room doesn't have, so shadows fall the wrong way. Your eye catches the contradiction before your brain names it, and the whole photo reads as a lie."
+        },
+        {
+          "q": "What single line most improves an AI staging prompt?",
+          "a": "A contact-shadow instruction — 'dark contact shadows where legs, rug edge and console meet the floor.' Furniture rendered without contact shadows floats above the floor, which is the difference between a room and a collage."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "episode-02-empty-to-staged/out/slide-01.png",
+          "episode-02-empty-to-staged/out/slide-02.png",
+          "episode-02-empty-to-staged/out/slide-03.png",
+          "episode-02-empty-to-staged/out/slide-04.png",
+          "episode-02-empty-to-staged/out/slide-05.png",
+          "episode-02-empty-to-staged/out/slide-06.png",
+          "episode-02-empty-to-staged/out/slide-07.png",
+          "episode-02-empty-to-staged/out/slide-08.png"
+        ],
+        "alt": [
+          "Vaporswift slide — Empty → Staged: Same room. Same photo. Furniture only.",
+          "Vaporswift slide — Empty. Cold. Scrolled past.",
+          "Vaporswift slide — Copy this: The prompt.",
+          "Vaporswift slide — Copy this: The prompt.",
+          "Vaporswift slide — Why it works: Staging is a lighting problem.",
+          "Vaporswift slide — Transferable: Stage for the buyer. Not for your taste.",
+          "Vaporswift slide — Read this part: Disclose it. Every time.",
+          "Vaporswift slide — Episode 02 of 12: Every prompt. Free. Always."
+        ]
+      },
+      "sourceDir": "episode-02-empty-to-staged",
+      "extras": []
+    },
+    {
+      "slug": "episode-03-impossible-walkthrough",
+      "code": "A03",
+      "track": "A",
+      "trackName": "AI prompting for real estate",
+      "title": "How do you make an AI drone video fly through a front door in one shot?",
+      "shortTitle": "Drone through the front door",
+      "description": "Give the model two pictures instead of a paragraph. With start_image and end_image set, composition is locked at both ends and the prompt only has to describe motion.",
+      "format": "video-carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "A drone flies at this house, through the front door and into the living room. No cuts, and no camera directions.",
+      "hookChars": 112,
+      "body": "A drone flies at this house, through the front door and into the living room. No cuts, and no camera directions.\n\nHere's how.\n\nYou give it two pictures instead of a paragraph.\n\nstart_image — the twilight exterior.\nend_image — the lit interior.\n\nNow the model isn't inventing a shot. It's solving for the path between two frames you already chose. Composition is locked at both ends, so the prompt only has to describe motion.\n\nThat's the whole prompt, and it's five lines:\n\nOne continuous flying shot, no cuts. The camera glides forward toward the house, rises slightly, and passes through the open front door without stopping — carrying straight on into the warm lit interior and settling on the living space.\n\nSmooth FPV drone motion, constant forward momentum, never pausing at the threshold. Cool twilight light gives way to warm interior light as we cross inside. Quiet evening ambience.\n\nNo people. No text.\n\nSix words are carrying the entire shot: \"never pausing at the threshold.\"\n\nLeave them out and the model reads the doorway as a cut point. You get two shots stitched together instead of one continuous move, and the effect dies — because the effect WAS the continuity.\n\nWhy this beats writing a better camera description: \"slow push-in\" has a hundred valid readings and the model picks one at random. So you re-roll, and re-roll, and never land the shot you saw in your head. Two frames end the guessing.\n\nOne more thing. The start frame is the twilight exterior from Episode 01. Nothing new was shot for this. Every still you make is now two assets.\n\nSave this for the next place you've already photographed.\n\nSend it to someone planning a shoot the budget won't quite cover.\n\nEpisode 04: daylight → golden hour, same geometry. Follow so it lands.\n\nMade with Seedance 2.0 — start_image and end_image. Not 2.5: it takes reference images but can't pin the first and last frame, and the pinning is the whole technique.\n\n#realestatevideo #aivideo #dronevideography #listingvideo #realestatemarketing",
+      "hashtags": [
+        "#realestatevideo",
+        "#aivideo",
+        "#dronevideography",
+        "#listingvideo",
+        "#realestatemarketing"
+      ],
+      "faq": [
+        {
+          "q": "How do you control camera movement in an AI video?",
+          "a": "Stop describing the camera and pin the endpoints. Setting start_image and end_image means the model is no longer inventing a shot — it is solving for the path between two frames you already chose, so the prompt only has to describe motion and light."
+        },
+        {
+          "q": "Why do AI video prompts about camera moves usually fail?",
+          "a": "Because a written camera move has to survive the model's interpretation of composition at the same time. Locking both frames removes composition from the problem entirely."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "episode-03-impossible-walkthrough/out/slide-01.png",
+          "episode-03-impossible-walkthrough/out/slide-02.png",
+          "episode-03-impossible-walkthrough/out/slide-03.png",
+          "episode-03-impossible-walkthrough/out/slide-04.png",
+          "episode-03-impossible-walkthrough/out/slide-05.png",
+          "episode-03-impossible-walkthrough/out/slide-06.png",
+          "episode-03-impossible-walkthrough/out/slide-07.png",
+          "episode-03-impossible-walkthrough/out/slide-08.png"
+        ],
+        "alt": [
+          "Vaporswift slide — The whole trick: I gave it two pictures.",
+          "Vaporswift slide — Copy this: The prompt.",
+          "Vaporswift slide — Why it works: Stop describing the camera. Show it.",
+          "Vaporswift slide — Don't skip this: Six words save the whole shot.",
+          "Vaporswift slide — It generalises: Two frames. Any subject.",
+          "Vaporswift slide — Receipts: Exactly how it was made.",
+          "Vaporswift slide — Episode 03 of 12: Every prompt. Free. Always."
+        ]
+      },
+      "sourceDir": "episode-03-impossible-walkthrough",
+      "extras": []
+    },
+    {
+      "slug": "track-b-01-clay-to-photoreal",
+      "code": "B01",
+      "track": "B",
+      "trackName": "AI prompting, everything else",
+      "title": "How do you turn a grey clay render into a photorealistic product video?",
+      "shortTitle": "Clay model → photoreal",
+      "description": "Hand the model two references with two different jobs: one carries structure only, the other carries look only. Then say which reference owns which job.",
+      "format": "reel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "There was no glass, no whiskey and no bar — just a grey clay model and one reference photo.",
+      "hookChars": 91,
+      "body": "There was no glass, no whiskey and no bar — just a grey clay model and one reference photo.\n\nHere's how.\n\nYou stop describing a scene and start handing the model two different jobs.\n\nReference 1 is the clay render. It carries STRUCTURE only — camera angle, composition, where the glass sits, how big it is, where the camera travels. Geometry, nothing else.\n\nReference 2 is a photo. It carries LOOK only — cut crystal, amber liquid, condensation, warm key from the left, cool rim from behind. Material, nothing else.\n\nThen you tell the model which reference owns which job. That's the whole trick.\n\nTwo lines are doing more work than they look:\n\n→ In the clay prompt: \"the glass and ice are solid opaque grey clay, not glass.\" Leave it out and the model renders real glass — and then you have no clay pass, just a worse photo.\n\n→ In the video prompt: \"no clay or grey untextured surfaces in the output.\" Feed a clay image as a reference and the model wants to keep some of it. You have to say the output contains none.\n\nWhy this beats prompting from scratch: text can't specify a camera path. You can write \"slow push-in\" a hundred ways and get a hundred different moves. A clay pass just shows it. You get the shot you designed instead of the shot the model guessed.\n\nFull recipe — all three prompts, the exact settings — is in my profile.\n\nSave this before your next product shoot.\n\nSend it to someone working on a launch.\n\nEpisode 02 is the same technique on a moving product. Follow so it lands.\n\nMade with Seedance 2.5, omni_reference mode, 10s, upscaled to 1080p.\n\n#aivideo #seedance #productphotography #cgi #commercialdirector",
+      "hashtags": [
+        "#aivideo",
+        "#seedance",
+        "#productphotography",
+        "#cgi",
+        "#commercialdirector"
+      ],
+      "faq": [
+        {
+          "q": "How do you use two reference images in an AI video prompt?",
+          "a": "Assign each one a job and say so explicitly. Reference 1 carries structure only — camera angle, composition, object placement and scale. Reference 2 carries look only — material, colour, lighting direction. The model needs to be told which reference owns which, or it averages them."
+        },
+        {
+          "q": "Why does my clay render stay grey in the output?",
+          "a": "Because feeding a clay image as a reference makes the model want to keep some of it. You have to state that the output contains none: 'no clay or grey untextured surfaces in the output.'"
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [],
+        "alt": [
+          "Vaporswift Reel — a grey clay whiskey glass becoming a photoreal cut-crystal glass with amber liquid and condensation"
+        ]
+      },
+      "sourceDir": "track-b-01-clay-to-photoreal",
+      "extras": [
+        "track-b-01-clay-to-photoreal/RECIPE.md"
+      ]
+    },
+    {
+      "slug": "track-b-02-into-the-watch",
+      "code": "B02",
+      "track": "B",
+      "trackName": "AI prompting, everything else",
+      "title": "How do you make a camera travel inside an object in an AI video?",
+      "shortTitle": "Into the watch movement",
+      "description": "The camera passes through the sapphire crystal and settles among the gears in one unbroken shot — driven by two pinned frames, not by a described camera move.",
+      "format": "carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "The camera travels through the sapphire crystal and ends up among the gears. One shot, and I never described the move.",
+      "hookChars": 118,
+      "body": "The camera travels through the sapphire crystal and ends up among the gears. One shot, and I never described the move.\n\nHere's how.\n\nYou give it two pictures instead of a paragraph.\n\nstart_image — the hero shot on slate.\nend_image — extreme macro inside the movement.\n\nThe model isn't inventing a shot any more. It's solving for the path between two frames you chose. Composition locked at both ends, so the prompt only has to describe motion.\n\nThat's the whole prompt, and it's six lines:\n\nOne continuous shot, no cuts. The camera pushes slowly forward toward the watch, then travels through the sapphire crystal and keeps going down into the movement, ending among the gears.\n\nConstant forward momentum, scale shrinking the whole way. Specular highlights sweep across the crystal as we pass through it, then the light becomes tight and raking on the metal inside. Soft mechanical ticking.\n\nNo people, no hands. No text.\n\nSix words are carrying the shot: \"scale shrinking the whole way.\"\n\nLeave them out and the model cuts to the macro instead of travelling into it — and you lose the only thing that made it impossible. The unbroken change in scale IS the trick.\n\nWhy this beats writing a better camera description: \"push in slowly\" has a hundred valid readings and the model picks one at random. So you re-roll, and re-roll, and never land the shot you saw. Two frames end the guessing.\n\nWorth saying plainly: no watch was photographed. Both frames were generated, then pinned as first and last. If you have a real product, shoot it and use your own frames — the technique doesn't care where the stills came from.\n\nAnd pick moves that are expensive or impossible, not merely pretty. Pretty AI video is a commodity now. Impossible isn't.\n\nSave this — it works on anything you can photograph.\n\nSend it to someone planning a product shoot.\n\nNext: one product, three finish packages. Follow so it lands.\n\nMade with Seedance 2.0 — start_image and end_image.\n\n#productvideo #aivideo #cgi #commercialdirector #productphotography",
+      "hashtags": [
+        "#productvideo",
+        "#aivideo",
+        "#cgi",
+        "#commercialdirector",
+        "#productphotography"
+      ],
+      "faq": [
+        {
+          "q": "Can AI video do an impossible camera move, like passing through solid glass?",
+          "a": "Yes, and it is easier than describing it. Pin a hero exterior as start_image and an extreme macro interior as end_image; the model solves the path between them. Scale change and material transitions come free because both endpoints are fixed."
+        },
+        {
+          "q": "What do you describe in the prompt once both frames are locked?",
+          "a": "Motion and light only — constant forward momentum, how highlights behave as you cross the material boundary, and the audio. Composition is already settled by the two images."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "track-b-02-into-the-watch/out/slide-01.png",
+          "track-b-02-into-the-watch/out/slide-02.png",
+          "track-b-02-into-the-watch/out/slide-03.png",
+          "track-b-02-into-the-watch/out/slide-04.png",
+          "track-b-02-into-the-watch/out/slide-05.png",
+          "track-b-02-into-the-watch/out/slide-06.png",
+          "track-b-02-into-the-watch/out/slide-07.png",
+          "track-b-02-into-the-watch/out/slide-08.png"
+        ],
+        "alt": [
+          "Vaporswift slide — The shot you can't hire: The camera goes through the glass. And keeps going.",
+          "Vaporswift slide — The whole trick: I gave it two pictures.",
+          "Vaporswift slide — Copy this: The prompt.",
+          "Vaporswift slide — Why it works: Stop describing the camera. Show it.",
+          "Vaporswift slide — Don't skip this: Six words sell the impossible.",
+          "Vaporswift slide — It generalises: Two frames. Any subject.",
+          "Vaporswift slide — Receipts: Exactly how it was made.",
+          "Vaporswift slide — Track B — Episode 02: Every prompt. Free. Always."
+        ]
+      },
+      "sourceDir": "track-b-02-into-the-watch",
+      "extras": []
+    },
+    {
+      "slug": "track-c-01-hook-truncation",
+      "code": "C01",
+      "track": "C",
+      "trackName": "Working with Claude",
+      "title": "Where does Instagram cut off your caption, and how do you fix it?",
+      "shortTitle": "The 125-character hook",
+      "description": "Instagram truncates a caption around 125 characters and it cuts mid-word. One prompt moves the sentence that was already in your draft to the front.",
+      "format": "video-carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "Instagram cuts your caption off around 125 characters, and it doesn't stop at a word — it cuts mid-word.",
+      "hookChars": 104,
+      "body": "Instagram cuts your caption off around 125 characters, and it doesn't stop at a word — it cuts mid-word.\n\nHere's how to fix it in one prompt.\n\nGo look at your last post right now. Whatever sits above the \"… more\" is the entire pitch you actually made. Everything under it only exists for people who already decided to care.\n\nMost captions bury the good line in paragraph three.\n\nSo don't write a better caption. Make the one you already wrote start in the right place:\n\nRewrite my Instagram caption so the hook survives truncation.\n\n1. First sentence lands the whole hook in under 125 characters.\n2. It creates a gap — a claim, a number, a contradiction. Not a summary.\n3. Then \"Here's how.\" and straight into the method.\n4. Keep every fact. Change nothing true.\n5. No emoji openers, no \"In today's world\", no throat-clearing.\n\nGive me three options, each with the character count of its first sentence.\n\nCAPTION: [paste yours]\n\nThat's the whole thing.\n\nRule 4 is the one that matters. Without it you get a rewrite that sounds punchier and quietly stops being true — a number rounds up, a claim gets bolder, and now you're defending something you didn't mean. Pinning it to the facts turns the job into what it should have been: finding the sentence that was already in there and moving it to the front.\n\nRule 5 exists because the throat-clearing is what eats the 125.\n\nHere's a real one from this account:\n\nBefore — 147 characters, cut mid-word:\n\"We've been experimenting with AI for real estate marketing lately and wanted to share something we learned about virtual staging that surprised us.\"\n\nAfter — 123 characters, lands whole:\n\"Staging this room physically costs thousands and takes a week to book — this took one pass on a photo that already existed.\"\n\nNothing was invented. The second line was already sitting in paragraph three of the first draft.\n\nRun it on something you've already published. That's the fastest way to see it work — you know the facts are right, so the only thing you're judging is whether the first line earns the tap.\n\nSave this. You will not retype it from memory at 11pm.\n\nSend it to someone whose captions deserve to be read.\n\n#instagramtips #contentstrategy #copywriting #socialmediamarketing #claudeai",
+      "hashtags": [
+        "#instagramtips",
+        "#contentstrategy",
+        "#copywriting",
+        "#socialmediamarketing",
+        "#claudeai"
+      ],
+      "faq": [
+        {
+          "q": "How many characters of an Instagram caption show before 'more'?",
+          "a": "Roughly 125, and it varies slightly by device and line length. It does not stop at a word boundary — it cuts mid-word, so a hook that runs long can be split in the middle of a term."
+        },
+        {
+          "q": "How do you rewrite a caption so the hook survives truncation?",
+          "a": "Ask for the whole hook in the first sentence under 125 characters, creating a gap rather than summarising, and add a rule pinning every fact. Without that rule you get a punchier rewrite that has quietly stopped being true."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "track-c-01-hook-truncation/out/slide-02.png",
+          "track-c-01-hook-truncation/out/slide-03.png",
+          "track-c-01-hook-truncation/out/slide-04.png",
+          "track-c-01-hook-truncation/out/slide-05.png"
+        ],
+        "alt": [
+          "Vaporswift slide — Check your own profile: Instagram cuts you off at 125.",
+          "Vaporswift slide — Copy this into Claude: The fix. One prompt.",
+          "Vaporswift slide — Same post, same facts: Only the first line moved.",
+          "Vaporswift slide — Working with Claude — 01: One prompt. Every caption."
+        ]
+      },
+      "sourceDir": "track-c-01-hook-truncation",
+      "extras": []
+    },
+    {
+      "slug": "track-c-02-what-is-claude",
+      "code": "C02",
+      "track": "C",
+      "trackName": "Working with Claude",
+      "title": "What is Claude, and what are Projects and Artifacts?",
+      "shortTitle": "What is Claude",
+      "description": "Claude has four parts and most people only ever use one. A plain map of the window: Projects, the chat, the input, and Artifacts.",
+      "format": "video-carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "Everyone tells you to use Claude. Nobody shows you the actual window. Here are its four parts.",
+      "hookChars": 94,
+      "body": "Everyone tells you to use Claude. Nobody shows you the actual window. Here are its four parts.\n\nHere's the map.\n\nMost people open it, type a question, get a good answer, and close the tab. That's the chat — one of four parts, and the least interesting one. The other three are why people who use it every day talk about it differently.\n\nProjects. A folder that remembers. Load it with the files it should always have read — your brand guide, your rate card, the last three things you wrote in your own voice — plus standing instructions on how to behave. Every chat you start inside that project already knows all of it. No re-briefing. No re-uploading. No \"as I mentioned earlier.\"\n\nArtifacts. When the output is a real thing — a doc, a page, a table — it opens in a panel beside the chat instead of scrolling past in the conversation. You keep asking for changes in plain language and it updates in place, keeping every version. Round four went too far? Go back to two.\n\nThe input. Drop in PDFs, images, spreadsheets. That's where the file goes, and where you pick which model answers.\n\nSet up one Project and the tool stops being a search box.\n\nHere's a starting point for the instructions field. Fill in the brackets:\n\nI am [what you do, in one line]. I work with [who].\n\nVOICE\n- Write like [describe two people or brands you sound like].\n- Short sentences. Specific over clever.\n- Never use: [your list of banned words and phrases].\n\nDEFAULTS\n- Give me the work first, explanation after.\n- If a fact is missing, ask me — don't invent one.\n- If something won't work, say so before you build it.\n\nFILES\n- Everything in this project's knowledge is true and current. Prefer it over what you assume.\n\nThat's it. Ten minutes, once.\n\nLoad the knowledge files second. The three you re-paste most often are the three that belong there — you already know which they are, because you're tired of finding them.\n\nOne honest note: there's a free tier, and paid tiers exist. Prices and the model lineup both move, so check the site rather than trusting a carousel — including this one.\n\nThe diagrams here are diagrams, not screenshots. The layout is the part worth learning; the pixels change.\n\nSave this for the next time you open it and stare at a blank box.\n\nSend it to someone who tried it once and closed it again.\n\n#claudeai #aitools #contentstrategy #productivity #smallbusiness",
+      "hashtags": [
+        "#claudeai",
+        "#aitools",
+        "#contentstrategy",
+        "#productivity",
+        "#smallbusiness"
+      ],
+      "faq": [
+        {
+          "q": "What is a Claude Project?",
+          "a": "A folder that remembers. You load it once with knowledge files — the documents it should always have read — plus standing instructions on how to behave. Every chat started inside that project already knows all of it, so there is no re-briefing and no re-uploading."
+        },
+        {
+          "q": "What is a Claude Artifact?",
+          "a": "Output that is a document rather than a message. When the result is a real thing — a doc, a page, a table — it opens in a panel beside the chat and updates in place as you ask for changes, keeping every version so you can go back."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "track-c-02-what-is-claude/out/slide-02.png",
+          "track-c-02-what-is-claude/out/slide-03.png",
+          "track-c-02-what-is-claude/out/slide-04.png",
+          "track-c-02-what-is-claude/out/slide-05.png"
+        ],
+        "alt": [
+          "Vaporswift slide — What is Claude: Four parts. That's the whole app.",
+          "Vaporswift slide — Part 1 — Projects: Stop re-explaining yourself.",
+          "Vaporswift slide — Part 2 — Artifacts: The work stops scrolling away.",
+          "Vaporswift slide — Working with Claude — 02: Don't start a chat. Start a Project."
+        ]
+      },
+      "sourceDir": "track-c-02-what-is-claude",
+      "extras": []
+    },
+    {
+      "slug": "track-c-03-claude-vs-chatgpt",
+      "code": "C03",
+      "track": "C",
+      "trackName": "Working with Claude",
+      "title": "Claude or ChatGPT — how do you decide which one to use?",
+      "shortTitle": "Claude vs ChatGPT",
+      "description": "Every comparison expires in about a month. Here is a twenty-minute test you run on your own work instead, plus the four tells worth grading.",
+      "format": "video-carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "Claude or ChatGPT? Every comparison you've read expires in about a month. Here's a test that doesn't.",
+      "hookChars": 101,
+      "body": "Claude or ChatGPT? Every comparison you've read expires in about a month. Here's a test that doesn't.\n\nHere's how to run it.\n\nBoth of them ship new models constantly. Any post ranking them — including the one you read last week — was written against versions that have already been replaced. Meanwhile the thing you actually need them for hasn't changed at all.\n\nSo stop reading verdicts and run twenty minutes of your own work through both.\n\nOpen them side by side. Same inputs, same order, same day. Don't help one of them more than the other.\n\n1. YOUR REAL WORK\nGive it something you actually made — a caption, a client email, a scope of work.\n\"Rewrite this. Keep every fact. Then list what you changed and why.\"\n\n2. PUSH BACK\nReply to whichever answer you liked less with three words: \"That's not right.\"\nSay nothing else, and watch what it does.\n\n3. YOUR OWN FILE\nUpload a document you know cold. Ask something only someone who read all of it could answer.\n\nThen grade both answers on four things:\n\nDid it do the whole instruction, or the easy half? You asked for two things. Count them.\n\nDid it tell you what it changed? A new version handed back with no account of the edits can't be checked, which means you have to re-read the whole thing yourself.\n\nDid it invent anything? A number, a date, a claim you never gave it. This is the one that costs you money, because it's the one you'll paste into something real.\n\nDid it fold when you pushed? \"That's not right\" should get a question back — what specifically, or here's what I based that on. An instant apology followed by a worse answer is a tool that will agree with you all the way off a cliff.\n\nPrompt 2 is the one most people skip and the one that tells you the most. It's the difference between something that helps you think and something that just agrees with you fast.\n\nWhichever column wins is your answer. It's allowed to disagree with the internet, because the internet isn't doing your job.\n\nAnd \"both, for different things\" is a completely legitimate result. Most people who use these seriously end up there.\n\nOne note on what's deliberately not in these slides: no prices, no model names, no feature checklists. All three change faster than a post like this ages, and a confidently wrong number on a teaching post is worse than no number. Check the source when you need the current one.\n\nSave this and re-run it the next time either one ships something big.\n\nSend it to whoever is still arguing about it in the group chat.\n\n#claudeai #chatgpt #aitools #contentstrategy #productivity",
+      "hashtags": [
+        "#claudeai",
+        "#chatgpt",
+        "#aitools",
+        "#contentstrategy",
+        "#productivity"
+      ],
+      "faq": [
+        {
+          "q": "Is Claude or ChatGPT better?",
+          "a": "The honest answer is that it depends on your work, and any ranking has a shelf life of weeks because both ship new models constantly. Run three prompts through both — your real work, a push-back reply, and a question about your own uploaded file — and grade the answers yourself. 'Both, for different things' is a legitimate result."
+        },
+        {
+          "q": "What should you look for when comparing two AI assistants?",
+          "a": "Four tells. Did it do the whole instruction or the easy half; did it tell you what it changed; did it invent a fact you never gave it; and did it fold when you pushed back. The last one matters most — 'that's not right' should get a question back, not an instant apology and a worse answer."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "track-c-03-claude-vs-chatgpt/out/slide-02.png",
+          "track-c-03-claude-vs-chatgpt/out/slide-03.png",
+          "track-c-03-claude-vs-chatgpt/out/slide-04.png",
+          "track-c-03-claude-vs-chatgpt/out/slide-05.png"
+        ],
+        "alt": [
+          "Vaporswift slide — The problem with the question: Both ship a new model every few weeks.",
+          "Vaporswift slide — Open both. Twenty minutes.: Three prompts. Same input, both.",
+          "Vaporswift slide — What you're actually grading: Four tells in any answer.",
+          "Vaporswift slide — Working with Claude — 03: There's no winner. There's a fit."
+        ]
+      },
+      "sourceDir": "track-c-03-claude-vs-chatgpt",
+      "extras": []
+    },
+    {
+      "slug": "trailer-01-camelback",
+      "code": "T01",
+      "track": "T",
+      "trackName": "Films",
+      "title": "How do you make a luxury property film with AI and no shoot day?",
+      "shortTitle": "Paradise Valley property film",
+      "description": "A 28-second Paradise Valley property trailer from one prompt and three reference pictures. Five of the six shots are locked off, which is what makes the single camera move land.",
+      "format": "video-carousel",
+      "published": null,
+      "instagramUrl": null,
+      "hook": "A 28-second property film for a Paradise Valley estate. No crew, no camera, no shoot day — one prompt and three pictures.",
+      "hookChars": 121,
+      "body": "A 28-second property film for a Paradise Valley estate. No crew, no camera, no shoot day — one prompt and three pictures.\n\nHere's how.\n\nThe three pictures do the casting. A headshot of the client, a car still, and the listing photo of the house. Pin those as references and every one of the six shots agrees on who and what it's looking at — same man, same car, same house, no drift.\n\nThen the prompt only has to direct.\n\nThe thing that makes it feel shot rather than generated is the camera. Real property films live on tripods and rigs, so five of the six shots are locked — the frame never moves, the subject moves through it. Shot 3 is a held frame the car simply drives through; the camera doesn't follow it.\n\nThat leaves exactly one move in the whole film, spent on the last shot: a fast push at his back as he steps through the front door, cutting to black the instant the camera reaches him.\n\nStillness is what makes the one move land.\n\nFull prompt, copy it:\n\nA 28-second luxury property trailer in six connected shots, one continuous dusk. Paradise Valley, Arizona, hyper-realistic. The SAME man as the casting reference, the SAME silver Porsche 911 as the car reference, and the SAME house as the house reference, in every shot where they appear.\n\nTHE CAMERA NEVER MOVES IN SHOTS 1–5. Shots 1–2 are rigid car-mounted rig shots, locked to the car body. Shots 3–5 are locked-off tripod shots — the frame is completely still and the subject moves through it. Shot 6 is the only camera movement in the film.\n\nSHOT 1 (3.5s) — car-mounted rig, low by the rear fender: the wheel rolling over warm asphalt, last sunlight flaring through the spokes, the road sliding beneath a perfectly rigid frame.\n\nSHOT 2 (4s) — car-mounted rig inside the cabin: his hand on the wheel, navy suit cuff and steel watch catching stripes of passing dusk light. Unhurried.\n\nSHOT 3 (5.5s) — locked-off tripod at the roadside: the frame holds still and empty for a moment, then the silver 911 enters frame left and glides through in full side profile about fifteen feet away, Camelback Mountain red behind, and exits frame right. The camera does not follow it.\n\nSHOT 4 (5s) — locked-off tripod, wide on the motor court: the car turns in over herringbone pavers, slows, and settles to a stop. White stucco and stacked stone, dark metal roofs, warm interior light through black-framed glass, path lights on.\n\nSHOT 5 (5s) — locked-off tripod, medium: he steps out in the tailored navy suit, closes the door with a soft thunk, and walks without hurry between the path lights toward the stone-and-glass front entry.\n\nSHOT 6 (5s) — from behind him at the threshold: the camera accelerates quickly toward his back as he steps through the open front door — CUT TO BLACK exactly at the moment the camera reaches his back. The black holds.\n\nLIGHT: one continuous dusk across all shots, deepening slightly; house interior warm 2700K; path lights and landscape lighting on.\n\nMEDIUM: anamorphic 35mm, cinematic grain, natural flare, luxury automotive and architectural commercial language.\n\nSOUND: low flat-six engine, tires on pavers, one soft door thunk, footsteps on stone, evening crickets. No music, no voices.\n\nNOT: no camera drift or handheld shake in shots 1–5, no pans, no zooms before shot 6, no other people, no other cars, no on-screen text, no invented logos or badges, no morphing between shots — every cut is clean.\n\nOne detail worth stealing: pinning the cut to a physical event — \"cut to black exactly at the moment the camera reaches his back\" — is what makes an ending feel authored instead of just stopping.\n\nSave this for the next property worth a film.\n\nSend it to someone sitting on a listing that deserves more than a photo gallery.\n\nMade with Seedance 2.5. Property in Paradise Valley, AZ.\n\n#realestatevideo #luxuryrealestate #paradisevalley #scottsdale #aivideo #propertyfilm",
+      "hashtags": [
+        "#realestatevideo",
+        "#luxuryrealestate",
+        "#paradisevalley",
+        "#scottsdale",
+        "#aivideo",
+        "#propertyfilm"
+      ],
+      "faq": [
+        {
+          "q": "How do you keep the same person, car and house across every shot of an AI video?",
+          "a": "Cast it with references before you prompt it. Three approved stills — subject, vehicle, property — pinned as references means every cut in a single generation agrees on who and what it is looking at. Scenery is cheap to describe in words; identity is not, so don't spend reference slots on it."
+        },
+        {
+          "q": "How do you stop an AI video camera from drifting?",
+          "a": "Say it structurally and negatively. A spine line — 'THE CAMERA NEVER MOVES IN SHOTS 1–5' — plus an explicit NOT block banning drift, handheld shake, pans and zooms. Then verify by measuring inter-frame pixel difference rather than by watching."
+        }
+      ],
+      "media": {
+        "video": null,
+        "stills": [
+          "trailer-01-camelback/out/slide-02.png",
+          "trailer-01-camelback/out/slide-03.png",
+          "trailer-01-camelback/out/slide-04.png",
+          "trailer-01-camelback/out/slide-05.png"
+        ],
+        "alt": [
+          "Vaporswift slide — How it was made: Three pictures. That's the cast.",
+          "Vaporswift slide — One prompt, six shots: The whole film, written down.",
+          "Vaporswift slide — Why it feels shot, not generated: Five locked frames. One move.",
+          "Vaporswift slide — Paradise Valley, AZ: 28 seconds. No crew."
+        ]
+      },
+      "sourceDir": "trailer-01-camelback",
+      "extras": [
+        "trailer-01-camelback/PROMPT.md",
+        "trailer-01-camelback/STORYBOARD.md"
+      ]
+    }
+  ]
+}

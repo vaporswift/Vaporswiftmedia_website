@@ -1,0 +1,21 @@
+{
+  "code": "T01",
+  "track": "T",
+  "trackName": "Films",
+  "shortTitle": "Paradise Valley property film",
+  "title": "How do you make a luxury property film with AI and no shoot day?",
+  "description": "A 28-second Paradise Valley property trailer from one prompt and three reference pictures. Five of the six shots are locked off, which is what makes the single camera move land.",
+  "format": "video-carousel",
+  "faq": [
+    {
+      "q": "How do you keep the same person, car and house across every shot of an AI video?",
+      "a": "Cast it with references before you prompt it. Three approved stills — subject, vehicle, property — pinned as references means every cut in a single generation agrees on who and what it is looking at. Scenery is cheap to describe in words; identity is not, so don't spend reference slots on it."
+    },
+    {
+      "q": "How do you stop an AI video camera from drifting?",
+      "a": "Say it structurally and negatively. A spine line — 'THE CAMERA NEVER MOVES IN SHOTS 1–5' — plus an explicit NOT block banning drift, handheld shake, pans and zooms. Then verify by measuring inter-frame pixel difference rather than by watching."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}

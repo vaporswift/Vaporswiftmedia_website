@@ -1,0 +1,21 @@
+{
+  "code": "B02",
+  "track": "B",
+  "trackName": "AI prompting, everything else",
+  "shortTitle": "Into the watch movement",
+  "title": "How do you make a camera travel inside an object in an AI video?",
+  "description": "The camera passes through the sapphire crystal and settles among the gears in one unbroken shot — driven by two pinned frames, not by a described camera move.",
+  "format": "carousel",
+  "faq": [
+    {
+      "q": "Can AI video do an impossible camera move, like passing through solid glass?",
+      "a": "Yes, and it is easier than describing it. Pin a hero exterior as start_image and an extreme macro interior as end_image; the model solves the path between them. Scale change and material transitions come free because both endpoints are fixed."
+    },
+    {
+      "q": "What do you describe in the prompt once both frames are locked?",
+      "a": "Motion and light only — constant forward momentum, how highlights behave as you cross the material boundary, and the audio. Composition is already settled by the two images."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}

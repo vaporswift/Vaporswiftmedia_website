@@ -7,7 +7,7 @@ Instagram truncates around 125 characters, so the hook has to land before the
 
 ---
 
-A drone flies at this house, through the front door, and into the living room without a single cut — and I never described the camera move.
+A drone flies at this house, through the front door and into the living room. No cuts, and no camera directions.
 
 Here's how.
 

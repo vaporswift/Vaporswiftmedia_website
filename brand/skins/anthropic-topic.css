@@ -1,0 +1,49 @@
+/* ============================================================
+   TOPIC SKIN — Anthropic / Claude
+   ============================================================
+
+   OWNER: the content session (instagram-carousels/).
+   USE: only on posts whose SUBJECT is Claude or Anthropic — Track C.
+
+   Why this file exists.
+
+   A post explaining Claude reads better in Claude's own visual language;
+   the reader recognises what they're looking at before they've read a word.
+   But that palette is not VaporSwift's, and a whole account dressed in it
+   looks like a Claude affiliate rather than a studio that uses the tool.
+
+   So it's a skin, not the house look. The house palette lives in
+   brand/tokens.css and should be visibly its own thing. This file is
+   applied deliberately, per post, and only when the topic earns it.
+
+   RULES
+   1. Never apply to Track A, Track B, or films. Those are VaporSwift work
+      and wear VaporSwift colours.
+   2. Never reproduce Anthropic's logo, wordmark, or product screenshots.
+      Track C's interface visuals are drawn diagrams, labelled as such
+      on-slide. Evoking a palette is fair; passing off a mark is not.
+   3. If the house palette ever moves close enough to this that the two
+      are hard to tell apart, the house palette is wrong, not this file.
+
+   USAGE
+     <link rel="stylesheet" href="../../brand/tokens.css">
+     <link rel="stylesheet" href="../../brand/skins/anthropic-topic.css">
+   Load order matters — the skin overrides tokens, so it comes second.
+   ============================================================ */
+
+:root{
+  --vs-ink:     #0E1311;   /* forest-cast near-black */
+  --vs-surface: #141B17;
+  --vs-well:    #1B2320;
+
+  --vs-paper:   #faf9f5;
+  --vs-body:    #CBC9C1;
+  --vs-code:    #D9D7CF;
+  --vs-muted:   #9AA394;
+
+  --vs-accent:  #d97757;   /* structure — labels, kickers, rules, pins */
+  --vs-accent2: #8FA97A;   /* emphasis  — headline highlights, key phrases */
+  --vs-negative:#A8756A;
+
+  --vs-hair:    rgba(250,249,245,.13);
+}

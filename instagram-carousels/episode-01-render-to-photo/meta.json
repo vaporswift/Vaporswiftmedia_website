@@ -1,0 +1,21 @@
+{
+  "code": "A01",
+  "track": "A",
+  "trackName": "AI prompting for real estate",
+  "shortTitle": "Render → photograph",
+  "title": "How do you turn a SketchUp render into a photorealistic image?",
+  "description": "One prompt turns a raw, untextured SketchUp export into a twilight photograph — without the model redesigning the building. The clause that makes it work is PRESERVE.",
+  "format": "carousel",
+  "faq": [
+    {
+      "q": "Why does AI change my building when I ask it to make a render photorealistic?",
+      "a": "Because nothing in the prompt told it not to. Without an explicit PRESERVE clause pinning geometry, proportions, roofline, window placement and camera position to the source image, the model treats the render as inspiration and quietly redesigns the house you were hired to sell."
+    },
+    {
+      "q": "What should an architectural render-to-photo prompt actually contain?",
+      "a": "Five blocks: PRESERVE (what must not change), CAMERA (body, lens, aperture, height, exposure), LIGHT (time of day and colour temperature), MATERIAL (named finishes with texture), and ATMOSPHERE (weather, wear, haze). Photographic specifics beat adjectives like 'realistic'."
+    }
+  ],
+  "published": null,
+  "instagramUrl": null
+}
