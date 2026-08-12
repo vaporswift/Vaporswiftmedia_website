@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vaporswift — Track C 03 — Claude vs ChatGPT</title>
+<style>
+  /* ============================================================
+     VAPORSWIFT CAROUSEL SYSTEM
+     Canvas: 1080 x 1440 (3:4) — Instagram native, zero grid crop.
+     New master this episode: .score — a two-column grading card.
+
+     Deliberately absent from this deck: prices, model names, feature
+     checkboxes. All three move faster than a carousel ages, and a wrong
+     number on a teaching post costs more than the slide is worth. What's
+     here instead is a test the reader runs, which stays true.
+     ============================================================ */
+
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/InterVariable.ttf') format('truetype-variations');
+    font-weight:100 900; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Medium.ttf') format('truetype');
+    font-weight:500; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:block;
+  }
+
+  :root{
+    --ink:     #0E1311;
+    --card:    #141B17;
+    --paper:   #faf9f5;
+    --accent:  #d97757;              /* structure — labels, kickers, rules */
+    --accent2: #8FA97A;              /* emphasis — highlights, key phrases */
+    --muted:   #9AA394;
+    --body:    #CBC9C1;
+    --code:    #D9D7CF;
+    --neg:     #A8756A;
+    --hair:    rgba(250,249,245,.13);
+
+    --M:   88px;
+    --TOP: 84px;
+    --BOT: 150px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:#0A0E0C;
+    font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      'Helvetica Neue', 'Inter Variable', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; gap:40px; padding:40px;
+  }
+
+  .slide{
+    width:1080px; height:1440px;
+    position:relative; overflow:hidden;
+    background:var(--ink); color:var(--paper);
+    flex:none;
+  }
+
+  /* ---------- shared furniture ---------- */
+
+  .brand{
+    position:absolute; top:var(--TOP); left:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper); opacity:.92; z-index:5;
+  }
+  .brand span{ color:var(--accent); }
+
+  .ep{
+    position:absolute; top:var(--TOP); right:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.18em;
+    color:var(--accent); z-index:5;
+  }
+
+  .arrow{
+    position:absolute; right:var(--M); bottom:70px;
+    font-size:44px; line-height:1; color:var(--paper); opacity:.8; z-index:6;
+  }
+
+  .kicker{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:21px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:24px;
+  }
+
+  .note{
+    position:absolute; left:var(--M); right:var(--M); bottom:calc(var(--BOT) - 74px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.06em; color:var(--muted);
+  }
+
+  /* ---------- MASTER B : CARD ---------- */
+
+  .card{ padding:var(--TOP) var(--M) var(--BOT); display:flex; flex-direction:column; }
+  .card .head{ margin-top:100px; margin-bottom:38px; }
+  .card h2{
+    font-size:60px; line-height:1.05; font-weight:600; letter-spacing:-.026em;
+  }
+  .card h2 em{ font-style:normal; color:var(--accent2); }
+  /* the tighter head the diagram and prompt slides need */
+  .card.tight .head{ margin-top:52px; margin-bottom:30px; flex:none; }
+
+  /* the prompt block — the screenshot-able signature asset */
+  .promptbox{
+    flex:1; border:1px solid var(--hair); background:var(--card);
+    padding:34px 34px 34px 32px; overflow:hidden;
+    border-left:3px solid var(--accent);
+  }
+  .promptbox pre{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:32px; line-height:1.5; white-space:pre-wrap;
+    color:var(--code); letter-spacing:-.006em;
+  }
+  .promptbox .lbl{ color:var(--accent); font-weight:700; }
+  .promptbox .neg{ color:var(--neg); }
+  .promptbox .key{ color:var(--accent2); font-weight:700; }
+
+  /* ---------- pull statement ---------- */
+  .pull{ flex:1; display:flex; flex-direction:column; justify-content:flex-start; padding-top:40px; }
+  .pull .q{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:42px; line-height:1.42; font-weight:700;
+    color:var(--accent2); letter-spacing:-.01em;
+    border-left:3px solid var(--accent); padding-left:32px;
+  }
+  .pull .why{ margin-top:46px; font-size:28px; line-height:1.42; color:var(--body); }
+  .pull .why b{ color:var(--paper); font-weight:600; }
+  .pull .tease{
+    margin-top:40px; padding-top:26px; border-top:1px solid var(--hair);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:24px; letter-spacing:.06em; color:var(--accent);
+  }
+
+  /* ---------- CTA ---------- */
+  .cta{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cta h2{ font-size:72px; margin-bottom:46px; }
+  .cta .ask{
+    display:flex; gap:20px; align-items:flex-start; padding:24px 0;
+    border-top:1px solid var(--hair);
+  }
+  .cta .ask:last-of-type{ border-bottom:1px solid var(--hair); }
+  .cta .ask .ico{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:23px; color:var(--accent);
+    letter-spacing:.1em; width:52px; flex:none; padding-top:4px;
+  }
+  .cta .ask .t{ font-size:29px; line-height:1.34; color:var(--body); }
+  .cta .ask .t b{ color:var(--paper); font-weight:600; }
+  .cta .sig{
+    margin-top:56px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:22px;
+    letter-spacing:.2em; color:var(--muted);
+  }
+  .cta .sig b{ color:var(--accent); font-weight:500; }
+
+  /* ============================================================
+     MASTER E : .score — the grading card
+
+     Two unlabelled columns on purpose. Naming which tool is which would be
+     a claim with a shelf life; leaving them blank makes the card reusable
+     the next time either one ships a new model, and it's the honest shape —
+     the reader is running the test, not being handed a verdict.
+     ============================================================ */
+  .score{ flex:1; display:flex; flex-direction:column; margin-top:34px; }
+  .score .hd{
+    display:grid; grid-template-columns:1fr 96px 96px; gap:20px;
+    padding-bottom:16px; border-bottom:2px solid var(--accent);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--accent);
+  }
+  .score .hd .c{ text-align:center; }
+  .score .rw{
+    display:grid; grid-template-columns:1fr 96px 96px; gap:20px;
+    align-items:center; padding:18px 0; border-bottom:1px solid var(--hair);
+    flex:1;
+  }
+  .score .rw .q{ font-size:32px; line-height:1.22; letter-spacing:-.012em; color:var(--paper); font-weight:600; }
+  .score .rw .s{ margin-top:11px; font-size:23px; line-height:1.32; color:var(--body); }
+  .score .rw .s em{ font-style:normal; color:var(--accent2); font-weight:600; }
+  .score .rw .box{
+    width:62px; height:62px; margin:0 auto;
+    border:2px solid var(--hair); border-radius:8px;
+  }
+  .score .foot{
+    margin-top:20px; font-size:26px; line-height:1.36; color:var(--body);
+  }
+  .score .foot b{ color:var(--paper); font-weight:600; }
+
+  @media print{ body{ background:#fff; gap:0; padding:0; } }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     02 — WHY THE QUESTION EXPIRES.  Second-serve cover: has to hook with
+     no slide 1 in front of it.
+     ============================================================ -->
+<section class="slide card tight" id="s2">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C03</div>
+  <div class="head">
+    <div class="kicker">The problem with the question</div>
+    <h2>Both ship a new<br>model every<br><em>few weeks.</em></h2>
+  </div>
+  <div class="pull">
+    <div class="q">"Which one is better" has an answer that expires before you finish setting up.</div>
+    <div class="why">Rankings flip constantly. <b>Your work doesn't.</b> So stop testing for score and test for fit — with something you can re-run yourself the next time the headlines change.</div>
+    <div class="tease">Three prompts, twenty minutes &mdash; next slide.</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============================================================
+     03 — THE BAKE-OFF.  The save driver: three prompts, copyable.
+     ============================================================ -->
+<section class="slide card tight" id="s3">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C03</div>
+  <div class="head">
+    <div class="kicker">Open both. Twenty minutes.</div>
+    <h2>Three prompts.<br><em>Same input, both.</em></h2>
+  </div>
+  <div class="promptbox">
+<pre><span class="lbl">1. YOUR REAL WORK</span>
+Give it something you actually made.
+"Rewrite this. <span class="key">Keep every fact.</span>
+Then list what you changed and why."
+
+<span class="lbl">2. PUSH BACK</span>
+Reply to the weaker answer with three
+words: <span class="key">"That's not right."</span>
+Say nothing else. Watch what it does.
+
+<span class="lbl">3. YOUR OWN FILE</span>
+Upload a document you know cold.
+Ask something <span class="key">only someone who read
+all of it</span> could answer.
+
+<span class="lbl">RULES</span>
+Same order, same day. Don't help
+one of them more than the other.</pre>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============================================================
+     04 — THE SCORECARD
+     ============================================================ -->
+<section class="slide card tight" id="s4">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C03</div>
+  <div class="head">
+    <div class="kicker">What you're actually grading</div>
+    <h2>Four tells in<br><em>any answer.</em></h2>
+  </div>
+  <div class="score">
+    <div class="hd">
+      <div>The tell</div><div class="c">A</div><div class="c">B</div>
+    </div>
+
+    <div class="rw">
+      <div>
+        <div class="q">Did it do the whole instruction?</div>
+        <div class="s">Or the easy half. You asked for two things — count them.</div>
+      </div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+
+    <div class="rw">
+      <div>
+        <div class="q">Did it tell you what it changed?</div>
+        <div class="s">A new version with no account of the edits <em>can't be checked.</em></div>
+      </div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+
+    <div class="rw">
+      <div>
+        <div class="q">Did it invent anything?</div>
+        <div class="s">A number, a date, a claim you never gave it. This is the one that costs you.</div>
+      </div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+
+    <div class="rw">
+      <div>
+        <div class="q">Did it fold when you pushed?</div>
+        <div class="s">"That's not right" should get a question back — not an instant apology and a worse answer.</div>
+      </div>
+      <div class="box"></div><div class="box"></div>
+    </div>
+
+    <div class="foot">Whichever column has more marks is <b>your</b> answer. It is allowed to disagree with the internet.</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============================================================
+     05 — CTA
+     ============================================================ -->
+<section class="slide card" id="s5">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C03</div>
+  <div class="cta">
+    <div class="kicker">Working with Claude &mdash; 03</div>
+    <h2>There's no winner.<br><em>There's a fit.</em></h2>
+    <div class="ask">
+      <div class="ico">SAVE</div>
+      <div class="t">Re-run it whenever either one ships something new. <b>The test outlives the answer.</b></div>
+    </div>
+    <div class="ask">
+      <div class="ico">TRY</div>
+      <div class="t">Use work you've already done, so <b>you're the one who knows if it's right.</b></div>
+    </div>
+    <div class="ask">
+      <div class="ico">SEND</div>
+      <div class="t">Send it to whoever is <b>still arguing about it in the group chat.</b></div>
+    </div>
+    <div class="sig">VAPORSWIFT<b>.</b>MEDIA</div>
+  </div>
+</section>
+
+</body>
+</html>

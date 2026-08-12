@@ -219,6 +219,8 @@ Four masters, no more:
 | `.card` | dark ground, typographic |
 | `.frames` | two 9:16 inputs side by side, labelled |
 | `.pull` | one statement, for the phrase a shot depends on |
+| `.diag` | drawn diagram + numbered pins + legend (C02) |
+| `.score` | two-column grading card (C03) |
 
 Tokens live in `:root`. Two accents with fixed roles: **orange
 (`--accent`)** carries structure — labels, kickers, rules; **forest green
@@ -235,6 +237,14 @@ Rules worth not relearning:
 - **Watch for `OVERFLOW`.** Slides clip silently; `render.js` asserts on it.
 - Type resolves to SF Pro / SF Mono, with Inter and JetBrains Mono vendored per
   folder as fallback. Metrics differ, hence the overflow check.
+- **Never capture with `elementHandle.screenshot()`.** On a tall page it has to
+  scroll to reach the slide, and that scroll intermittently lands wrong — it
+  writes a PNG that is exactly 1080×1440, passes every geometry and overflow
+  assertion, and contains the slide offset by ~200px with the neighbouring
+  slide bleeding in. It happened twice while building C02/C03 and it is
+  invisible unless you open the file. `render.js` now hides every other slide,
+  zeroes the body padding, scrolls to origin and shoots the viewport. Two
+  consecutive runs are byte-identical; that's the test.
 
 ---
 
@@ -256,6 +266,32 @@ Ask for the send explicitly. Sends-per-reach is a top-three signal and almost
 nobody asks.
 
 ---
+
+## Teaching the tool, not just the prompt (Track C)
+
+C01 was a prompt. C02 and C03 are about Claude itself, and they run into a
+constraint worth writing down.
+
+- **No real screenshots, on purpose.** claude.ai isn't reachable from the build
+  environment, and a generated screenshot of a real product is a fabrication —
+  garbled labels, invented menus. So C02 draws the interface in CSS and says
+  **"Diagram, not a screenshot"** on every slide that does it. It reads better
+  anyway: a real screenshot's interesting parts are 11px type, unreadable at
+  carousel scale, and stale the week the UI moves. If real screenshots are
+  wanted later, drop them in `assets/` and swap the `.win` block for an
+  `<img>` — the pin and legend system works over either.
+- **No prices, no model names, no feature checkboxes on any slide.**
+  anthropic.com and openai.com are both egress-blocked here, and the
+  third-party pages that rank for those queries contradict each other (one was
+  an October 2025 post re-dated to August 2026). All three facts move faster
+  than a carousel ages. The caption points at the source instead — and says so
+  out loud, which is worth more than the number.
+- **A comparison post should ship a test, not a verdict.** C03's scorecard has
+  two unlabelled columns. That keeps it reusable after either tool ships a new
+  model, keeps the account out of the business of picking a winner, and is the
+  honest shape: the reader runs it on their own work. "Both, for different
+  things" is named as a legitimate outcome so the post can't read as an ad.
+  The no-adversary rule applies to tools, not just people.
 
 ## Track A slate
 

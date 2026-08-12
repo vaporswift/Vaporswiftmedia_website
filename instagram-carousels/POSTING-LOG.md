@@ -34,6 +34,10 @@ own median — that's the real benchmark.
 | | A03 | Video-led carousel | | | | | |
 | | B01 | Reel | | | — | — | |
 | | B02 | Carousel | | | | | |
+| | Trailer 01 | Video-led carousel | | | | | |
+| | C01 | Video-led carousel | | | | | |
+| | C02 | Video-led carousel | | | | | |
+| | C03 | Video-led carousel | | | | | |
 
 ## Open questions these posts should answer
 
@@ -55,6 +59,19 @@ Written down before posting so they can't be rationalised afterwards.
 5. **Do the two-part prompt slides lose people?** A01 and A02 split the prompt
    across slides 3 and 4. If swipe-through falls off a cliff at slide 4,
    condense instead.
+6. **Does the tool audience overlap the work audience?** Track A/B sell what
+   the tools can make; C02 and C03 explain the tool itself and will pull a
+   different, broader crowd. Watch follows-per-reach against saves-per-reach:
+   if C posts follow well but save poorly, they're reach, not depth, and
+   belong at a lower frequency than A and B.
+7. **Do drawn diagrams save as well as photographs?** C02 is the first deck
+   with no photography in it at all. If its saves-per-reach holds against A01
+   and A02, the diagram master is cheap content that doesn't need a
+   generation budget — which changes what's worth building next.
+8. **Does a post that refuses to pick a winner still perform?** C03 hands over
+   a test instead of a verdict, which is the honest version and the less
+   clickable one. If it underperforms badly on sends, the format needs a
+   sharper hook — not a fake verdict.
 
 ## Lessons
 

@@ -1,11 +1,12 @@
 # Vaporswift — Instagram content system
 
-Two tracks, one design system, one build pipeline.
+Three tracks, one design system, one build pipeline.
 
 | Track | Subject |
 |---|---|
 | **A** | AI prompting for real estate |
 | **B** | AI prompting, everything else |
+| **C** | Working with Claude — the tool itself, and using it on your own posts |
 
 **Start here:** [`PLAYBOOK.md`](PLAYBOOK.md) is the accumulated craft — prompt
 framework, design system, model gotchas. Read it before building an episode.
@@ -23,8 +24,13 @@ what we learned. Fill it in as you post.
 | A03 | Drone through the front door | Video + 7 slides | `episode-03-impossible-walkthrough/` |
 | B01 | Clay → photoreal cocktail | Reel | `track-b-01-clay-to-photoreal/` |
 | B02 | Into the watch movement | 8-slide carousel | `track-b-02-into-the-watch/` |
+| C01 | The 125-character hook | Video + 4 slides | `track-c-01-hook-truncation/` |
+| C02 | What is Claude | Video + 4 slides | `track-c-02-what-is-claude/` |
+| C03 | Claude vs ChatGPT | Video + 4 slides | `track-c-03-claude-vs-chatgpt/` |
+| — | Trailer: Paradise Valley | Video + 4 slides | `trailer-01-camelback/` |
 
-Five posts — roughly three weeks at two a week.
+Track C shares one opener: the same vapor-bed clip backs every episode and
+only the `overlay.html` text changes, so a C post is recognisable on sight.
 
 ## Formats
 
@@ -50,10 +56,18 @@ npm install            # playwright + chromium, via postinstall (first time only
 node render.js         # → out/slide-*.png
 ```
 
-Episode A03 has one extra step, because its first carousel slide is video:
+Episode A03 and all of Track C have one extra step, because their first
+carousel slide is video:
 
 ```bash
 node build-video-slide.js   # → out/slide-01-video.mp4
+```
+
+Track C also carries a caption check, because C01 shipped a draft that
+miscounted its own character claim:
+
+```bash
+node check-caption.js       # measures the hook, fails if the claim drifted
 ```
 
 Everything must run on a machine that can reach the Higgsfield CDN. Fonts ship

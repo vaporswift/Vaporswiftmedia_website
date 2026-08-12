@@ -1,0 +1,14 @@
+{
+  "name": "vaporswift-track-c-03",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vaporswift — Track C 03: Claude vs ChatGPT",
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "render": "node render.js",
+    "build": "./fetch-assets.sh && node render.js"
+  },
+  "dependencies": {
+    "playwright": "^1.56.1"
+  }
+}
