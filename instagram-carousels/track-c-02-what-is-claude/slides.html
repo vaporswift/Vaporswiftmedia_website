@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vaporswift — Track C 02 — What Is Claude</title>
+<style>
+  /* ============================================================
+     VAPORSWIFT CAROUSEL SYSTEM
+     Canvas: 1080 x 1440 (3:4) — Instagram native, zero grid crop.
+     New master this episode: .diag — annotated diagram + numbered legend.
+     ============================================================ */
+
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/InterVariable.ttf') format('truetype-variations');
+    font-weight:100 900; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Medium.ttf') format('truetype');
+    font-weight:500; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:block;
+  }
+
+  :root{
+    --ink:     #0E1311;
+    --card:    #141B17;
+    --paper:   #faf9f5;
+    --accent:  #d97757;              /* structure — labels, kickers, pins */
+    --accent2: #8FA97A;              /* emphasis — highlights, key phrases */
+    --muted:   #9AA394;
+    --body:    #CBC9C1;
+    --code:    #D9D7CF;
+    --neg:     #A8756A;
+    --hair:    rgba(250,249,245,.13);
+    --well:    #1B2320;              /* diagram sub-surface */
+
+    --M:   88px;
+    --TOP: 84px;
+    --BOT: 150px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:#0A0E0C;
+    font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      'Helvetica Neue', 'Inter Variable', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; gap:40px; padding:40px;
+  }
+
+  .slide{
+    width:1080px; height:1440px;
+    position:relative; overflow:hidden;
+    background:var(--ink); color:var(--paper);
+    flex:none;
+  }
+
+  /* ---------- shared furniture ---------- */
+
+  .brand{
+    position:absolute; top:var(--TOP); left:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper); opacity:.92; z-index:5;
+  }
+  .brand span{ color:var(--accent); }
+
+  .ep{
+    position:absolute; top:var(--TOP); right:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.18em;
+    color:var(--accent); z-index:5;
+  }
+
+  .arrow{
+    position:absolute; right:var(--M); bottom:70px;
+    font-size:44px; line-height:1; color:var(--paper); opacity:.8; z-index:6;
+  }
+
+  .kicker{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:21px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:24px;
+  }
+
+  .note{
+    position:absolute; left:var(--M); bottom:calc(var(--BOT) - 74px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.06em; color:var(--muted);
+  }
+
+  /* ---------- MASTER B : CARD ---------- */
+
+  .card{ padding:var(--TOP) var(--M) var(--BOT); display:flex; flex-direction:column; }
+  .card .head{ margin-top:100px; margin-bottom:38px; }
+  .card h2{
+    font-size:60px; line-height:1.05; font-weight:600; letter-spacing:-.026em;
+  }
+  .card h2 em{ font-style:normal; color:var(--accent2); }
+
+  /* ---------- pull statement ---------- */
+  .pull{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .pull .q{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:42px; line-height:1.42; font-weight:700;
+    color:var(--accent2); letter-spacing:-.01em;
+    border-left:3px solid var(--accent); padding-left:32px;
+  }
+  .pull .why{ margin-top:46px; font-size:28px; line-height:1.42; color:var(--body); }
+  .pull .why b{ color:var(--paper); font-weight:600; }
+
+  /* ---------- CTA ---------- */
+  .cta{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cta h2{ font-size:72px; margin-bottom:46px; }
+  .cta .ask{
+    display:flex; gap:20px; align-items:flex-start; padding:24px 0;
+    border-top:1px solid var(--hair);
+  }
+  .cta .ask:last-of-type{ border-bottom:1px solid var(--hair); }
+  .cta .ask .ico{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:23px; color:var(--accent);
+    letter-spacing:.1em; width:52px; flex:none; padding-top:4px;
+  }
+  .cta .ask .t{ font-size:29px; line-height:1.34; color:var(--body); }
+  .cta .ask .t b{ color:var(--paper); font-weight:600; }
+  .cta .sig{
+    margin-top:56px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:22px;
+    letter-spacing:.2em; color:var(--muted);
+  }
+  .cta .sig b{ color:var(--accent); font-weight:500; }
+
+  /* ============================================================
+     MASTER D : .diag — annotated diagram + numbered legend
+
+     Deliberately a DIAGRAM, not a screenshot. Two reasons, both practical:
+     a real screenshot is unreadable at carousel scale (the interesting parts
+     are 11px type), and any screenshot is stale the week the UI moves. The
+     layout is the teachable thing, so the layout is what gets drawn.
+     Every .diag slide carries a "diagram, not a screenshot" note — if the
+     reader can't tell, the slide is lying.
+     ============================================================ */
+
+  .card.diag .head{ margin-top:52px; margin-bottom:30px; flex:none; }
+  .diagram{ flex:1; display:flex; flex-direction:column; }
+
+  /* --- the drawn window --- */
+  .win{
+    position:relative; height:500px; flex:none;
+    border:1px solid var(--hair); background:var(--card);
+    display:flex; flex-direction:column; overflow:hidden;
+  }
+  .win .bar{
+    height:50px; flex:none; display:flex; align-items:center; gap:10px;
+    padding:0 20px; border-bottom:1px solid var(--hair); background:var(--ink);
+  }
+  .win .bar i{ width:11px; height:11px; border-radius:50%; background:#2E3A34; display:block; }
+  .win .bar b{
+    margin-left:14px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:16px; font-weight:400; letter-spacing:.1em; color:var(--muted);
+  }
+  .win .cols{ flex:1; display:flex; min-height:0; }
+
+  .win .rail{
+    width:198px; flex:none; border-right:1px solid var(--hair);
+    padding:20px 16px; background:var(--ink);
+  }
+  .win .main{ flex:1; min-width:0; padding:22px 22px 18px; display:flex; flex-direction:column; }
+  .win .panel{
+    width:282px; flex:none; border-left:1px solid var(--hair);
+    padding:18px 18px; background:var(--ink);
+  }
+
+  /* shared diagram atoms */
+  .win .cap{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:14px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+    color:var(--muted); margin-bottom:12px;
+  }
+  .win .cap.on{ color:var(--accent); }
+  /* grey bars stand in for text — they read as "a diagram of an app",
+     never as a screenshot of one */
+  .win .ln{ height:9px; border-radius:5px; background:#28322D; margin-bottom:10px; }
+  .win .ln.lit{ background:#3A4A42; }
+  .win .item{
+    height:30px; border-radius:6px; background:#1A231F; margin-bottom:9px;
+    display:flex; align-items:center; padding:0 10px;
+  }
+  .win .item.sel{ background:rgba(217,119,87,.16); border:1px solid rgba(217,119,87,.5); }
+  .win .item .dot{ width:7px; height:7px; border-radius:2px; background:#3A4A42; margin-right:9px; flex:none; }
+  .win .item.sel .dot{ background:var(--accent); }
+  .win .item .ln{ flex:1; margin:0; height:8px; }
+
+  /* chat column */
+  .win .bub{ border-radius:10px; padding:14px 16px; margin-bottom:14px; }
+  .win .bub.you{ background:#1A231F; margin-left:96px; }
+  .win .bub.cl{ background:transparent; border-left:2px solid var(--accent2); border-radius:0; padding-left:16px; }
+  .win .bub .ln:last-child{ margin-bottom:0; }
+  .win .input{
+    margin-top:auto; border:1px solid var(--hair); border-radius:12px;
+    background:var(--ink); padding:14px 14px; display:flex; align-items:center; gap:12px;
+  }
+  .win .input .clip{
+    width:34px; height:34px; border-radius:8px; border:1px solid var(--hair);
+    display:flex; align-items:center; justify-content:center; flex:none;
+    font-size:18px; color:var(--accent); line-height:1;
+  }
+  .win .input .ln{ flex:1; margin:0; }
+  .win .input .chip{
+    flex:none; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:14px; letter-spacing:.08em; color:var(--muted);
+    border:1px solid var(--hair); border-radius:999px; padding:6px 12px;
+  }
+
+  /* artifact panel */
+  .win .panel .vers{ display:flex; gap:7px; margin-bottom:14px; }
+  .win .panel .vers span{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:13px; letter-spacing:.06em; color:var(--muted);
+    border:1px solid var(--hair); border-radius:999px; padding:4px 10px;
+  }
+  .win .panel .vers span.now{ color:var(--accent2); border-color:rgba(143,169,122,.55); }
+  .win .doc{ border:1px solid var(--hair); border-radius:8px; padding:14px; background:var(--card); }
+  .win .doc .h{ height:14px; width:62%; border-radius:5px; background:#3A4A42; margin-bottom:14px; }
+
+  /* --- numbered pins, dropped on top of the drawing --- */
+  .pin{
+    position:absolute; z-index:4;
+    width:46px; height:46px; border-radius:50%;
+    background:var(--accent); color:#12100E;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:24px; font-weight:700; line-height:46px; text-align:center;
+    box-shadow:0 0 0 5px rgba(14,19,17,.92);
+  }
+
+  /* --- the legend --- */
+  .legend{ margin-top:30px; flex:1; overflow:hidden; }
+  .lg{
+    display:grid; grid-template-columns:52px 1fr; gap:20px; align-items:start;
+    padding:17px 0; border-top:1px solid var(--hair);
+  }
+  .lg:last-child{ border-bottom:1px solid var(--hair); }
+  .lg .n{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:24px; font-weight:700; color:var(--accent); line-height:1.24;
+  }
+  .lg .t{ font-size:25px; line-height:1.26; color:var(--body); letter-spacing:-.008em; }
+  .lg .t b{ color:var(--paper); font-weight:600; }
+  .lg .t em{ font-style:normal; color:var(--accent2); font-weight:600; }
+  .lg .t s{
+    text-decoration:none; display:block; margin-top:5px;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:17px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent);
+  }
+
+  @media print{ body{ background:#fff; gap:0; padding:0; } }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     02 — THE WINDOW.  Second-serve cover: this is the slide Instagram
+     may resurface as the post's face, so it has to hook with no slide 1.
+     ============================================================ -->
+<section class="slide card diag" id="s2">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C02</div>
+  <div class="head">
+    <div class="kicker">What is Claude</div>
+    <h2>Four parts. That's<br>the <em>whole app.</em></h2>
+  </div>
+
+  <div class="diagram">
+    <div class="win">
+      <div class="bar"><i></i><i></i><i></i><b>claude.ai</b></div>
+      <div class="cols">
+
+        <div class="rail">
+          <div class="cap on">Projects</div>
+          <div class="item sel"><span class="dot"></span><span class="ln lit"></span></div>
+          <div class="item"><span class="dot"></span><span class="ln"></span></div>
+          <div class="item"><span class="dot"></span><span class="ln"></span></div>
+          <div class="cap" style="margin-top:22px">Chats</div>
+          <div class="ln" style="width:86%"></div>
+          <div class="ln" style="width:64%"></div>
+          <div class="ln" style="width:78%"></div>
+          <div class="ln" style="width:52%"></div>
+        </div>
+
+        <div class="main">
+          <div class="bub you">
+            <div class="ln" style="width:100%"></div>
+            <div class="ln" style="width:72%"></div>
+          </div>
+          <div class="bub cl">
+            <div class="ln lit" style="width:100%"></div>
+            <div class="ln" style="width:94%"></div>
+            <div class="ln" style="width:88%"></div>
+            <div class="ln" style="width:46%"></div>
+          </div>
+          <div class="bub you">
+            <div class="ln" style="width:64%"></div>
+          </div>
+          <div class="bub cl">
+            <div class="ln lit" style="width:86%"></div>
+            <div class="ln" style="width:62%"></div>
+          </div>
+          <div class="input">
+            <span class="clip">&#43;</span>
+            <span class="ln"></span>
+            <span class="chip">model</span>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="cap on">Artifact</div>
+          <div class="vers"><span>v1</span><span>v2</span><span class="now">v3</span></div>
+          <div class="doc">
+            <div class="h"></div>
+            <div class="ln" style="width:100%"></div>
+            <div class="ln" style="width:92%"></div>
+            <div class="ln" style="width:97%"></div>
+            <div class="ln" style="width:70%"></div>
+            <div class="ln" style="width:88%"></div>
+            <div class="ln" style="width:44%"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Pins sit ON what they name — no leader rules. Positions are
+           window-local px; verify asserts each pin stays inside .win. -->
+      <div class="pin" style="left:130px; top:88px;">1</div>
+
+      <div class="pin" style="left:300px; top:166px;">2</div>
+
+      <div class="pin" style="left:400px; top:428px;">3</div>
+
+      <div class="pin" style="left:740px; top:180px;">4</div>
+    </div>
+
+    <div class="legend">
+      <div class="lg"><div class="n">1</div><div class="t"><b>Projects.</b> A folder that remembers — files and standing instructions every chat inside it already knows.<s>Slide 3</s></div></div>
+      <div class="lg"><div class="n">2</div><div class="t"><b>The chat.</b> The part everyone has already tried.</div></div>
+      <div class="lg"><div class="n">3</div><div class="t"><b>The input.</b> Drop in PDFs, images, spreadsheets. Pick the model here.</div></div>
+      <div class="lg"><div class="n">4</div><div class="t"><b>Artifacts.</b> Real output — a doc, a page, a table — that opens beside the chat and keeps its versions.<s>Slide 4</s></div></div>
+    </div>
+  </div>
+
+  <div class="note">Diagram, not a screenshot. The layout is the point.</div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============================================================
+     03 — PROJECTS
+     ============================================================ -->
+<section class="slide card diag" id="s3">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C02</div>
+  <div class="head">
+    <div class="kicker">Part 1 &mdash; Projects</div>
+    <h2>Stop re-explaining<br><em>yourself.</em></h2>
+  </div>
+
+  <div class="diagram">
+    <div class="win">
+      <div class="bar"><i></i><i></i><i></i><b>a project, from the inside</b></div>
+      <div class="cols" style="padding:26px 26px 22px; gap:22px; align-items:stretch">
+
+        <!-- what you load once -->
+        <div style="width:330px;flex:none;display:flex;flex-direction:column;gap:16px">
+          <div class="doc" style="flex:1">
+            <div class="cap on">Knowledge</div>
+            <div class="ln" style="width:88%"></div>
+            <div class="ln" style="width:96%"></div>
+            <div class="ln" style="width:64%"></div>
+            <div class="ln lit" style="width:80%"></div>
+            <div class="ln" style="width:52%"></div>
+          </div>
+          <div class="doc" style="flex:1">
+            <div class="cap on">Instructions</div>
+            <div class="ln" style="width:94%"></div>
+            <div class="ln lit" style="width:76%"></div>
+            <div class="ln" style="width:88%"></div>
+            <div class="ln" style="width:40%"></div>
+          </div>
+        </div>
+
+        <!-- the arrow -->
+        <div style="flex:none;display:flex;align-items:center;justify-content:center;width:56px">
+          <span style="font-size:44px;color:var(--accent);line-height:1">&rarr;</span>
+        </div>
+
+        <!-- every chat inherits it -->
+        <div style="flex:1;display:flex;flex-direction:column;gap:14px;min-width:0">
+          <div class="cap" style="color:var(--accent2)">Every chat in the project</div>
+          <div class="doc" style="flex:1;border-color:rgba(143,169,122,.4)">
+            <div class="ln lit" style="width:70%"></div>
+            <div class="ln" style="width:100%"></div>
+            <div class="ln" style="width:84%"></div>
+          </div>
+          <div class="doc" style="flex:1;border-color:rgba(143,169,122,.4)">
+            <div class="ln lit" style="width:58%"></div>
+            <div class="ln" style="width:96%"></div>
+            <div class="ln" style="width:76%"></div>
+          </div>
+          <div class="doc" style="flex:1;border-color:rgba(143,169,122,.4)">
+            <div class="ln lit" style="width:66%"></div>
+            <div class="ln" style="width:90%"></div>
+            <div class="ln" style="width:62%"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pin" style="left:296px; top:140px;">1</div>
+
+      <div class="pin" style="left:296px; top:348px;">2</div>
+
+      <div class="pin" style="left:790px; top:290px;">3</div>
+    </div>
+
+    <div class="legend">
+      <div class="lg"><div class="n">1</div><div class="t"><b>Knowledge.</b> The files it should always have read — brand guide, rate card, past work, the transcript you keep re-pasting.</div></div>
+      <div class="lg"><div class="n">2</div><div class="t"><b>Instructions.</b> How you want it to behave, written once. Tone, format, what to never do.</div></div>
+      <div class="lg"><div class="n">3</div><div class="t"><b>Every chat starts loaded.</b> <em>That's the whole feature.</em> No re-briefing, no re-uploading, no "as I mentioned earlier."</div></div>
+    </div>
+  </div>
+
+  <div class="note">Diagram, not a screenshot. The layout is the point.</div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============================================================
+     04 — ARTIFACTS
+     ============================================================ -->
+<section class="slide card diag" id="s4">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C02</div>
+  <div class="head">
+    <div class="kicker">Part 2 &mdash; Artifacts</div>
+    <h2>The work stops<br><em>scrolling away.</em></h2>
+  </div>
+
+  <div class="diagram">
+    <div class="win">
+      <div class="bar"><i></i><i></i><i></i><b>chat on the left, the thing itself on the right</b></div>
+      <div class="cols">
+
+        <div class="main" style="padding:22px 22px 18px">
+          <div class="bub you">
+            <div class="ln" style="width:100%"></div>
+            <div class="ln" style="width:58%"></div>
+          </div>
+          <div class="bub cl">
+            <div class="ln lit" style="width:92%"></div>
+            <div class="ln" style="width:70%"></div>
+          </div>
+          <div class="bub you">
+            <div class="ln" style="width:86%"></div>
+          </div>
+          <div class="bub cl">
+            <div class="ln lit" style="width:78%"></div>
+            <div class="ln" style="width:96%"></div>
+            <div class="ln" style="width:88%"></div>
+            <div class="ln" style="width:54%"></div>
+          </div>
+          <div class="input">
+            <span class="clip">&#43;</span>
+            <span class="ln"></span>
+          </div>
+        </div>
+
+        <div class="panel" style="width:406px">
+          <div class="cap on">Artifact &mdash; one-pager</div>
+          <div class="vers"><span>v1</span><span>v2</span><span class="now">v3 &middot; now</span></div>
+          <div class="doc" style="height:300px">
+            <div class="h"></div>
+            <div class="ln" style="width:100%"></div>
+            <div class="ln" style="width:93%"></div>
+            <div class="ln" style="width:97%"></div>
+            <div class="ln lit" style="width:74%"></div>
+            <div class="ln" style="width:90%"></div>
+            <div class="ln" style="width:96%"></div>
+            <div class="ln" style="width:61%"></div>
+            <div class="ln" style="width:88%"></div>
+            <div class="ln" style="width:38%"></div>
+          </div>
+          <div style="display:flex;gap:8px;margin-top:14px">
+            <span class="chip" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:14px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--hair);border-radius:999px;padding:6px 12px">copy</span>
+            <span class="chip" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:14px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--hair);border-radius:999px;padding:6px 12px">download</span>
+            <span class="chip" style="font-family:ui-monospace,'SF Mono',Menlo,monospace;font-size:14px;letter-spacing:.08em;color:var(--muted);border:1px solid var(--hair);border-radius:999px;padding:6px 12px">share</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pin" style="left:248px; top:288px;">1</div>
+
+      <div class="pin" style="left:640px; top:190px;">2</div>
+
+      <div class="pin" style="left:712px; top:96px;">3</div>
+    </div>
+
+    <div class="legend">
+      <div class="lg"><div class="n">1</div><div class="t"><b>The conversation stays a conversation.</b> Ask for changes in plain language, as many rounds as it takes.</div></div>
+      <div class="lg"><div class="n">2</div><div class="t"><b>The output is a document, not a message.</b> It updates in place instead of being re-posted further down the scroll.</div></div>
+      <div class="lg"><div class="n">3</div><div class="t"><b>Versions are kept.</b> <em>Round four went too far?</em> Go back to two. Then copy, download or share the thing itself.</div></div>
+    </div>
+  </div>
+
+  <div class="note">Diagram, not a screenshot. The layout is the point.</div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============================================================
+     05 — CTA
+     ============================================================ -->
+<section class="slide card" id="s5">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">C02</div>
+  <div class="cta">
+    <div class="kicker">Working with Claude &mdash; 02</div>
+    <h2>Don't start a chat.<br><em>Start a Project.</em></h2>
+    <div class="ask">
+      <div class="ico">SAVE</div>
+      <div class="t">The map, for the next time you open it and stare at a blank box. <b>Save it now.</b></div>
+    </div>
+    <div class="ask">
+      <div class="ico">TRY</div>
+      <div class="t">Make one Project. Load the three files you re-paste most. <b>That's the whole setup.</b></div>
+    </div>
+    <div class="ask">
+      <div class="ico">SEND</div>
+      <div class="t">Send it to someone who <b>opened it once and closed it again.</b></div>
+    </div>
+    <div class="sig">VAPORSWIFT<b>.</b>MEDIA</div>
+  </div>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,472 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vaporswift — Track B 02 — Into the Watch</title>
+<style>
+  /* ============================================================
+     VAPORSWIFT CAROUSEL SYSTEM
+     Canvas: 1080 x 1440 (3:4) — Instagram native, zero grid crop.
+     Two masters only: .photo and .card
+     ============================================================ */
+
+  /* Fonts ship with the repo (./fonts) so the deck renders identically on any
+     machine without a system font install. Both are SIL Open Font License. */
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/InterVariable.ttf') format('truetype-variations');
+    font-weight:100 900; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Medium.ttf') format('truetype');
+    font-weight:500; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:block;
+  }
+
+  :root{
+    /* Anthropic palette on a forest-cast ground. Two accents: orange carries
+       structure (labels, kickers, rules), green carries emphasis (headline
+       highlights, the key phrases inside a prompt). */
+    --ink:     #0E1311;              /* forest-cast near-black */
+    --card:    #141B17;              /* prompt block / thumb ground */
+    --paper:   #faf9f5;              /* Anthropic light */
+    --accent:  #d97757;              /* Anthropic orange — structure */
+    --accent2: #8FA97A;              /* forest green — emphasis */
+    --muted:   #9AA394;
+    --body:    #CBC9C1;              /* secondary body text */
+    --code:    #D9D7CF;              /* prompt block text */
+    --neg:     #A8756A;              /* the NOT clause */
+    --hair:    rgba(250,249,245,.13);
+
+    --M:   88px;  /* side margin        */
+    --TOP: 84px;  /* top margin         */
+    --BOT: 150px; /* bottom safe zone — carousel dots + UI live here */
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:#0A0E0C;
+    font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      'Helvetica Neue', 'Inter Variable', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; gap:40px; padding:40px;
+  }
+
+  .slide{
+    width:1080px; height:1440px;
+    position:relative; overflow:hidden;
+    background:var(--ink); color:var(--paper);
+    flex:none;
+  }
+
+  /* ---------- shared furniture ---------- */
+
+  .brand{
+    position:absolute; top:var(--TOP); left:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper); opacity:.92; z-index:5;
+  }
+  .brand span{ color:var(--accent); }
+
+  .ep{
+    position:absolute; top:var(--TOP); right:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.18em;
+    color:var(--accent); z-index:5;
+  }
+
+  /* Sits BELOW the content box, not inside it — otherwise it collides with
+     the last line of type on dense card slides. Carousel dots are centred,
+     so the right corner at 70px is clear. */
+  .arrow{
+    position:absolute; right:var(--M); bottom:70px;
+    font-size:44px; line-height:1; color:var(--paper); opacity:.8; z-index:6;
+  }
+  .photo .arrow{ bottom:var(--BOT); }
+
+  .kicker{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:21px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:26px;
+  }
+
+  h1{
+    font-size:78px; line-height:1.03; font-weight:600; letter-spacing:-.028em;
+  }
+  h1 em{ font-style:normal; color:var(--accent2); }
+
+  .tease{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:22px; letter-spacing:.02em; color:var(--paper); opacity:.72; margin-top:30px;
+  }
+
+  /* ---------- MASTER A : PHOTO ---------- */
+
+  .photo .bg{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; display:block;
+  }
+  .photo .missing{
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(45deg,#171F1A 0 22px,#121814 22px 44px);
+    display:flex; align-items:center; justify-content:center;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:26px; color:var(--muted);
+    letter-spacing:.1em; text-align:center; padding:60px;
+  }
+  /* scrim: keeps type legible over any photograph */
+  .photo .scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to top, rgba(7,11,9,.94) 0%, rgba(7,11,9,.75) 22%, rgba(7,11,9,.18) 46%, rgba(7,11,9,.05) 62%, rgba(7,11,9,.42) 100%);
+  }
+  .photo .copy{
+    position:absolute; left:var(--M); right:var(--M); bottom:var(--BOT);
+    z-index:4;
+  }
+
+  /* before-inset chip — signals the transformation without diluting the hero */
+  .inset{
+    position:absolute; right:var(--M); bottom:calc(var(--BOT) + 300px);
+    width:238px; z-index:6;
+  }
+  .inset .frame{
+    width:238px; height:178px; overflow:hidden;
+    border:2px solid rgba(250,249,245,.55);
+    box-shadow:0 18px 46px rgba(0,0,0,.6);
+    background:var(--card);
+  }
+  .inset .frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .inset .tag{
+    margin-top:12px; text-align:right;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.2em; color:var(--paper); opacity:.85;
+  }
+
+  .stamp{
+    display:inline-block;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px;
+    letter-spacing:.2em; text-transform:uppercase;
+    padding:11px 20px; border:1.5px solid var(--accent); color:var(--accent);
+    margin-bottom:28px;
+  }
+
+  /* ---------- MASTER B : CARD ---------- */
+
+  .card{ padding:var(--TOP) var(--M) var(--BOT); display:flex; flex-direction:column; }
+  .card .head{ margin-top:100px; margin-bottom:38px; }
+  .card h2{
+    font-size:60px; line-height:1.05; font-weight:600; letter-spacing:-.026em;
+  }
+  .card h2 em{ font-style:normal; color:var(--accent2); }
+  .card .headnum{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px; letter-spacing:.16em;
+    color:var(--muted); margin-top:14px;
+  }
+
+  /* the prompt block — the screenshot-able signature asset */
+  .promptbox{
+    flex:1; border:1px solid var(--hair); background:var(--card);
+    padding:34px 34px 34px 32px; overflow:hidden;
+    border-left:3px solid var(--accent);
+  }
+  .promptbox pre{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:27px; line-height:1.55; white-space:pre-wrap;
+    color:var(--code); letter-spacing:-.006em;
+  }
+  .promptbox .lbl{ color:var(--accent); font-weight:700; }
+  .promptbox .neg{ color:var(--neg); }
+  .promptbox .key{ color:var(--accent2); font-weight:700; }
+
+  /* anatomy rows */
+  .rows{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .row{
+    display:grid; grid-template-columns:222px 1fr; gap:24px;
+    padding:16px 0; border-top:1px solid var(--hair); align-items:baseline;
+  }
+  .row:last-child{ border-bottom:1px solid var(--hair); }
+  .row .k{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; font-weight:700;
+    letter-spacing:.1em; color:var(--accent);
+  }
+  .row .v{ font-size:24px; line-height:1.33; color:var(--body); letter-spacing:-.008em; }
+  .row .v b{ color:var(--paper); font-weight:600; }
+
+  /* three-up lever comparison */
+  .three{ flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center; }
+  .lev{ display:flex; gap:24px; align-items:stretch; height:268px; }
+  .lev .thumb{
+    width:300px; flex:none; overflow:hidden; background:var(--card);
+    border:1px solid var(--hair);
+  }
+  .lev .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .lev .thumb .ph{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(45deg,#171F1A 0 16px,#121814 16px 32px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px; color:#5d5d63; text-align:center; padding:16px;
+  }
+  .lev .txt{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .lev .txt .n{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; letter-spacing:.18em;
+    color:var(--accent2); margin-bottom:12px;
+  }
+  .lev .txt .p{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:21px; line-height:1.45;
+    color:var(--body);
+  }
+  .lev .txt .p b{ color:var(--paper); background:rgba(143,169,122,.18); font-weight:500; }
+
+  /* spec table */
+  .spec{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .sp{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:26px 0; border-top:1px solid var(--hair);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+  }
+  .sp:last-child{ border-bottom:1px solid var(--hair); }
+  .sp .k{ font-size:22px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; }
+  .sp .v{ font-size:26px; color:var(--paper); font-weight:500; }
+  .sp .v em{ font-style:normal; color:var(--accent); }
+
+  /* CTA */
+  .cta{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cta h2{ font-size:72px; margin-bottom:46px; }
+  .cta .ask{
+    display:flex; gap:20px; align-items:flex-start; padding:24px 0;
+    border-top:1px solid var(--hair);
+  }
+  .cta .ask:last-of-type{ border-bottom:1px solid var(--hair); }
+  .cta .ask .ico{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:23px; color:var(--accent);
+    letter-spacing:.1em; width:52px; flex:none; padding-top:4px;
+  }
+  .cta .ask .t{ font-size:29px; line-height:1.34; color:var(--body); }
+  .cta .ask .t b{ color:var(--paper); font-weight:600; }
+  .cta .sig{
+    margin-top:56px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:22px;
+    letter-spacing:.2em; color:var(--muted);
+  }
+  .cta .sig b{ color:var(--accent); font-weight:500; }
+
+  .note{
+    position:absolute; left:var(--M); bottom:calc(var(--BOT) - 74px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.06em; color:var(--muted);
+  }
+
+  @media print{ body{ background:#fff; gap:0; padding:0; } }
+
+  /* ---------- MASTER C : FRAMES — the two 9:16 inputs, side by side ---------- */
+  .frames{ flex:1; display:flex; gap:32px; align-items:flex-start; justify-content:center; }
+  .fr{ flex:1; display:flex; flex-direction:column; min-width:0; }
+  .fr .shot{
+    width:100%; aspect-ratio:9/16; overflow:hidden;
+    background:var(--card); border:1px solid var(--hair);
+  }
+  .fr .shot img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .fr .shot .ph{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(45deg,#171F1A 0 16px,#121814 16px 32px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:16px; color:var(--muted);
+    text-align:center; padding:14px;
+  }
+  .fr .lab{
+    margin-top:18px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px; font-weight:700;
+    letter-spacing:.2em; text-transform:uppercase; color:var(--accent);
+  }
+  .fr .sub{ margin-top:8px; font-size:21px; line-height:1.35; color:var(--body); }
+
+  /* ---------- pull statement ---------- */
+  .pull{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .pull .q{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:42px; line-height:1.42; font-weight:700;
+    color:var(--accent2); letter-spacing:-.01em;
+    border-left:3px solid var(--accent); padding-left:32px;
+  }
+  .pull .why{ margin-top:46px; font-size:28px; line-height:1.42; color:var(--body); }
+  .pull .why b{ color:var(--paper); font-weight:600; }
+
+</style>
+</head>
+<body>
+
+<!-- 1 — HERO -->
+<section class="slide photo" id="s1">
+  <img class="bg" src="assets/end.png" alt="" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+  <div class="missing" style="display:none">assets/end.png</div>
+  <div class="scrim"></div>
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="copy">
+    <div class="kicker">The shot you can't hire</div>
+    <h1>The camera goes<br>through the glass.<br><em>And keeps going.</em></h1>
+    <div class="tease">No macro rig on earth does this. Slide 2. →</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 2 — THE TWO FRAMES -->
+<section class="slide card" id="s2">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="head">
+    <div class="kicker">The whole trick</div>
+    <h2>I gave it two<br><em>pictures.</em></h2>
+  </div>
+  <div class="frames">
+    <div class="fr">
+      <div class="shot"><img src="assets/start.png" alt="" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>start.png</div>'"></div>
+      <div class="lab">Start frame</div>
+      <div class="sub">The hero shot.</div>
+    </div>
+    <div class="fr">
+      <div class="shot"><img src="assets/end.png" alt="" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>end.png</div>'"></div>
+      <div class="lab">End frame</div>
+      <div class="sub">Inside the movement.</div>
+    </div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 3 — THE PROMPT -->
+<section class="slide card" id="s3">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="head">
+    <div class="kicker">Copy this</div>
+    <h2>The prompt.</h2>
+    <div class="headnum">ALL OF IT — NOTHING IS CUT</div>
+  </div>
+  <div class="promptbox">
+<pre>One continuous shot, <span class="key">no cuts</span>. The camera
+pushes slowly forward toward the watch,
+then travels through the sapphire crystal
+and keeps going down into the movement,
+ending among the gears.
+
+Constant forward momentum, <span class="key">scale shrinking
+the whole way</span>. Specular highlights sweep
+across the crystal as we pass through it,
+then the light becomes tight and raking
+on the metal inside. Soft mechanical
+ticking.
+
+<span class="neg">No people, no hands. No text.</span></pre>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 4 — WHY IT WORKS -->
+<section class="slide card" id="s4">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="head">
+    <div class="kicker">Why it works</div>
+    <h2>Stop describing<br>the camera.<br><em>Show it.</em></h2>
+  </div>
+  <div class="rows">
+    <div class="row"><div class="k">THE PROBLEM</div><div class="v">Text is a terrible way to specify motion. <b>"Slow push-in" has a hundred valid readings</b> and the model picks one at random. So you re-roll, and re-roll.</div></div>
+    <div class="row"><div class="k">THE FIX</div><div class="v">Pin a <b>start frame and an end frame.</b> Now the model only has to invent the path between two fixed points.</div></div>
+    <div class="row"><div class="k">WHAT CHANGES</div><div class="v">Composition is locked at both ends, so the prompt shrinks to describing <b>motion only.</b> Six lines instead of a paragraph — and far more reliable.</div></div>
+    <div class="row"><div class="k">PICK THE SHOT</div><div class="v">Choose moves that are <b>expensive or impossible,</b> not merely pretty. Pretty AI video is a commodity now.</div></div>
+    <div class="row"><div class="k">THE PATTERN</div><div class="v">Same idea as the clay pass: <b>give the model constraints as images, not adjectives.</b></div></div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 5 — THE PHRASE -->
+<section class="slide card" id="s5">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="head">
+    <div class="kicker">Don't skip this</div>
+    <h2>Six words sell<br><em>the impossible.</em></h2>
+  </div>
+  <div class="pull">
+    <div class="q">"scale shrinking<br>the whole way"</div>
+    <div class="why">Leave it out and the model <b>cuts</b> to the macro instead of travelling into it. You lose the one thing that makes the shot impossible — the unbroken change in scale. Say it, and the camera shrinks the whole way down.</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 6 — SAME TECHNIQUE, ANY SUBJECT -->
+<section class="slide card" id="s6">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="head">
+    <div class="kicker">It generalises</div>
+    <h2>Two frames.<br><em>Any subject.</em></h2>
+  </div>
+  <div class="frames">
+    <div class="fr">
+      <div class="shot"><img src="assets/alt-start.png" alt="" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>alt-start.png</div>'"></div>
+      <div class="lab">Start</div>
+      <div class="sub">A house at twilight.</div>
+    </div>
+    <div class="fr">
+      <div class="shot"><img src="assets/alt-end.png" alt="" onerror="this.parentElement.innerHTML='<div class=&quot;ph&quot;>alt-end.png</div>'"></div>
+      <div class="lab">End</div>
+      <div class="sub">Inside the living room.</div>
+    </div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 7 — SPEC -->
+<section class="slide card" id="s7">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="head">
+    <div class="kicker">Receipts</div>
+    <h2>Exactly how<br>it was made.</h2>
+  </div>
+  <div class="spec">
+    <div class="sp"><span class="k">Model</span><span class="v">Seedance 2.0</span></div>
+    <div class="sp"><span class="k">Inputs</span><span class="v"><em>start_image + end_image</em></span></div>
+    <div class="sp"><span class="k">Duration</span><span class="v">8 seconds</span></div>
+    <div class="sp"><span class="k">Output</span><span class="v">1080 × 1920, 9:16</span></div>
+    <div class="sp"><span class="k">Audio</span><span class="v">Native, generated</span></div>
+    <div class="sp"><span class="k">Cuts</span><span class="v"><em>Zero</em></span></div>
+    <div class="sp"><span class="k">Product used</span><span class="v"><em>None — both frames generated</em></span></div>
+  </div>
+  <div class="note">No watch was photographed. Both frames were generated, then pinned as the first and last frame.</div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- 8 — CTA -->
+<section class="slide card" id="s8">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">B02</div>
+  <div class="cta">
+    <div class="kicker">Track B — Episode 02</div>
+    <h2>Every prompt.<br><em>Free. Always.</em></h2>
+    <div class="ask">
+      <div class="ico">SAVE</div>
+      <div class="t">Two frames and six lines. <b>Save it</b> — it works on any product you can photograph.</div>
+    </div>
+    <div class="ask">
+      <div class="ico">SEND</div>
+      <div class="t">Send it to someone <b>planning a product shoot.</b></div>
+    </div>
+    <div class="ask">
+      <div class="ico">NEXT</div>
+      <div class="t">Next: <b>one product, three finish packages.</b> Follow so it lands.</div>
+    </div>
+    <div class="sig">VAPORSWIFT<b>.</b>MEDIA</div>
+  </div>
+</section>
+
+</body>
+</html>

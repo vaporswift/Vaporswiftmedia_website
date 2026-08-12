@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Vaporswift — Episode 01 — Render to Photo</title>
+<meta name="hz:slide-selector" content=".slide">
+<meta name="hz:canvas-width" content="1080">
+<meta name="hz:canvas-height" content="1440">
+<style>
+  /* ============================================================
+     VAPORSWIFT CAROUSEL SYSTEM
+     Canvas: 1080 x 1440 (3:4) — Instagram native, zero grid crop.
+     Two masters only: .photo and .card
+     ============================================================ */
+
+  /* Fonts ship with the repo (./fonts) so the deck renders identically on any
+     machine without a system font install. Both are SIL Open Font License. */
+  @font-face{
+    font-family:'Inter Variable';
+    src:url('fonts/InterVariable.ttf') format('truetype-variations');
+    font-weight:100 900; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Regular.ttf') format('truetype');
+    font-weight:400; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Medium.ttf') format('truetype');
+    font-weight:500; font-style:normal; font-display:block;
+  }
+  @font-face{
+    font-family:'JetBrains Mono';
+    src:url('fonts/JetBrainsMono-Bold.ttf') format('truetype');
+    font-weight:700; font-style:normal; font-display:block;
+  }
+
+  :root{
+    /* Anthropic palette on a forest-cast ground. Two accents: orange carries
+       structure (labels, kickers, rules), green carries emphasis (headline
+       highlights, the key phrases inside a prompt). */
+    --ink:     #0E1311;              /* forest-cast near-black */
+    --card:    #141B17;              /* prompt block / thumb ground */
+    --paper:   #faf9f5;              /* Anthropic light */
+    --accent:  #d97757;              /* Anthropic orange — structure */
+    --accent2: #8FA97A;              /* forest green — emphasis */
+    --muted:   #9AA394;
+    --body:    #CBC9C1;              /* secondary body text */
+    --code:    #D9D7CF;              /* prompt block text */
+    --neg:     #A8756A;              /* the NOT clause */
+    --hair:    rgba(250,249,245,.13);
+
+    --M:   88px;  /* side margin        */
+    --TOP: 84px;  /* top margin         */
+    --BOT: 150px; /* bottom safe zone — carousel dots + UI live here */
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  body{
+    background:#0A0E0C;
+    font-family:-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text',
+      'Helvetica Neue', 'Inter Variable', Inter, system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    display:flex; flex-direction:column; align-items:center; gap:40px; padding:40px;
+  }
+
+  .slide{
+    width:1080px; height:1440px;
+    position:relative; overflow:hidden;
+    background:var(--ink); color:var(--paper);
+    flex:none;
+  }
+
+  /* ---------- shared furniture ---------- */
+
+  .brand{
+    position:absolute; top:var(--TOP); left:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.22em; text-transform:uppercase;
+    color:var(--paper); opacity:.92; z-index:5;
+  }
+  .brand span{ color:var(--accent); }
+
+  .ep{
+    position:absolute; top:var(--TOP); right:var(--M);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:19px; font-weight:500; letter-spacing:.18em;
+    color:var(--accent); z-index:5;
+  }
+
+  /* Sits BELOW the content box, not inside it — otherwise it collides with
+     the last line of type on dense card slides. Carousel dots are centred,
+     so the right corner at 70px is clear. */
+  .arrow{
+    position:absolute; right:var(--M); bottom:70px;
+    font-size:44px; line-height:1; color:var(--paper); opacity:.8; z-index:6;
+  }
+  .photo .arrow{ bottom:var(--BOT); }
+
+  .kicker{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:21px; font-weight:500; letter-spacing:.2em; text-transform:uppercase;
+    color:var(--accent); margin-bottom:26px;
+  }
+
+  h1{
+    font-size:78px; line-height:1.03; font-weight:600; letter-spacing:-.028em;
+  }
+  h1 em{ font-style:normal; color:var(--accent2); }
+
+  .tease{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:22px; letter-spacing:.02em; color:var(--paper); opacity:.72; margin-top:30px;
+  }
+
+  /* ---------- MASTER A : PHOTO ---------- */
+
+  .photo .bg{
+    position:absolute; inset:0; width:100%; height:100%;
+    object-fit:cover; display:block;
+  }
+  .photo .missing{
+    position:absolute; inset:0;
+    background:repeating-linear-gradient(45deg,#171F1A 0 22px,#121814 22px 44px);
+    display:flex; align-items:center; justify-content:center;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:26px; color:var(--muted);
+    letter-spacing:.1em; text-align:center; padding:60px;
+  }
+  /* scrim: keeps type legible over any photograph */
+  .photo .scrim{
+    position:absolute; inset:0;
+    background:
+      linear-gradient(to top, rgba(7,11,9,.94) 0%, rgba(7,11,9,.75) 22%, rgba(7,11,9,.18) 46%, rgba(7,11,9,.05) 62%, rgba(7,11,9,.42) 100%);
+  }
+  .photo .copy{
+    position:absolute; left:var(--M); right:var(--M); bottom:var(--BOT);
+    z-index:4;
+  }
+
+  /* before-inset chip — signals the transformation without diluting the hero */
+  .inset{
+    position:absolute; right:var(--M); bottom:calc(var(--BOT) + 300px);
+    width:238px; z-index:6;
+  }
+  .inset .frame{
+    width:238px; height:178px; overflow:hidden;
+    border:2px solid rgba(250,249,245,.55);
+    box-shadow:0 18px 46px rgba(0,0,0,.6);
+    background:var(--card);
+  }
+  .inset .frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .inset .tag{
+    margin-top:12px; text-align:right;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.2em; color:var(--paper); opacity:.85;
+  }
+
+  .stamp{
+    display:inline-block;
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px;
+    letter-spacing:.2em; text-transform:uppercase;
+    padding:11px 20px; border:1.5px solid var(--accent); color:var(--accent);
+    margin-bottom:28px;
+  }
+
+  /* ---------- MASTER B : CARD ---------- */
+
+  .card{ padding:var(--TOP) var(--M) var(--BOT); display:flex; flex-direction:column; }
+  .card .head{ margin-top:100px; margin-bottom:38px; }
+  .card h2{
+    font-size:60px; line-height:1.05; font-weight:600; letter-spacing:-.026em;
+  }
+  .card h2 em{ font-style:normal; color:var(--accent2); }
+  .card .headnum{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:20px; letter-spacing:.16em;
+    color:var(--muted); margin-top:14px;
+  }
+
+  /* the prompt block — the screenshot-able signature asset */
+  .promptbox{
+    flex:1; border:1px solid var(--hair); background:var(--card);
+    padding:34px 34px 34px 32px; overflow:hidden;
+    border-left:3px solid var(--accent);
+  }
+  .promptbox pre{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+    font-size:27px; line-height:1.55; white-space:pre-wrap;
+    color:var(--code); letter-spacing:-.006em;
+  }
+  .promptbox .lbl{ color:var(--accent); font-weight:700; }
+  .promptbox .neg{ color:var(--neg); }
+  .promptbox .key{ color:var(--accent2); font-weight:700; }
+
+  /* anatomy rows */
+  .rows{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .row{
+    display:grid; grid-template-columns:222px 1fr; gap:24px;
+    padding:16px 0; border-top:1px solid var(--hair); align-items:baseline;
+  }
+  .row:last-child{ border-bottom:1px solid var(--hair); }
+  .row .k{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; font-weight:700;
+    letter-spacing:.1em; color:var(--accent);
+  }
+  .row .v{ font-size:24px; line-height:1.33; color:var(--body); letter-spacing:-.008em; }
+  .row .v b{ color:var(--paper); font-weight:600; }
+
+  /* three-up lever comparison */
+  .three{ flex:1; display:flex; flex-direction:column; gap:22px; justify-content:center; }
+  .lev{ display:flex; gap:24px; align-items:stretch; height:268px; }
+  .lev .thumb{
+    width:300px; flex:none; overflow:hidden; background:var(--card);
+    border:1px solid var(--hair);
+  }
+  .lev .thumb img{ width:100%; height:100%; object-fit:cover; display:block; }
+  .lev .thumb .ph{
+    width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+    background:repeating-linear-gradient(45deg,#171F1A 0 16px,#121814 16px 32px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px; color:#5d5d63; text-align:center; padding:16px;
+  }
+  .lev .txt{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .lev .txt .n{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:19px; letter-spacing:.18em;
+    color:var(--accent2); margin-bottom:12px;
+  }
+  .lev .txt .p{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:21px; line-height:1.45;
+    color:var(--body);
+  }
+  .lev .txt .p b{ color:var(--paper); background:rgba(143,169,122,.18); font-weight:500; }
+
+  /* spec table */
+  .spec{ flex:1; display:flex; flex-direction:column; justify-content:center; gap:0; }
+  .sp{
+    display:flex; justify-content:space-between; align-items:baseline;
+    padding:26px 0; border-top:1px solid var(--hair);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace;
+  }
+  .sp:last-child{ border-bottom:1px solid var(--hair); }
+  .sp .k{ font-size:22px; letter-spacing:.14em; color:var(--muted); text-transform:uppercase; }
+  .sp .v{ font-size:26px; color:var(--paper); font-weight:500; }
+  .sp .v em{ font-style:normal; color:var(--accent); }
+
+  /* CTA */
+  .cta{ flex:1; display:flex; flex-direction:column; justify-content:center; }
+  .cta h2{ font-size:72px; margin-bottom:46px; }
+  .cta .ask{
+    display:flex; gap:20px; align-items:flex-start; padding:24px 0;
+    border-top:1px solid var(--hair);
+  }
+  .cta .ask:last-of-type{ border-bottom:1px solid var(--hair); }
+  .cta .ask .ico{
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:23px; color:var(--accent);
+    letter-spacing:.1em; width:52px; flex:none; padding-top:4px;
+  }
+  .cta .ask .t{ font-size:29px; line-height:1.34; color:var(--body); }
+  .cta .ask .t b{ color:var(--paper); font-weight:600; }
+  .cta .sig{
+    margin-top:56px; font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:22px;
+    letter-spacing:.2em; color:var(--muted);
+  }
+  .cta .sig b{ color:var(--accent); font-weight:500; }
+
+  .note{
+    position:absolute; left:var(--M); bottom:calc(var(--BOT) - 74px);
+    font-family:ui-monospace, 'SF Mono', Menlo, Monaco, 'JetBrains Mono', monospace; font-size:17px;
+    letter-spacing:.06em; color:var(--muted);
+  }
+
+  @media print{ body{ background:#fff; gap:0; padding:0; } }
+</style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1 — HERO / AFTER ============ -->
+<section class="slide photo" id="s1">
+  <img class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3Cx6lxAMIv3Bm4poL4fw1eFKLFy/hf_20260807_031117_c9ddce63-db50-4c16-9737-fbfc1fb96c74.png" alt="">
+  <div class="missing" style="display:none">assets/after.png</div>
+  <div class="scrim"></div>
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+
+  <div class="inset">
+    <div class="frame">
+      <img src="https://d8j0ntlcm91z4.cloudfront.net/user_3Cx6lxAMIv3Bm4poL4fw1eFKLFy/hf_20260807_030734_cbdaf7d3-c750-41df-884d-ee8e7c7c0e53.png" alt="">
+    </div>
+    <div class="tag">BEFORE</div>
+  </div>
+
+  <div class="copy">
+    <div class="kicker">Render → Photo</div>
+    <h1>This was a raw<br>SketchUp export<br><em>ninety seconds ago.</em></h1>
+    <div class="tease">The full prompt is on slide 3. →</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 2 — THE BEFORE (doubles as second-serve cover) ============ -->
+<section class="slide photo" id="s2">
+  <img class="bg" src="https://d8j0ntlcm91z4.cloudfront.net/user_3Cx6lxAMIv3Bm4poL4fw1eFKLFy/hf_20260807_030734_cbdaf7d3-c750-41df-884d-ee8e7c7c0e53.png" alt="">
+  <div class="missing" style="display:none">assets/before.png</div>
+  <div class="scrim"></div>
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+
+  <div class="copy">
+    <div class="stamp">The input</div>
+    <h1>No textures.<br>No lighting.<br><em>No budget.</em></h1>
+    <div class="tease">Every architect has a folder full of these. →</div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 3 — THE PROMPT (1/2) ============ -->
+<section class="slide card" id="s3">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+  <div class="head">
+    <div class="kicker">Copy this</div>
+    <h2>The prompt.</h2>
+    <div class="headnum">PART 1 OF 2 — THE SETUP</div>
+  </div>
+  <div class="promptbox">
+<pre><span class="lbl">PRESERVE:</span> photograph this exact
+house. Keep the geometry, proportions,
+roofline, window placement and camera
+position <span class="key">exactly</span> as the source image.
+Do not redesign the building.
+
+<span class="lbl">CAMERA:</span> Sony A7R V, 24mm tilt-shift,
+f/8, tripod at 1.6m, 4-second exposure.
+<span class="key">Verticals perfectly corrected.</span>
+
+<span class="lbl">LIGHT:</span> twilight, 15 minutes after
+sunset. Deep indigo sky, thin orange band
+at the horizon. Every interior light on,
+warm 2700K through the windows, pools of
+light spilling onto the ground.</pre>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 4 — THE PROMPT (2/2) ============ -->
+<section class="slide card" id="s4">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+  <div class="head">
+    <div class="kicker">Copy this</div>
+    <h2>The prompt.</h2>
+    <div class="headnum">PART 2 OF 2 — THE REALISM</div>
+  </div>
+  <div class="promptbox">
+<pre><span class="lbl">MATERIAL:</span> lime plaster with trowel
+texture. White oak with grain variation
+board to board. Board-formed concrete.
+Matte black aluminium frames.
+
+<span class="lbl">ATMOSPHERE:</span> <span class="key">wet driveway from recent
+rain</span>, reflecting the warm window light.
+Landscaping slightly overgrown. Faint
+haze catching the light.
+
+<span class="lbl">MEDIUM:</span> architectural photography,
+Dwell, ArchDaily. Sensor grain, slight
+vignette, natural chromatic aberration.
+
+<span class="neg">NOT: no CGI, no plastic surfaces, no
+perfect symmetry, no cartoon clouds,
+no 3D render.</span></pre>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 5 — PROMPT ANATOMY ============ -->
+<section class="slide card" id="s5">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+  <div class="head">
+    <div class="kicker">Why it works</div>
+    <h2>Seven slots.<br><em>Same order, every time.</em></h2>
+  </div>
+  <div class="rows">
+    <div class="row"><div class="k">PRESERVE</div><div class="v"><b>The one everybody skips.</b> Without it the model redesigns the building you were hired to sell.</div></div>
+    <div class="row"><div class="k">CAMERA</div><div class="v">Body, lens, height, exposure. <b>"Verticals corrected"</b> is the actual signature of architectural photography — AI defaults to converging lines, which reads as amateur.</div></div>
+    <div class="row"><div class="k">LIGHT</div><div class="v">Time of day, direction, colour temperature. Warm interiors against a cold sky is the twilight-shot formula.</div></div>
+    <div class="row"><div class="k">MATERIAL</div><div class="v">Name two or three <b>real finishes.</b> "Wood" gives you plastic. "White oak with grain variation" gives you wood.</div></div>
+    <div class="row"><div class="k">ATMOSPHERE</div><div class="v"><b>Wet ground buys you reflections.</b> Reflections are physics, and physics is what your eye reads as real.</div></div>
+    <div class="row"><div class="k">MEDIUM</div><div class="v">Name the publication, not the software. Grain and vignette are the fingerprints of a real sensor.</div></div>
+    <div class="row"><div class="k">NOT</div><div class="v">Name the failure modes out loud. The word <b>"perfect"</b> is what ruins most AI architecture.</div></div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 6 — THE ONE LEVER ============ -->
+<section class="slide card" id="s6">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+  <div class="head">
+    <div class="kicker">Transferable</div>
+    <h2>Change one line.<br><em>Change the whole listing.</em></h2>
+  </div>
+  <div class="three">
+    <div class="lev">
+      <div class="thumb"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3Cx6lxAMIv3Bm4poL4fw1eFKLFy/hf_20260807_031117_c9ddce63-db50-4c16-9737-fbfc1fb96c74.png" alt=""></div>
+      <div class="txt">
+        <div class="n">01 — SELLS THE ARCHITECTURE</div>
+        <div class="p">LIGHT: <b>twilight, 15 min after sunset,</b> every interior light on</div>
+      </div>
+    </div>
+    <div class="lev">
+      <div class="thumb"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3Cx6lxAMIv3Bm4poL4fw1eFKLFy/hf_20260807_031413_298eb3a5-bbe5-4b9b-8fe8-7911c490c1d3.png" alt=""></div>
+      <div class="txt">
+        <div class="n">02 — SELLS THE LIFESTYLE</div>
+        <div class="p">LIGHT: <b>golden hour, low raking sun</b> from camera left, long soft shadows</div>
+      </div>
+    </div>
+    <div class="lev">
+      <div class="thumb"><img src="https://d8j0ntlcm91z4.cloudfront.net/user_3Cx6lxAMIv3Bm4poL4fw1eFKLFy/hf_20260807_031419_e391c857-e62b-4472-a317-10d755891405.png" alt=""></div>
+      <div class="txt">
+        <div class="n">03 — SELLS THE MATERIALS</div>
+        <div class="p">LIGHT: <b>bright overcast,</b> huge soft sky, no hard shadows anywhere</div>
+      </div>
+    </div>
+  </div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 7 — SPEC CARD ============ -->
+<section class="slide card" id="s7">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+  <div class="head">
+    <div class="kicker">Receipts</div>
+    <h2>Exactly how<br>it was made.</h2>
+  </div>
+  <div class="spec">
+    <div class="sp"><span class="k">Model</span><span class="v">Nano Banana Pro</span></div>
+    <div class="sp"><span class="k">Mode</span><span class="v">Image → image</span></div>
+    <div class="sp"><span class="k">Input</span><span class="v">One draft render</span></div>
+    <div class="sp"><span class="k">Aspect</span><span class="v">3:4 &nbsp;<em>1080 × 1440</em></span></div>
+    <div class="sp"><span class="k">Resolution</span><span class="v">2K, upscaled to 4K</span></div>
+    <div class="sp"><span class="k">Attempts</span><span class="v">2</span></div>
+    <div class="sp"><span class="k">Retouching</span><span class="v">None</span></div>
+    <div class="sp"><span class="k">Time</span><span class="v"><em>~90 seconds</em></span></div>
+  </div>
+  <div class="note">Illustrative demo. Altered listing imagery must be disclosed under MLS rules.</div>
+  <div class="arrow">→</div>
+</section>
+
+<!-- ============ SLIDE 8 — CTA ============ -->
+<section class="slide card" id="s8">
+  <div class="brand">VAPORSWIFT<span>.</span>MEDIA</div>
+  <div class="ep">01</div>
+  <div class="cta">
+    <div class="kicker">Episode 01 of 12</div>
+    <h2>Every prompt.<br><em>Free. Always.</em></h2>
+    <div class="ask">
+      <div class="ico">SAVE</div>
+      <div class="t">You will not remember this prompt tomorrow. <b>Save it now</b> and it's in your camera roll for the next listing.</div>
+    </div>
+    <div class="ask">
+      <div class="ico">SEND</div>
+      <div class="t">Send it to someone sitting on <b>a folder of renders</b> they never use.</div>
+    </div>
+    <div class="ask">
+      <div class="ico">NEXT</div>
+      <div class="t">Episode 02: <b>empty room → fully staged interior.</b> Follow so it lands.</div>
+    </div>
+    <div class="sig">VAPORSWIFT<b>.</b>MEDIA</div>
+  </div>
+</section>
+
+</body>
+</html>

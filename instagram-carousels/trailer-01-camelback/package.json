@@ -1,0 +1,14 @@
+{
+  "name": "vaporswift-trailer-01",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Vaporswift \u2014 Trailer 01 carousel (video + 4 slides)",
+  "scripts": {
+    "postinstall": "playwright install chromium",
+    "render": "node render.js",
+    "build": "./fetch-assets.sh && node render.js"
+  },
+  "dependencies": {
+    "playwright": "^1.56.1"
+  }
+}
