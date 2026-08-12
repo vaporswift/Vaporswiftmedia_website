@@ -122,13 +122,27 @@ session work and is the next step there. Until it lands, a change to
 
 ---
 
+## This repo is public
+
+Deliberately — the content is meant to be given away, and it's useful to point
+a tool or another session straight at a raw file URL.
+
+- **Never commit a secret.** No API keys, tokens, `.env` files, client
+  contracts or private client assets. There are none in the history today.
+  If you need a credential, it goes in the environment, not the repo.
+- **Unpublished drafts are readable by anyone.** Accepted trade, not an
+  oversight. Don't park anything here that would hurt if read early.
+- Media in `assets/` is gitignored, which is also where licensed or
+  client-supplied source material stays. Keep it that way.
+
 ## Rules of engagement
 
 1. Own your directory. Request changes elsewhere; don't make them.
 2. Branch from `main`, merge back by PR.
 3. `manifest.json` is generated. Regenerate, never edit.
 4. Token names are a contract. Values are free; names are not.
-5. Renderers assert their own output — `render.js` checks geometry and
+5. Public repo — no secrets, no client-confidential material.
+6. Renderers assert their own output — `render.js` checks geometry and
    overflow, `check-caption.js` checks the hook length, `build-content.js`
    refuses to emit a manifest with a missing field or an over-length hook.
    If one fails, fix the cause; don't route around the check.
