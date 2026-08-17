@@ -1,5 +1,9 @@
 # Playbook
 
+> This file is the **craft** — what to make and why. For the **sequence** —
+> what to run, in what order, the known-good geometry, and where credits and
+> tokens actually go — see [`PRODUCTION.md`](PRODUCTION.md).
+
 Everything learned building the first five episodes. Read before starting a new
 one — most of it was expensive to find out.
 
