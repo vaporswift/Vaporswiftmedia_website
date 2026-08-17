@@ -8,8 +8,16 @@ Three tracks, one design system, one build pipeline.
 | **B** | AI prompting, everything else |
 | **C** | Working with Claude — the tool itself, and using it on your own posts |
 
-**Start here:** [`PLAYBOOK.md`](PLAYBOOK.md) is the accumulated craft — prompt
-framework, design system, model gotchas. Read it before building an episode.
+**Start here.** Two documents, and between them they replace reading the
+episode folders:
+
+- [`PLAYBOOK.md`](PLAYBOOK.md) — the craft. Voice, prompt framework, design
+  system, verified model behaviour.
+- [`PRODUCTION.md`](PRODUCTION.md) — the runbook. The build sequence, the
+  known-good geometry, where Higgsfield credits and Claude tokens actually go,
+  and every trap with what it cost.
+
+Scaffold a new episode with `./new-episode.sh <slug> <CODE>`.
 [`POSTING-LOG.md`](POSTING-LOG.md) is the record — what shipped, how it did,
 what we learned. Fill it in as you post.
 
@@ -50,6 +58,7 @@ cd format-still-to-motion && npm install
 ## Building an episode
 
 ```bash
+./new-episode.sh track-c-04-my-topic C04   # scaffolds the folder
 cd <episode-folder>
 npm install            # playwright + chromium, via postinstall (first time only)
 ./fetch-assets.sh      # pulls source images (and video) from Higgsfield
